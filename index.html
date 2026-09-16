@@ -53,6 +53,19 @@
         .modal-content { background-color: #1a1a2e; color: white; }
         .modal-header { border-bottom: 1px solid #0f3460; }
         
+        .retry-btn { 
+            background: transparent; 
+            border: 2px solid #e94560; 
+            color: #e94560; 
+            padding: 10px 25px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 1rem;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        .retry-btn:hover { background: #e94560; color: white; }
+        
         @media (max-width: 576px) { .video-thumbnail { height: 200px; } .channel-icon { width: 60px; height: 60px; } .channel-logo-text { font-size: 1.5rem; } }
         @media (min-width: 768px) { .video-thumbnail { height: 250px; } }
     </style>
@@ -116,106 +129,113 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Channel Data (TechPana को सही ID राखिएको छ)
-        const channels = [
-            { id: 'techpana', name: 'टेक पाना', channelId: 'UCAr_Ev0xCWf3iuag9KWuvLw', logo: 'T', color: '#e94560' },
-            { id: 'gorkhapatra', name: 'गोरखापत्र', channelId: 'UCvUlOudVh8JKSd0cKMHKx8g', logo: 'गो', color: '#0f3460' },
-            { id: 'annapurna', name: 'अन्नपूर्ण', channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw', logo: 'अ', color: '#533483' } // Google Developers (Demo)
-        ];
+        // ==========================================
+        // ️ IMPORTANT: Replace with your GAS URL
+        // ==========================================
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbygGb6kJKrre8nx7psR8Qg360_frNlGPP8JLEpfO6-3wtxAE8S1l1-gvgTdWZSax7_9mA/exec';
 
+        let allVideos = [];
         let selectedChannel = null;
         let currentTab = 'videos';
-        let allVideosCache = {};
+        let uniqueChannels = [];
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderChannels();
-            selectChannel(channels[0].id); // Default: TechPana
+            loadVideos();
         });
 
+        async function loadVideos() {
+            const videosSection = document.getElementById('videosSection');
+            videosSection.innerHTML = `<div class="loading-spinner"><div class="spinner-border" role="status"></div></div>`;
+
+            try {
+                const response = await fetch(GAS_API_URL);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                allVideos = data;
+                
+                // Extract unique channels from videos
+                extractChannels();
+                
+                // Render channels and videos
+                renderChannels();
+                renderVideos(allVideos);
+
+            } catch (error) {
+                console.error('Error:', error);
+                videosSection.innerHTML = `
+                    <div class="no-videos">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <p>भिडियो लोड गर्न असफल भयो!</p>
+                        <p class="small text-muted">${error.message}</p>
+                        <button class="retry-btn" onclick="loadVideos()">
+                            <i class="bi bi-arrow-clockwise"></i> Retry
+                        </button>
+                    </div>`;
+            }
+        }
+
+        function extractChannels() {
+            // Unique channels निकाल्ने
+            const channelMap = new Map();
+            
+            allVideos.forEach(video => {
+                if (video.channelName && !channelMap.has(video.channelName)) {
+                    channelMap.set(video.channelName, {
+                        id: video.channelName,
+                        name: video.channelName,
+                        logo: video.channelLogo || video.channelName.charAt(0),
+                        color: video.channelColor || '#e94560'
+                    });
+                }
+            });
+            
+            uniqueChannels = Array.from(channelMap.values());
+        }
+
         function renderChannels() {
-            document.getElementById('channelsList').innerHTML = channels.map(ch => `
-                <div class="channel-item ${selectedChannel === ch.id ? 'active' : ''}" onclick="selectChannel('${ch.id}')">
+            const channelsList = document.getElementById('channelsList');
+            
+            // "All" button थप्ने
+            let html = `
+                <div class="channel-item ${!selectedChannel ? 'active' : ''}" onclick="filterByChannel(null)">
+                    <div class="channel-icon" style="border-color: ${!selectedChannel ? '#e94560' : '#0f3460'}">
+                        <span class="channel-logo-text" style="color: #e94560">All</span>
+                    </div>
+                    <div class="channel-name">सबै</div>
+                </div>
+            `;
+            
+            // Dynamic channels
+            html += uniqueChannels.map(ch => `
+                <div class="channel-item ${selectedChannel === ch.id ? 'active' : ''}" onclick="filterByChannel('${ch.id}')">
                     <div class="channel-icon" style="border-color: ${selectedChannel === ch.id ? '#e94560' : '#0f3460'}">
                         <span class="channel-logo-text" style="color: ${ch.color}">${ch.logo}</span>
                     </div>
                     <div class="channel-name">${ch.name}</div>
                 </div>
             `).join('');
-        }
-
-        function selectChannel(channelId) {
-            selectedChannel = channelId;
-            renderChannels();
-            loadVideos(channelId);
-        }
-
-        async function loadVideos(channelId) {
-            const channel = channels.find(c => c.id === channelId);
-            const videosSection = document.getElementById('videosSection');
             
-            videosSection.innerHTML = `<div class="loading-spinner"><div class="spinner-border" role="status"></div></div>`;
+            channelsList.innerHTML = html;
+        }
 
-            try {
-                let videos;
-                
-                if (allVideosCache[channelId]) {
-                    videos = allVideosCache[channelId];
-                } else {
-                    // ✅ Direct Frontend Fetch using AllOrigins CORS Proxy (No GAS needed!)
-                    const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channel.channelId}`;
-                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
-                    
-                    const response = await fetch(proxyUrl);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    
-                    const textData = await response.text();
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(textData, "text/xml");
-                    
-                    // Check for XML parsing errors
-                    if (xmlDoc.querySelector("parsererror")) {
-                        throw new Error("Failed to parse YouTube RSS feed");
-                    }
-
-                    const entries = xmlDoc.querySelectorAll("entry");
-                    videos = [];
-                    
-                    entries.forEach(entry => {
-                        const videoId = entry.querySelector("videoId")?.textContent;
-                        const title = entry.querySelector("title")?.textContent;
-                        const published = entry.querySelector("published")?.textContent;
-                        
-                        if (videoId && title) {
-                            videos.push({
-                                videoId: videoId,
-                                title: title,
-                                thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-                                channelId: channel.id,
-                                channelName: channel.name,
-                                channelColor: channel.color,
-                                channelLogo: channel.logo,
-                                published: published,
-                                timeAgo: getTimeAgo(published)
-                            });
-                        }
-                    });
-                    
-                    allVideosCache[channelId] = videos;
-                }
-
-                renderVideos(videos);
-
-            } catch (error) {
-                console.error('Fetch Error:', error);
-                videosSection.innerHTML = `
-                    <div class="no-videos">
-                        <i class="bi bi-exclamation-triangle"></i>
-                        <p>भिडियो लोड गर्न असफल भयो!</p>
-                        <p class="small text-muted">Error: ${error.message}</p>
-                        <button class="btn btn-sm btn-outline-danger mt-2" onclick="loadVideos('${channelId}')">
-                            <i class="bi bi-arrow-clockwise"></i> Retry
-                        </button>
-                    </div>`;
+        function filterByChannel(channelName) {
+            selectedChannel = channelName;
+            renderChannels();
+            
+            if (channelName) {
+                const filtered = allVideos.filter(v => v.channelName === channelName);
+                renderVideos(filtered);
+            } else {
+                renderVideos(allVideos);
             }
         }
 
@@ -259,7 +279,7 @@
             modal.show();
             
             document.getElementById('videoModal').addEventListener('hidden.bs.modal', () => {
-                player.src = ''; // Stop video when modal closes
+                player.src = '';
             }, { once: true });
         }
 
@@ -268,21 +288,18 @@
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
             
-            if (selectedChannel) loadVideos(selectedChannel);
-        }
-
-        function getTimeAgo(dateString) {
-            if (!dateString) return 'Unknown';
-            const date = new Date(dateString);
-            const now = new Date();
-            const diff = now - date;
-            const minutes = Math.floor(diff / 60000);
-            const hours = Math.floor(diff / 3600000);
-            const days = Math.floor(diff / 86400000);
-            
-            if (minutes < 60) return minutes + 'm ago';
-            if (hours < 24) return hours + 'h ago';
-            return days + 'd ago';
+            // Tab अनुसार filter गर्ने
+            if (tab === 'trending') {
+                renderVideos(allVideos.slice(0, 5)); // First 5 videos
+            } else if (tab === 'our-videos') {
+                renderVideos(allVideos);
+            } else {
+                if (selectedChannel) {
+                    filterByChannel(selectedChannel);
+                } else {
+                    renderVideos(allVideos);
+                }
+            }
         }
 
         function escapeHtml(text) {
