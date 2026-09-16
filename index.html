@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f0f0f">
     <title>Video Gallery</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
+    <!-- ✅ Relative paths for subfolder deployment (/vid/) -->
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./icons/icon-192x192.png">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background-color: #0f0f0f; color: #ffffff; font-family: 'Segoe UI', Roboto, sans-serif; overflow-x: hidden; padding-bottom: 80px; }
         
+        /* Header */
         .app-header { background-color: #0f0f0f; padding: 12px 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #272727; }
         .header-title { font-size: 1.2rem; font-weight: 600; color: #ffffff; }
         .back-btn { color: #ffffff !important; font-size: 1.3rem; }
@@ -26,6 +31,7 @@
         .action-btn.login-btn { background: #00c853; }
         .action-btn.login-btn:hover { background: #00e676; }
         
+        /* Search Overlay */
         .search-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.98); z-index: 200; display: none; flex-direction: column; padding: 20px; }
         .search-overlay.active { display: flex; }
         .search-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
@@ -40,9 +46,11 @@
         .no-search-results { text-align: center; padding: 40px 20px; color: #cccccc; }
         .no-search-results i { font-size: 3rem; margin-bottom: 10px; color: #e94560; }
         
+        /* Skeleton Loading */
         .skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         
+        /* Channels */
         .channels-section { background: #0f0f0f; padding: 15px 0; border-bottom: 1px solid #272727; }
         .channels-scroll { overflow-x: auto; scrollbar-width: none; padding: 0 15px; }
         .channels-scroll::-webkit-scrollbar { display: none; }
@@ -52,6 +60,7 @@
         .channel-item-logo { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: #ffffff; border: 2px solid transparent; }
         .channel-item-name { font-size: 0.8rem; margin-top: 5px; color: #e0e0e0; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
         
+        /* Videos */
         .home-videos { padding: 15px; }
         .section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: #ffffff; }
         .video-list-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1a1a1a; align-items: center; }
@@ -70,6 +79,7 @@
         .favorite-btn { background: none; border: none; color: #e0e0e0; font-size: 1.2rem; cursor: pointer; padding: 5px; }
         .favorite-btn.active { color: #e94560; }
         
+        /* Channel Page */
         .channel-header { padding: 20px 15px; background: #0f0f0f; border-bottom: 1px solid #272727; }
         .channel-header-top { display: flex; justify-content: space-between; align-items: flex-start; }
         .channel-header-info { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; flex: 1; }
@@ -78,6 +88,7 @@
         .channel-header-name { font-size: 1.35rem; font-weight: 700; margin-bottom: 4px; color: #ffffff; }
         .channel-header-desc { font-size: 0.9rem; color: #e0e0e0; line-height: 1.5; font-weight: 400; }
         
+        /* Video Player */
         .video-player-section { background: #000; }
         .video-player-wrapper { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
         .video-player-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
@@ -99,6 +110,7 @@
         .channel-video-title { font-size: 0.95rem; font-weight: 600; line-height: 1.3; margin-bottom: 8px; color: #ffffff; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .channel-video-stats { font-size: 0.85rem; color: #cccccc; font-weight: 500; }
         
+        /* Loading & Error */
         .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; }
         .spinner-border { color: #e94560; width: 3rem; height: 3rem; }
         .loading-text { margin-top: 15px; color: #e0e0e0; font-size: 1rem; }
@@ -107,6 +119,7 @@
         .no-data h5 { color: #ffffff; font-weight: 600; margin-bottom: 10px; }
         .no-data p { color: #cccccc; }
         
+        /* Modal */
         .modal-content { background: #1a1a1a; color: #ffffff; border: 1px solid #272727; }
         .modal-header { border-bottom: 1px solid #272727; }
         .modal-title { color: #ffffff; font-weight: 600; }
@@ -122,15 +135,18 @@
         .btn-secondary-custom:hover { background: #3a3a3a; color: #ffffff; }
         .btn-close-white { filter: invert(1); }
         
+        /* Toast */
         .toast-container { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 9999; }
         .toast-custom { background: #272727; color: #ffffff; padding: 12px 20px; border-radius: 8px; border-left: 4px solid #e94560; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-weight: 500; }
         
+        /* Bottom Navigation */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #0f0f0f; border-top: 1px solid #272727; display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; }
         .nav-tab { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 5px; cursor: pointer; color: #cccccc; transition: all 0.3s; }
         .nav-tab.active { color: #e94560; }
         .nav-tab i { font-size: 1.5rem; margin-bottom: 3px; }
         .nav-tab span { font-size: 0.75rem; font-weight: 500; }
         
+        /* Settings */
         .settings-section { padding: 20px 15px; }
         .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #1a1a1a; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: background 0.2s; border: 1px solid #272727; }
         .settings-item:hover { background: #272727; }
@@ -140,6 +156,7 @@
         .settings-item-desc { font-size: 0.85rem; color: #cccccc; margin-top: 2px; }
         .admin-badge { display: inline-block; background: #00c853; color: #ffffff; padding: 3px 10px; border-radius: 10px; font-size: 0.75rem; margin-left: 8px; font-weight: 600; }
         
+        /* Install Prompt */
         .install-prompt { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #e94560; padding: 15px 25px; border-radius: 12px; display: none; align-items: center; gap: 15px; z-index: 9998; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .install-prompt.show { display: flex; }
         .install-prompt button { background: #e94560; color: #ffffff; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: 500; }
@@ -151,6 +168,7 @@
 </head>
 <body>
 
+    <!-- Header -->
     <header class="app-header">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-2">
@@ -176,6 +194,7 @@
         </div>
     </header>
 
+    <!-- Search Overlay -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-header">
             <div class="search-input-wrapper">
@@ -190,8 +209,10 @@
         <div class="search-results" id="searchResults"></div>
     </div>
 
+    <!-- Main Content -->
     <main id="mainContent"></main>
 
+    <!-- Channel Modal -->
     <div class="modal fade" id="channelModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -230,6 +251,7 @@
         </div>
     </div>
 
+    <!-- Video Modal -->
     <div class="modal fade" id="videoModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -272,6 +294,7 @@
         </div>
     </div>
 
+    <!-- Admin Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -302,14 +325,17 @@
         </div>
     </div>
 
+    <!-- Install Prompt -->
     <div class="install-prompt" id="installPrompt">
         <div><strong>Install App</strong><br><small>Add to home screen</small></div>
         <button onclick="installApp()">Install</button>
         <button class="btn-secondary-custom" onclick="dismissInstallPrompt()" style="padding: 8px 15px; border-radius: 6px;">×</button>
     </div>
 
+    <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <div class="nav-tab active" data-tab="home" onclick="switchTab('home')">
             <i class="bi bi-house"></i><span>Home</span>
@@ -322,32 +348,41 @@
         </div>
     </nav>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
     <script>
+        // ==========================================
+        // 🔥 FIREBASE CONFIGURATION
+        // ==========================================
         const firebaseConfig = {
-  apiKey: "AIzaSyAeOf5HQZMay4QVID8-x0PzUIo84d-XS_k",
-  authDomain: "my-vid-ccddc.firebaseapp.com",
-  projectId: "my-vid-ccddc",
-  storageBucket: "my-vid-ccddc.firebasestorage.app",
-  messagingSenderId: "510082359037",
-  appId: "1:510082359037:web:361277a4774d68e746a894",
-  measurementId: "G-Q2CQ01NTQ9"
-};
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
         db.enablePersistence({ synchronizeTabs: true }).catch(err => console.log('Persistence error:', err.code));
 
+        // ==========================================
+        // ADMIN CONFIG
+        // ==========================================
         const ADMIN_EMAIL = 'admin@videogallery.com';
         const ADMIN_PASSWORD = 'admin123';
         let isAdmin = false;
         let currentUser = null;
 
+        // ==========================================
+        // STATE
+        // ==========================================
         let channels = [];
         let allVideos = [];
         let favorites = [];
@@ -360,6 +395,20 @@
         let unsubscribeVideos = null;
         let unsubscribeFavorites = null;
 
+        // ==========================================
+        // SERVICE WORKER (✅ Relative path for subfolder)
+        // ==========================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW failed:', err));
+            });
+        }
+
+        // ==========================================
+        // AUTH STATE LISTENER
+        // ==========================================
         auth.onAuthStateChanged(user => {
             currentUser = user;
             if (user && user.email === ADMIN_EMAIL) {
@@ -441,6 +490,9 @@
             }
         }
 
+        // ==========================================
+        // SEARCH FUNCTIONALITY
+        // ==========================================
         function openSearch() {
             document.getElementById('searchOverlay').classList.add('active');
             document.getElementById('searchInput').value = '';
@@ -502,6 +554,9 @@
 
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSearch(); });
 
+        // ==========================================
+        // INIT
+        // ==========================================
         document.addEventListener('DOMContentLoaded', () => { loadInitialData(); });
 
         function loadInitialData() {
@@ -538,6 +593,9 @@
             }, error => console.error('Favorites error:', error));
         }
 
+        // ==========================================
+        // VIEW COUNT HELPER
+        // ==========================================
         function formatViews(count) {
             if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M views';
             if (count >= 1000) return (count / 1000).toFixed(1) + 'K views';
@@ -552,6 +610,9 @@
             } catch (error) { console.error('Error incrementing view:', error); }
         }
 
+        // ==========================================
+        // TAB SWITCHING
+        // ==========================================
         function switchTab(tab) {
             currentTab = tab;
             document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
@@ -587,6 +648,9 @@
             }
         }
 
+        // ==========================================
+        // HOME PAGE
+        // ==========================================
         function renderHomePage() {
             currentPage = 'home';
             currentChannel = null;
@@ -644,6 +708,9 @@
             mainContent.innerHTML = html;
         }
 
+        // ==========================================
+        // FAVORITES PAGE
+        // ==========================================
         function renderFavoritesPage() {
             const mainContent = document.getElementById('mainContent');
             if (favorites.length === 0) {
@@ -674,6 +741,9 @@
             mainContent.innerHTML = html;
         }
 
+        // ==========================================
+        // SETTINGS PAGE
+        // ==========================================
         function renderSettingsPage() {
             document.getElementById('headerActions').style.display = 'flex';
             const mainContent = document.getElementById('mainContent');
@@ -713,6 +783,9 @@
                 </div>`;
         }
 
+        // ==========================================
+        // CHANNEL PAGE
+        // ==========================================
         function openChannel(channelName, targetVideoId = null) {
             currentPage = 'channel';
             currentChannel = channels.find(c => c.channelName === channelName);
@@ -745,21 +818,15 @@
             
             // ✅ FIXED: Priority order for selecting video to play
             let videoToPlay = null;
-            
-            // 1. If targetVideoId is passed (from home page click), use that
             if (targetVideoId) {
                 videoToPlay = videos.find(v => v.videoId === targetVideoId);
             }
-            
-            // 2. If currentPlayingVideo is already set and belongs to this channel, keep it
             if (!videoToPlay && currentPlayingVideo) {
                 const currentVideoInList = videos.find(v => v.id === currentPlayingVideo.id);
                 if (currentVideoInList) {
                     videoToPlay = currentVideoInList;
                 }
             }
-            
-            // 3. Otherwise, use first video
             if (!videoToPlay && videos.length > 0) {
                 videoToPlay = videos[0];
             }
@@ -810,6 +877,9 @@
             window.scrollTo(0, 0);
         }
 
+        // ==========================================
+        // PLAY VIDEO & INCREMENT VIEW
+        // ==========================================
         function playVideoFromHome(videoDocId) {
             const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
@@ -823,8 +893,6 @@
             
             // ✅ Set currentPlayingVideo BEFORE incrementing view
             currentPlayingVideo = video;
-            
-            // Increment view count (this triggers snapshot listener)
             incrementViewCount(videoDocId);
             
             // ✅ Update player immediately
@@ -863,6 +931,9 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // ==========================================
+        // FAVORITES
+        // ==========================================
         async function toggleFavorite(videoId, title, channelName, published) {
             const existing = favorites.find(f => f.videoId === videoId);
             if (existing) {
@@ -879,8 +950,14 @@
             }
         }
 
+        // ==========================================
+        // NAVIGATION
+        // ==========================================
         function goBack() { if (currentPage === 'channel') switchTab('home'); }
 
+        // ==========================================
+        // CHANNEL CRUD
+        // ==========================================
         function openAddChannelModal() {
             if (!isAdmin) { showToast('Please login as admin', 'error'); return; }
             document.getElementById('channelModalTitle').innerHTML = '<i class="bi bi-person-plus me-2"></i>Add New Channel';
@@ -940,6 +1017,9 @@
             } catch (error) { showToast('❌ Failed: ' + error.message, 'error'); }
         }
 
+        // ==========================================
+        // VIDEO CRUD
+        // ==========================================
         function openAddVideoModal() {
             if (!isAdmin) { showToast('Please login as admin', 'error'); return; }
             document.getElementById('videoModalTitle').innerHTML = '<i class="bi bi-plus-circle me-2"></i>Add New Video';
@@ -1005,6 +1085,9 @@
             } catch (error) { showToast('❌ Failed: ' + error.message, 'error'); }
         }
 
+        // ==========================================
+        // SETTINGS FUNCTIONS
+        // ==========================================
         async function clearCache() {
             if (confirm('Clear cache?')) {
                 const cacheNames = await caches.keys();
@@ -1022,6 +1105,9 @@
             }
         }
 
+        // ==========================================
+        // PWA INSTALL
+        // ==========================================
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -1035,6 +1121,9 @@
         }
         function dismissInstallPrompt() { document.getElementById('installPrompt').classList.remove('show'); }
 
+        // ==========================================
+        // UTILITIES
+        // ==========================================
         function showLoading(text) { document.getElementById('mainContent').innerHTML = `<div class="loading-container"><div class="spinner-border" role="status"></div><div class="loading-text">${text}</div></div>`; }
         function renderSkeletonLoading() {
             return `<div class="channels-section"><div class="channels-scroll"><div class="channels-list">${[1,2,3,4,5].map(() => `<div class="channel-item"><div class="skeleton" style="width:56px;height:56px;border-radius:50%;"></div><div class="skeleton" style="width:60px;height:12px;margin-top:8px;"></div></div>`).join('')}</div></div></div><div class="home-videos"><div class="skeleton" style="width:100px;height:20px;margin-bottom:15px;"></div>${[1,2,3].map(() => `<div class="video-list-item"><div class="skeleton" style="width:160px;height:90px;border-radius:8px;"></div><div style="flex:1;"><div class="skeleton" style="width:100%;height:16px;margin-bottom:8px;"></div><div class="skeleton" style="width:60%;height:12px;margin-bottom:8px;"></div><div class="skeleton" style="width:40%;height:12px;"></div></div></div>`).join('')}</div>`;
