@@ -1,53 +1,95 @@
 <!DOCTYPE html>
-<html lang="ne">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f0f0f">
-    <title>Nepali Videos</title>
+    <title>Video Gallery</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background-color: #0f0f0f; 
-            color: #fff; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            overflow-x: hidden; 
-            padding-bottom: 80px;
-        }
+        body { background-color: #0f0f0f; color: #fff; font-family: 'Segoe UI', Roboto, sans-serif; overflow-x: hidden; padding-bottom: 80px; }
         
         /* Header */
-        .app-header { 
-            background-color: #0f0f0f; 
-            padding: 12px 15px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            border-bottom: 1px solid #272727;
-        }
+        .app-header { background-color: #0f0f0f; padding: 12px 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #272727; }
         .header-title { font-size: 1.2rem; font-weight: 500; }
         .back-btn { color: white !important; font-size: 1.3rem; }
-        .header-actions { display: flex; gap: 10px; }
-        .action-btn { 
-            background: #e94560; 
-            color: white; 
-            border: none; 
-            width: 36px; 
-            height: 36px; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+        .header-actions { display: flex; gap: 8px; }
+        .action-btn { background: #e94560; color: white; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; transition: all 0.3s; }
         .action-btn:hover { background: #ff6b6b; transform: scale(1.1); }
         .action-btn.secondary { background: #272727; }
         .action-btn.secondary:hover { background: #3a3a3a; }
+        .action-btn.search-btn { background: #1a1a1a; border: 1px solid #272727; }
+        .action-btn.search-btn:hover { background: #272727; }
+        .action-btn.login-btn { background: #00c853; }
+        .action-btn.login-btn:hover { background: #00e676; }
+        
+        /* Search Overlay */
+        .search-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .search-overlay.active { display: flex; }
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .search-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            background: #1a1a1a;
+            border: 1px solid #272727;
+            border-radius: 25px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+        .search-input:focus { border-color: #e94560; }
+        .search-input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        .search-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .search-results {
+            flex: 1;
+            overflow-y: auto;
+        }
+        .search-results-title {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+        .no-search-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #888;
+        }
+        .no-search-results i { font-size: 3rem; margin-bottom: 10px; color: #e94560; }
         
         /* Skeleton Loading */
         .skeleton {
@@ -56,283 +98,69 @@
             animation: shimmer 1.5s infinite;
             border-radius: 4px;
         }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         
-        /* HOME PAGE - Horizontal Channels */
-        .channels-section {
-            background: #0f0f0f;
-            padding: 15px 0;
-            border-bottom: 1px solid #272727;
-        }
-        .channels-scroll {
-            overflow-x: auto;
-            scrollbar-width: none;
-            padding: 0 15px;
-        }
+        /* Channels */
+        .channels-section { background: #0f0f0f; padding: 15px 0; border-bottom: 1px solid #272727; }
+        .channels-scroll { overflow-x: auto; scrollbar-width: none; padding: 0 15px; }
         .channels-scroll::-webkit-scrollbar { display: none; }
-        .channels-list {
-            display: flex;
-            gap: 15px;
-            min-width: max-content;
-        }
-        .channel-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+        .channels-list { display: flex; gap: 15px; min-width: max-content; }
+        .channel-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s; }
         .channel-item:hover { transform: scale(1.05); }
-        .channel-item-logo {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-        .channel-item-name {
-            font-size: 0.75rem;
-            margin-top: 5px;
-            color: #aaa;
-            max-width: 70px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+        .channel-item-logo { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: white; border: 2px solid transparent; }
+        .channel-item-name { font-size: 0.75rem; margin-top: 5px; color: #aaa; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         
-        /* HOME PAGE - Video List */
+        /* Videos */
         .home-videos { padding: 15px; }
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .video-list-item {
-            display: flex;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid #1a1a1a;
-            align-items: center;
-        }
+        .section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .video-list-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1a1a1a; align-items: center; }
         .video-list-item:last-child { border-bottom: none; }
-        .video-list-thumb {
-            width: 160px;
-            min-width: 160px;
-            height: 90px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            background: #272727;
-            cursor: pointer;
-        }
+        .video-list-thumb { width: 160px; min-width: 160px; height: 90px; border-radius: 8px; overflow: hidden; background: #272727; cursor: pointer; }
         .video-list-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .video-list-info { flex: 1; min-width: 0; cursor: pointer; }
-        .video-list-title {
-            font-size: 0.9rem;
-            font-weight: 500;
-            line-height: 1.3;
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .video-list-channel {
-            font-size: 0.8rem;
-            color: #aaa;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 4px;
-        }
-        .video-list-channel-logo {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            font-weight: bold;
-            color: white;
-        }
+        .video-list-title { font-size: 0.9rem; font-weight: 500; line-height: 1.3; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .video-list-channel { font-size: 0.8rem; color: #aaa; display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
+        .video-list-channel-logo { width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: bold; color: white; }
         .video-list-stats { font-size: 0.8rem; color: #888; }
-        
-        /* Video Actions (Edit/Delete) */
-        .video-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 5px;
-        }
-        .video-action-btn {
-            background: #1a1a1a;
-            border: none;
-            color: #888;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .video-actions { display: flex; flex-direction: column; gap: 8px; padding: 5px; }
+        .video-action-btn { background: #1a1a1a; border: none; color: #888; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
         .video-action-btn:hover { background: #272727; color: white; }
         .video-action-btn.delete:hover { background: #dc3545; color: white; }
-        
-        .favorite-btn {
-            background: none;
-            border: none;
-            color: #888;
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 5px;
-        }
+        .favorite-btn { background: none; border: none; color: #888; font-size: 1.2rem; cursor: pointer; padding: 5px; }
         .favorite-btn.active { color: #e94560; }
         
-        /* CHANNEL PAGE */
-        .channel-header {
-            padding: 20px 15px;
-            background: #0f0f0f;
-            border-bottom: 1px solid #272727;
-        }
-        .channel-header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        .channel-header-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 12px;
-            flex: 1;
-        }
-        .channel-header-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .channel-header-logo {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
-            flex-shrink: 0;
-        }
+        /* Channel Page */
+        .channel-header { padding: 20px 15px; background: #0f0f0f; border-bottom: 1px solid #272727; }
+        .channel-header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .channel-header-info { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; flex: 1; }
+        .channel-header-actions { display: flex; gap: 8px; }
+        .channel-header-logo { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; color: white; flex-shrink: 0; }
         .channel-header-name { font-size: 1.3rem; font-weight: 600; margin-bottom: 4px; }
         .channel-header-desc { font-size: 0.85rem; color: #aaa; line-height: 1.5; }
         
         /* Video Player */
         .video-player-section { background: #000; }
-        .video-player-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            background: #000;
-        }
-        .video-player-wrapper iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: none;
-        }
-        
-        /* Video Details */
-        .video-details {
-            padding: 15px;
-            background: #0f0f0f;
-            border-bottom: 1px solid #272727;
-        }
-        .video-details-title {
-            font-size: 1.05rem;
-            font-weight: 500;
-            line-height: 1.4;
-            margin-bottom: 12px;
-        }
-        .video-details-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: #aaa;
-            flex-wrap: wrap;
-        }
+        .video-player-wrapper { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
+        .video-player-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .video-details { padding: 15px; background: #0f0f0f; border-bottom: 1px solid #272727; }
+        .video-details-title { font-size: 1.05rem; font-weight: 500; line-height: 1.4; margin-bottom: 12px; }
+        .video-details-meta { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: #aaa; flex-wrap: wrap; }
         .video-details-channel { display: flex; align-items: center; gap: 8px; }
-        .video-details-channel-logo {
-            width: 28px; height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: white;
-        }
+        .video-details-channel-logo { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; color: white; }
         
-        /* Channel Videos List */
         .channel-videos-list { padding: 10px 0; background: #0f0f0f; }
-        .channel-video-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-            align-items: center;
-        }
+        .channel-video-item { display: flex; gap: 12px; padding: 12px 15px; cursor: pointer; transition: background 0.2s; align-items: center; }
         .channel-video-item:hover { background: #1a1a1a; }
         .channel-video-item.active { background: #272727; }
-        .channel-video-thumb {
-            width: 160px;
-            min-width: 160px;
-            height: 90px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            background: #272727;
-        }
+        .channel-video-thumb { width: 160px; min-width: 160px; height: 90px; border-radius: 8px; overflow: hidden; background: #272727; }
         .channel-video-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .channel-video-info { flex: 1; min-width: 0; }
-        .channel-video-title {
-            font-size: 0.9rem;
-            font-weight: 500;
-            line-height: 1.3;
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+        .channel-video-title { font-size: 0.9rem; font-weight: 500; line-height: 1.3; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .channel-video-stats { font-size: 0.8rem; color: #888; }
         
-        /* Loading & Error */
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-        }
+        .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; }
         .spinner-border { color: #e94560; width: 3rem; height: 3rem; }
         .loading-text { margin-top: 15px; color: #aaa; }
-        
         .no-data { text-align: center; padding: 60px 20px; color: #aaa; }
         .no-data i { font-size: 4rem; margin-bottom: 15px; color: #e94560; }
         
@@ -341,113 +169,38 @@
         .modal-header { border-bottom: 1px solid #272727; }
         .modal-footer { border-top: 1px solid #272727; }
         .form-control, .form-select { background: #272727; border: 1px solid #3a3a3a; color: white; }
-        .form-control:focus, .form-select:focus {
-            background: #272727; color: white;
-            border-color: #e94560;
-            box-shadow: 0 0 0 0.2rem rgba(233, 69, 96, 0.25);
-        }
+        .form-control:focus, .form-select:focus { background: #272727; color: white; border-color: #e94560; box-shadow: 0 0 0 0.2rem rgba(233, 69, 96, 0.25); }
         .btn-primary-custom { background: #e94560; border: none; color: white; padding: 10px 25px; }
         .btn-primary-custom:hover { background: #ff6b6b; }
         .btn-secondary-custom { background: #272727; border: 1px solid #3a3a3a; color: white; }
-        .btn-danger-custom { background: #dc3545; border: none; color: white; padding: 10px 25px; }
-        .btn-danger-custom:hover { background: #c82333; }
         
         /* Toast */
-        .toast-container {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-        }
-        .toast-custom {
-            background: #272727;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            border-left: 4px solid #e94560;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
+        .toast-container { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 9999; }
+        .toast-custom { background: #272727; color: white; padding: 12px 20px; border-radius: 8px; border-left: 4px solid #e94560; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         
         /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #0f0f0f;
-            border-top: 1px solid #272727;
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            z-index: 100;
-        }
-        .nav-tab {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 5px;
-            cursor: pointer;
-            color: #888;
-            transition: all 0.3s;
-        }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #0f0f0f; border-top: 1px solid #272727; display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; }
+        .nav-tab { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 5px; cursor: pointer; color: #888; transition: all 0.3s; }
         .nav-tab.active { color: #e94560; }
         .nav-tab i { font-size: 1.5rem; margin-bottom: 3px; }
         .nav-tab span { font-size: 0.7rem; }
         
-        /* Settings Page */
+        /* Settings */
         .settings-section { padding: 20px 15px; }
-        .settings-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: #1a1a1a;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
+        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #1a1a1a; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: background 0.2s; }
         .settings-item:hover { background: #272727; }
         .settings-item-left { display: flex; align-items: center; gap: 12px; }
         .settings-item-left i { font-size: 1.3rem; color: #e94560; }
         .settings-item-text { font-size: 0.95rem; }
         .settings-item-desc { font-size: 0.75rem; color: #888; margin-top: 2px; }
+        .admin-badge { display: inline-block; background: #00c853; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; margin-left: 8px; }
         
         /* Install Prompt */
-        .install-prompt {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a1a1a;
-            border: 1px solid #e94560;
-            padding: 15px 25px;
-            border-radius: 12px;
-            display: none;
-            align-items: center;
-            gap: 15px;
-            z-index: 9998;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
+        .install-prompt { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #1a1a1a; border: 1px solid #e94560; padding: 15px 25px; border-radius: 12px; display: none; align-items: center; gap: 15px; z-index: 9998; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .install-prompt.show { display: flex; }
-        .install-prompt button {
-            background: #e94560;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+        .install-prompt button { background: #e94560; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; }
         
-        @media (max-width: 576px) {
-            .video-list-thumb, .channel-video-thumb {
-                width: 140px;
-                min-width: 140px;
-                height: 80px;
-            }
-        }
+        @media (max-width: 576px) { .video-list-thumb, .channel-video-thumb { width: 140px; min-width: 140px; height: 80px; } }
     </style>
 </head>
 <body>
@@ -459,24 +212,45 @@
                 <button class="btn btn-link text-white back-btn" id="backBtn" onclick="goBack()" style="display: none;">
                     <i class="bi bi-arrow-left"></i>
                 </button>
-                <h5 class="header-title mb-0" id="pageTitle">Nepali Videos</h5>
+                <h5 class="header-title mb-0" id="pageTitle">Video Gallery</h5>
             </div>
             <div class="header-actions" id="headerActions">
-                <button class="action-btn secondary" onclick="openAddChannelModal()" title="Add Channel">
+                <button class="action-btn search-btn" onclick="openSearch()" title="Search">
+                    <i class="bi bi-search"></i>
+                </button>
+                <button class="action-btn secondary admin-only" onclick="openAddChannelModal()" title="Add Channel" style="display: none;">
                     <i class="bi bi-person-plus"></i>
                 </button>
-                <button class="action-btn" onclick="openAddVideoModal()" title="Add Video">
+                <button class="action-btn admin-only" onclick="openAddVideoModal()" title="Add Video" style="display: none;">
                     <i class="bi bi-plus-lg"></i>
+                </button>
+                <button class="action-btn login-btn" id="loginBtn" onclick="handleLoginClick()" title="Admin Login">
+                    <i class="bi bi-person"></i>
                 </button>
             </div>
         </div>
     </header>
 
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-header">
+            <div class="search-input-wrapper">
+                <i class="bi bi-search search-input-icon"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search videos..." oninput="handleSearch()">
+            </div>
+            <button class="search-close" onclick="closeSearch()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="search-results-title" id="searchResultsTitle">Type to search videos</div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
     <!-- Main Content -->
     <main id="mainContent"></main>
 
-    <!-- Add/Edit Channel Modal -->
-    <div class="modal fade" id="channelModal" tabindex="-1" aria-hidden="true">
+    <!-- Channel Modal (Add/Edit) -->
+    <div class="modal fade" id="channelModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -514,8 +288,8 @@
         </div>
     </div>
 
-    <!-- Add/Edit Video Modal -->
-    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <!-- Video Modal (Add/Edit) -->
+    <div class="modal fade" id="videoModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -552,12 +326,45 @@
         </div>
     </div>
 
+    <!-- Admin Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalTitle"><i class="bi bi-shield-lock me-2"></i>Admin Login</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="loginEmail" placeholder="admin@example.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password *</label>
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required>
+                        </div>
+                        <div id="loginError" class="text-danger" style="display: none; font-size: 0.9rem;"></div>
+                    </form>
+                    <div class="mt-3 p-3" style="background: #272727; border-radius: 8px; font-size: 0.85rem;">
+                        <strong class="text-warning">Demo Credentials:</strong><br>
+                        <span class="text-muted">Email: admin@videogallery.com</span><br>
+                        <span class="text-muted">Password: admin123</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="submitLogin()">
+                        <i class="bi bi-box-arrow-in-right me-1"></i><span id="loginSubmitText">Login</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Install Prompt -->
     <div class="install-prompt" id="installPrompt">
-        <div>
-            <strong>Install App</strong><br>
-            <small class="text-muted">Add to home screen</small>
-        </div>
+        <div><strong>Install App</strong><br><small class="text-muted">Add to home screen</small></div>
         <button onclick="installApp()">Install</button>
         <button class="btn-secondary-custom" onclick="dismissInstallPrompt()" style="padding: 8px 15px; border-radius: 6px;">×</button>
     </div>
@@ -568,26 +375,24 @@
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <div class="nav-tab active" data-tab="home" onclick="switchTab('home')">
-            <i class="bi bi-house"></i>
-            <span>Home</span>
+            <i class="bi bi-house"></i><span>Home</span>
         </div>
         <div class="nav-tab" data-tab="favorites" onclick="switchTab('favorites')">
-            <i class="bi bi-heart"></i>
-            <span>Favorites</span>
+            <i class="bi bi-heart"></i><span>Favorites</span>
         </div>
         <div class="nav-tab" data-tab="settings" onclick="switchTab('settings')">
-            <i class="bi bi-gear"></i>
-            <span>Settings</span>
+            <i class="bi bi-gear"></i><span>Settings</span>
         </div>
     </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
     <script>
         // ==========================================
-        // 🔥 FIREBASE CONFIGURATION
+        //  FIREBASE CONFIGURATION
         // ==========================================
         const firebaseConfig = {
   apiKey: "AIzaSyAeOf5HQZMay4QVID8-x0PzUIo84d-XS_k",
@@ -601,7 +406,16 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
         db.enablePersistence({ synchronizeTabs: true }).catch(err => console.log('Persistence error:', err.code));
+
+        // ==========================================
+        // ADMIN CONFIG
+        // ==========================================
+        const ADMIN_EMAIL = 'admin@videogallery.com';
+        const ADMIN_PASSWORD = 'admin123';
+        let isAdmin = false;
+        let currentUser = null;
 
         // ==========================================
         // STATE
@@ -617,6 +431,186 @@
         let unsubscribeChannels = null;
         let unsubscribeVideos = null;
         let unsubscribeFavorites = null;
+
+        // ==========================================
+        // AUTH STATE LISTENER
+        // ==========================================
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            if (user && user.email === ADMIN_EMAIL) {
+                isAdmin = true;
+                localStorage.setItem('vg_admin', 'true');
+            } else {
+                isAdmin = false;
+                localStorage.removeItem('vg_admin');
+            }
+            updateAdminUI();
+            renderCurrentView();
+        });
+
+        // Check local storage on load
+        if (localStorage.getItem('vg_admin') === 'true') {
+            // Will be verified by onAuthStateChanged
+        }
+
+        function updateAdminUI() {
+            // Show/hide admin-only buttons
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = isAdmin ? 'flex' : 'none';
+            });
+            
+            // Update login button
+            const loginBtn = document.getElementById('loginBtn');
+            if (isAdmin) {
+                loginBtn.innerHTML = '<i class="bi bi-box-arrow-right"></i>';
+                loginBtn.title = 'Logout';
+                loginBtn.style.background = '#dc3545';
+            } else {
+                loginBtn.innerHTML = '<i class="bi bi-person"></i>';
+                loginBtn.title = 'Admin Login';
+                loginBtn.style.background = '#00c853';
+            }
+        }
+
+        function handleLoginClick() {
+            if (isAdmin) {
+                // Logout
+                if (confirm('Are you sure you want to logout?')) {
+                    auth.signOut().then(() => {
+                        showToast('Logged out successfully', 'info');
+                    });
+                }
+            } else {
+                // Open login modal
+                document.getElementById('loginForm').reset();
+                document.getElementById('loginError').style.display = 'none';
+                document.getElementById('loginModalTitle').innerHTML = '<i class="bi bi-shield-lock me-2"></i>Admin Login';
+                document.getElementById('loginSubmitText').textContent = 'Login';
+                new bootstrap.Modal(document.getElementById('loginModal')).show();
+            }
+        }
+
+        async function submitLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (!email || !password) {
+                errorDiv.textContent = 'Please fill all fields';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            const btn = document.querySelector('#loginModal .btn-primary-custom');
+            btn.disabled = true;
+            document.getElementById('loginSubmitText').textContent = 'Logging in...';
+            errorDiv.style.display = 'none';
+            
+            try {
+                // Try to sign in
+                await auth.signInWithEmailAndPassword(email, password);
+                showToast('✅ Welcome Admin!', 'success');
+                bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+            } catch (error) {
+                // If user doesn't exist, create it first
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    try {
+                        // Create admin user
+                        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                        await userCredential.user.updateProfile({ displayName: 'Admin' });
+                        showToast('✅ Admin account created & logged in!', 'success');
+                        bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+                    } catch (createError) {
+                        errorDiv.textContent = 'Login failed: ' + createError.message;
+                        errorDiv.style.display = 'block';
+                    }
+                } else {
+                    errorDiv.textContent = 'Login failed: ' + error.message;
+                    errorDiv.style.display = 'block';
+                }
+            } finally {
+                btn.disabled = false;
+                document.getElementById('loginSubmitText').textContent = 'Login';
+            }
+        }
+
+        // ==========================================
+        // SEARCH FUNCTIONALITY
+        // ==========================================
+        function openSearch() {
+            document.getElementById('searchOverlay').classList.add('active');
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('searchResultsTitle').textContent = 'Type to search videos';
+            setTimeout(() => document.getElementById('searchInput').focus(), 100);
+        }
+
+        function closeSearch() {
+            document.getElementById('searchOverlay').classList.remove('active');
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const resultsDiv = document.getElementById('searchResults');
+            const titleDiv = document.getElementById('searchResultsTitle');
+            
+            if (!query) {
+                resultsDiv.innerHTML = '';
+                titleDiv.textContent = 'Type to search videos';
+                return;
+            }
+            
+            // Filter videos by title or channel name
+            const filteredVideos = allVideos.filter(v => 
+                v.title.toLowerCase().includes(query) || 
+                v.channelName.toLowerCase().includes(query)
+            );
+            
+            titleDiv.textContent = `${filteredVideos.length} result${filteredVideos.length !== 1 ? 's' : ''} found`;
+            
+            if (filteredVideos.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="no-search-results">
+                        <i class="bi bi-search"></i>
+                        <p>No videos found for "${query}"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            filteredVideos.forEach(video => {
+                const channel = channels.find(c => c.channelName === video.channelName);
+                html += `
+                    <div class="video-list-item" onclick="closeSearch(); playVideoFromHome('${video.id}')">
+                        <div class="video-list-thumb">
+                            <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
+                        </div>
+                        <div class="video-list-info">
+                            <div class="video-list-title">${highlightText(video.title, query)}</div>
+                            <div class="video-list-channel">
+                                <span class="video-list-channel-logo" style="background-color: ${channel ? channel.channelColor : '#e94560'}">${channel ? channel.channelLogo : '?'}</span>
+                                <span>${highlightText(video.channelName, query)}</span>
+                            </div>
+                            <div class="video-list-stats">${formatViews(video.viewCount)} • ${video.published}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            resultsDiv.innerHTML = html;
+        }
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<mark style="background: #e94560; color: white; padding: 0 2px; border-radius: 2px;">$1</mark>');
+        }
+
+        // Close search on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSearch();
+        });
 
         // ==========================================
         // INIT
@@ -673,9 +667,7 @@
                 await db.collection('videos').doc(videoDocId).update({
                     viewCount: firebase.firestore.FieldValue.increment(1)
                 });
-            } catch (error) {
-                console.error('Error incrementing view:', error);
-            }
+            } catch (error) { console.error('Error incrementing view:', error); }
         }
 
         // ==========================================
@@ -692,7 +684,7 @@
             document.getElementById('headerActions').style.display = 'flex';
             
             if (tab === 'home') {
-                document.getElementById('pageTitle').textContent = 'Nepali Videos';
+                document.getElementById('pageTitle').textContent = 'Video Gallery';
                 currentPage = 'home';
                 renderHomePage();
             } else if (tab === 'favorites') {
@@ -713,6 +705,8 @@
                 }
             } else if (currentTab === 'favorites') {
                 renderFavoritesPage();
+            } else if (currentTab === 'settings') {
+                renderSettingsPage();
             }
         }
 
@@ -724,7 +718,7 @@
             currentChannel = null;
             currentPlayingVideo = null;
             document.getElementById('backBtn').style.display = 'none';
-            document.getElementById('pageTitle').textContent = 'Nepali Videos';
+            document.getElementById('pageTitle').textContent = 'Video Gallery';
             document.getElementById('headerActions').style.display = 'flex';
             
             const mainContent = document.getElementById('mainContent');
@@ -741,9 +735,7 @@
                 channels.forEach(ch => {
                     html += `
                         <div class="channel-item" onclick="openChannel('${escapeAttr(ch.channelName)}')">
-                            <div class="channel-item-logo" style="background-color: ${ch.channelColor || '#e94560'}">
-                                ${ch.channelLogo || ch.channelName.charAt(0)}
-                            </div>
+                            <div class="channel-item-logo" style="background-color: ${ch.channelColor || '#e94560'}">${ch.channelLogo || ch.channelName.charAt(0)}</div>
                             <div class="channel-item-name">${ch.channelName}</div>
                         </div>
                     `;
@@ -755,7 +747,8 @@
             
             if (allVideos.length === 0) {
                 html += `<div class="no-data"><i class="bi bi-video-off"></i><p>No videos yet</p>
-                         <button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()"><i class="bi bi-plus-lg me-1"></i>Add First Video</button></div>`;
+                         ${isAdmin ? '<button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()"><i class="bi bi-plus-lg me-1"></i>Add First Video</button>' : ''}
+                         </div>`;
             } else {
                 allVideos.forEach(video => {
                     const channel = channels.find(c => c.channelName === video.channelName);
@@ -776,10 +769,12 @@
                             <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')">
                                 <i class="bi bi-heart${isFavorite ? '-fill' : ''}"></i>
                             </button>
+                            ${isAdmin ? `
                             <div class="video-actions">
                                 <button class="video-action-btn" onclick="openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
                                 <button class="video-action-btn delete" onclick="deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>
                             </div>
+                            ` : ''}
                         </div>
                     `;
                 });
@@ -828,20 +823,61 @@
         // SETTINGS PAGE
         // ==========================================
         function renderSettingsPage() {
-            document.getElementById('headerActions').style.display = 'none';
+            document.getElementById('headerActions').style.display = 'flex';
             const mainContent = document.getElementById('mainContent');
             mainContent.innerHTML = `
                 <div class="settings-section">
-                    <h4 class="section-title">Settings</h4>
-                    <div class="settings-item" onclick="clearCache()"><div class="settings-item-left"><i class="bi bi-trash"></i><div><div class="settings-item-text">Clear Cache</div><div class="settings-item-desc">Remove cached data</div></div></div><i class="bi bi-chevron-right"></i></div>
-                    <div class="settings-item" onclick="showAppInfo()"><div class="settings-item-left"><i class="bi bi-info-circle"></i><div><div class="settings-item-text">About App</div><div class="settings-item-desc">Version 1.0.0</div></div></div><i class="bi bi-chevron-right"></i></div>
-                    <div class="settings-item" onclick="shareApp()"><div class="settings-item-left"><i class="bi bi-share"></i><div><div class="settings-item-text">Share App</div><div class="settings-item-desc">Share with friends</div></div></div><i class="bi bi-chevron-right"></i></div>
-                    <div class="settings-item" onclick="installApp()"><div class="settings-item-left"><i class="bi bi-download"></i><div><div class="settings-item-text">Install App</div><div class="settings-item-desc">Add to home screen</div></div></div><i class="bi bi-chevron-right"></i></div>
+                    <h4 class="section-title">Settings ${isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}</h4>
+                    
+                    <div class="settings-item" onclick="handleLoginClick()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-${isAdmin ? 'box-arrow-right' : 'shield-lock'}"></i>
+                            <div>
+                                <div class="settings-item-text">${isAdmin ? 'Logout Admin' : 'Admin Login'}</div>
+                                <div class="settings-item-desc">${isAdmin ? 'Sign out of admin account' : 'Access admin features'}</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
+                    <div class="settings-item" onclick="clearCache()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-trash"></i>
+                            <div><div class="settings-item-text">Clear Cache</div><div class="settings-item-desc">Remove cached data</div></div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
+                    <div class="settings-item" onclick="showAppInfo()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-info-circle"></i>
+                            <div><div class="settings-item-text">About App</div><div class="settings-item-desc">Version 1.0.0</div></div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
+                    <div class="settings-item" onclick="shareApp()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-share"></i>
+                            <div><div class="settings-item-text">Share App</div><div class="settings-item-desc">Share with friends</div></div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
+                    <div class="settings-item" onclick="installApp()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-download"></i>
+                            <div><div class="settings-item-text">Install App</div><div class="settings-item-desc">Add to home screen</div></div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
                     <div class="mt-4 p-3" style="background: #1a1a1a; border-radius: 8px;">
                         <h6 class="mb-2">Statistics</h6>
                         <div class="d-flex justify-content-between mb-2"><span class="text-muted">Channels:</span><span>${channels.length}</span></div>
                         <div class="d-flex justify-content-between mb-2"><span class="text-muted">Videos:</span><span>${allVideos.length}</span></div>
-                        <div class="d-flex justify-content-between"><span class="text-muted">Favorites:</span><span>${favorites.length}</span></div>
+                        <div class="d-flex justify-content-between mb-2"><span class="text-muted">Favorites:</span><span>${favorites.length}</span></div>
+                        <div class="d-flex justify-content-between"><span class="text-muted">Admin Status:</span><span style="color: ${isAdmin ? '#00c853' : '#888'}">${isAdmin ? 'Logged In' : 'Not Logged In'}</span></div>
                     </div>
                 </div>
             `;
@@ -857,14 +893,12 @@
             
             document.getElementById('backBtn').style.display = 'block';
             document.getElementById('pageTitle').textContent = channelName;
-            document.getElementById('headerActions').style.display = 'none';
+            document.getElementById('headerActions').style.display = 'flex';
             
             renderChannelPage(getChannelVideos(channelName), targetVideoId);
         }
 
-        function getChannelVideos(channelName) {
-            return allVideos.filter(v => v.channelName === channelName);
-        }
+        function getChannelVideos(channelName) { return allVideos.filter(v => v.channelName === channelName); }
 
         function renderChannelPage(videos, targetVideoId = null) {
             if (!currentChannel) return;
@@ -877,10 +911,12 @@
                             <div class="channel-header-logo" style="background-color: ${currentChannel.channelColor || '#e94560'}">${currentChannel.channelLogo || currentChannel.channelName.charAt(0)}</div>
                             <div><div class="channel-header-name">${currentChannel.channelName}</div></div>
                         </div>
+                        ${isAdmin ? `
                         <div class="channel-header-actions">
                             <button class="action-btn secondary" onclick="openEditChannelModal('${currentChannel.id}')" title="Edit Channel"><i class="bi bi-pencil"></i></button>
                             <button class="action-btn secondary" onclick="deleteChannel('${currentChannel.id}')" title="Delete Channel"><i class="bi bi-trash"></i></button>
                         </div>
+                        ` : ''}
                     </div>
                     <div class="channel-header-desc">${currentChannel.description || ''}</div>
                 </div>
@@ -912,7 +948,9 @@
             
             html += `<div class="channel-videos-list">`;
             if (videos.length === 0) {
-                html += `<div class="no-data"><i class="bi bi-video-off"></i><p>No videos in this channel</p><button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()"><i class="bi bi-plus-lg me-1"></i>Add Video</button></div>`;
+                html += `<div class="no-data"><i class="bi bi-video-off"></i><p>No videos in this channel</p>
+                         ${isAdmin ? '<button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()"><i class="bi bi-plus-lg me-1"></i>Add Video</button>' : ''}
+                         </div>`;
             } else {
                 videos.forEach(video => {
                     const isActive = currentPlayingVideo && currentPlayingVideo.id === video.id;
@@ -925,10 +963,12 @@
                                 <div class="channel-video-title">${video.title}</div>
                                 <div class="channel-video-stats">${formatViews(video.viewCount)} • ${video.published}</div>
                             </div>
+                            ${isAdmin ? `
                             <div class="video-actions">
                                 <button class="video-action-btn" onclick="event.stopPropagation(); openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
                                 <button class="video-action-btn delete" onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>
                             </div>
+                            ` : ''}
                         </div>
                     `;
                 });
@@ -944,7 +984,7 @@
         function playVideoFromHome(videoDocId) {
             const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
-            incrementViewCount(videoDocId); // Increment view count
+            incrementViewCount(videoDocId);
             openChannel(video.channelName, video.videoId);
         }
 
@@ -952,7 +992,7 @@
             const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
             
-            incrementViewCount(videoDocId); // Increment view count
+            incrementViewCount(videoDocId);
             currentPlayingVideo = video;
             
             const player = document.getElementById('channelVideoPlayer');
@@ -991,10 +1031,7 @@
             } else {
                 const video = allVideos.find(v => v.videoId === videoId);
                 await db.collection('favorites').add({
-                    videoId: videoId,
-                    title: title,
-                    channelName: channelName,
-                    published: published,
+                    videoId: videoId, title: title, channelName: channelName, published: published,
                     thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
                     addedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
@@ -1005,14 +1042,13 @@
         // ==========================================
         // NAVIGATION
         // ==========================================
-        function goBack() {
-            if (currentPage === 'channel') switchTab('home');
-        }
+        function goBack() { if (currentPage === 'channel') switchTab('home'); }
 
         // ==========================================
-        // CHANNEL CRUD
+        // CHANNEL CRUD (Admin Only)
         // ==========================================
         function openAddChannelModal() {
+            if (!isAdmin) { showToast('Please login as admin', 'error'); return; }
             document.getElementById('channelModalTitle').innerHTML = '<i class="bi bi-person-plus me-2"></i>Add New Channel';
             document.getElementById('channelSubmitText').textContent = 'Add Channel';
             document.getElementById('editChannelId').value = '';
@@ -1022,6 +1058,7 @@
         }
 
         function openEditChannelModal(channelId) {
+            if (!isAdmin) { showToast('Please login as admin', 'error'); return; }
             const channel = channels.find(c => c.id === channelId);
             if (!channel) return;
             
@@ -1036,6 +1073,7 @@
         }
 
         async function submitChannel() {
+            if (!isAdmin) { showToast('Admin access required', 'error'); return; }
             const channelId = document.getElementById('editChannelId').value;
             const channelName = document.getElementById('inputChannelName').value.trim();
             const channelLogo = document.getElementById('inputChannelLogo').value.trim();
@@ -1058,28 +1096,25 @@
                     showToast('✅ Channel added!', 'success');
                 }
                 bootstrap.Modal.getInstance(document.getElementById('channelModal')).hide();
-            } catch (error) {
-                showToast('❌ Failed: ' + error.message, 'error');
-            } finally {
-                btn.disabled = false;
-            }
+            } catch (error) { showToast('❌ Failed: ' + error.message, 'error'); }
+            finally { btn.disabled = false; }
         }
 
         async function deleteChannel(channelId) {
+            if (!isAdmin) { showToast('Admin access required', 'error'); return; }
             if (!confirm('Are you sure you want to delete this channel?')) return;
             try {
                 await db.collection('channels').doc(channelId).delete();
                 showToast('Channel deleted', 'info');
                 switchTab('home');
-            } catch (error) {
-                showToast('❌ Failed: ' + error.message, 'error');
-            }
+            } catch (error) { showToast('❌ Failed: ' + error.message, 'error'); }
         }
 
         // ==========================================
-        // VIDEO CRUD
+        // VIDEO CRUD (Admin Only)
         // ==========================================
         function openAddVideoModal() {
+            if (!isAdmin) { showToast('Please login as admin', 'error'); return; }
             document.getElementById('videoModalTitle').innerHTML = '<i class="bi bi-plus-circle me-2"></i>Add New Video';
             document.getElementById('videoSubmitText').textContent = 'Add Video';
             document.getElementById('editVideoId').value = '';
@@ -1087,15 +1122,14 @@
             
             const select = document.getElementById('inputChannel');
             select.innerHTML = '<option value="">Select channel...</option>';
-            channels.forEach(ch => {
-                select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`;
-            });
+            channels.forEach(ch => { select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`; });
             if (currentChannel) select.value = currentChannel.channelName;
             
             new bootstrap.Modal(document.getElementById('videoModal')).show();
         }
 
         function openEditVideoModal(videoDocId) {
+            if (!isAdmin) { showToast('Please login as admin', 'error'); return; }
             const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
             
@@ -1107,15 +1141,14 @@
             
             const select = document.getElementById('inputChannel');
             select.innerHTML = '<option value="">Select channel...</option>';
-            channels.forEach(ch => {
-                select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`;
-            });
+            channels.forEach(ch => { select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`; });
             select.value = video.channelName;
             
             new bootstrap.Modal(document.getElementById('videoModal')).show();
         }
 
         async function submitVideo() {
+            if (!isAdmin) { showToast('Admin access required', 'error'); return; }
             const videoDocId = document.getElementById('editVideoId').value;
             const videoId = document.getElementById('inputVideoId').value.trim();
             const title = document.getElementById('inputTitle').value.trim();
@@ -1138,21 +1171,17 @@
                     showToast('✅ Video added!', 'success');
                 }
                 bootstrap.Modal.getInstance(document.getElementById('videoModal')).hide();
-            } catch (error) {
-                showToast('❌ Failed: ' + error.message, 'error');
-            } finally {
-                btn.disabled = false;
-            }
+            } catch (error) { showToast('❌ Failed: ' + error.message, 'error'); }
+            finally { btn.disabled = false; }
         }
 
         async function deleteVideo(videoDocId) {
+            if (!isAdmin) { showToast('Admin access required', 'error'); return; }
             if (!confirm('Are you sure you want to delete this video?')) return;
             try {
                 await db.collection('videos').doc(videoDocId).delete();
                 showToast('Video deleted', 'info');
-            } catch (error) {
-                showToast('❌ Failed: ' + error.message, 'error');
-            }
+            } catch (error) { showToast('❌ Failed: ' + error.message, 'error'); }
         }
 
         // ==========================================
@@ -1165,10 +1194,10 @@
                 showToast('Cache cleared!', 'success');
             }
         }
-        function showAppInfo() { alert('Nepali Videos App\nVersion 1.0.0'); }
+        function showAppInfo() { alert('Video Gallery App\nVersion 1.0.0\n\nWatch your favorite videos in one place!'); }
         async function shareApp() {
             if (navigator.share) {
-                try { await navigator.share({ title: 'Nepali Videos', text: 'Check out this app!', url: window.location.href }); } catch (err) {}
+                try { await navigator.share({ title: 'Video Gallery', text: 'Check out this app!', url: window.location.href }); } catch (err) {}
             } else {
                 navigator.clipboard.writeText(window.location.href);
                 showToast('Link copied!', 'success');
