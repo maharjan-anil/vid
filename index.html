@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Youtube Videos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #1a1a2e; color: #fff; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; padding-bottom: 70px; }
+        
+        .app-header { background-color: #16213e; padding: 15px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .back-btn { color: white !important; text-decoration: none; }
+        
+        .channels-section { padding: 20px 0; }
+        .section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; padding: 0 15px; }
+        .channels-scroll { overflow-x: auto; scrollbar-width: none; }
+        .channels-scroll::-webkit-scrollbar { display: none; }
+        .channels-list { display: flex; gap: 20px; padding: 0 15px; min-width: max-content; }
+        .channel-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s; min-width: 80px; }
+        .channel-item:hover { transform: scale(1.05); }
+        .channel-item.active .channel-icon { border-color: #e94560; }
+        .channel-icon { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #0f3460; background-color: #16213e; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; transition: all 0.3s; }
+        .channel-logo-text { font-size: 1.8rem; font-weight: bold; }
+        .channel-name { font-size: 0.75rem; text-align: center; color: #a0a0a0; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        
+        .video-card { margin-bottom: 20px; cursor: pointer; transition: transform 0.2s; background-color: #16213e; border-radius: 8px; overflow: hidden; }
+        .video-card:hover { transform: translateY(-2px); }
+        .video-thumbnail { position: relative; width: 100%; height: 220px; overflow: hidden; background-color: #0f3460; }
+        .video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0,0,0,0.7); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .video-card:hover .play-button { background-color: rgba(233, 69, 96, 0.9); transform: translate(-50%, -50%) scale(1.1); }
+        .play-button i { font-size: 1.5rem; color: white; margin-left: 5px; }
+        .video-info { padding: 12px 15px; }
+        .video-title { font-size: 0.95rem; font-weight: 500; margin-bottom: 10px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .video-meta { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: #a0a0a0; }
+        .channel-avatar { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+        .channel-avatar div { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8rem; }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background-color: #16213e; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.3); z-index: 100; }
+        .nav-item { cursor: pointer; padding: 5px; transition: all 0.3s; }
+        .nav-item.active { color: #e94560; }
+        .nav-icon { font-size: 1.5rem; margin-bottom: 3px; }
+        .nav-label { font-size: 0.75rem; }
+        
+        .loading-spinner { display: flex; justify-content: center; padding: 40px; }
+        .spinner-border { color: #e94560; width: 3rem; height: 3rem; }
+        .no-videos { text-align: center; padding: 40px 20px; color: #a0a0a0; }
+        .no-videos i { font-size: 3rem; margin-bottom: 15px; color: #e94560; }
+        
+        .modal-content { background-color: #1a1a2e; color: white; }
+        .modal-header { border-bottom: 1px solid #0f3460; }
+        
+        @media (max-width: 576px) { .video-thumbnail { height: 200px; } .channel-icon { width: 60px; height: 60px; } .channel-logo-text { font-size: 1.5rem; } }
+        @media (min-width: 768px) { .video-thumbnail { height: 250px; } }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="container-fluid px-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <button class="btn btn-link text-white back-btn" onclick="history.back()"><i class="bi bi-arrow-left fs-4"></i></button>
+                <h5 class="mb-0 text-white">Youtube Videos</h5>
+                <div style="width: 40px;"></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="channels-section">
+            <h6 class="section-title text-white">Youtube Channels</h6>
+            <div class="channels-scroll">
+                <div class="channels-list" id="channelsList"></div>
+            </div>
+        </section>
+
+        <section class="videos-section container-fluid px-3" id="videosSection">
+            <div class="loading-spinner"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-4 nav-item active" data-tab="videos" onclick="switchTab('videos')">
+                    <i class="bi bi-play-circle nav-icon"></i><div class="nav-label">Videos</div>
+                </div>
+                <div class="col-4 nav-item" data-tab="trending" onclick="switchTab('trending')">
+                    <i class="bi bi-fire nav-icon"></i><div class="nav-label">Trending</div>
+                </div>
+                <div class="col-4 nav-item" data-tab="our-videos" onclick="switchTab('our-videos')">
+                    <i class="bi bi-collection-play nav-icon"></i><div class="nav-label">Our videos</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-truncate" id="videoModalTitle" style="max-width: 80%;">Video</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="ratio ratio-16x9">
+                        <iframe id="videoPlayer" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Channel Data (TechPana को सही ID राखिएको छ)
+        const channels = [
+            { id: 'techpana', name: 'टेक पाना', channelId: 'UCAr_Ev0xCWf3iuag9KWuvLw', logo: 'T', color: '#e94560' },
+            { id: 'gorkhapatra', name: 'गोरखापत्र', channelId: 'UCvUlOudVh8JKSd0cKMHKx8g', logo: 'गो', color: '#0f3460' },
+            { id: 'annapurna', name: 'अन्नपूर्ण', channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw', logo: 'अ', color: '#533483' } // Google Developers (Demo)
+        ];
+
+        let selectedChannel = null;
+        let currentTab = 'videos';
+        let allVideosCache = {};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderChannels();
+            selectChannel(channels[0].id); // Default: TechPana
+        });
+
+        function renderChannels() {
+            document.getElementById('channelsList').innerHTML = channels.map(ch => `
+                <div class="channel-item ${selectedChannel === ch.id ? 'active' : ''}" onclick="selectChannel('${ch.id}')">
+                    <div class="channel-icon" style="border-color: ${selectedChannel === ch.id ? '#e94560' : '#0f3460'}">
+                        <span class="channel-logo-text" style="color: ${ch.color}">${ch.logo}</span>
+                    </div>
+                    <div class="channel-name">${ch.name}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectChannel(channelId) {
+            selectedChannel = channelId;
+            renderChannels();
+            loadVideos(channelId);
+        }
+
+        async function loadVideos(channelId) {
+            const channel = channels.find(c => c.id === channelId);
+            const videosSection = document.getElementById('videosSection');
+            
+            videosSection.innerHTML = `<div class="loading-spinner"><div class="spinner-border" role="status"></div></div>`;
+
+            try {
+                let videos;
+                
+                if (allVideosCache[channelId]) {
+                    videos = allVideosCache[channelId];
+                } else {
+                    // ✅ Direct Frontend Fetch using AllOrigins CORS Proxy (No GAS needed!)
+                    const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channel.channelId}`;
+                    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
+                    
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const textData = await response.text();
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(textData, "text/xml");
+                    
+                    // Check for XML parsing errors
+                    if (xmlDoc.querySelector("parsererror")) {
+                        throw new Error("Failed to parse YouTube RSS feed");
+                    }
+
+                    const entries = xmlDoc.querySelectorAll("entry");
+                    videos = [];
+                    
+                    entries.forEach(entry => {
+                        const videoId = entry.querySelector("videoId")?.textContent;
+                        const title = entry.querySelector("title")?.textContent;
+                        const published = entry.querySelector("published")?.textContent;
+                        
+                        if (videoId && title) {
+                            videos.push({
+                                videoId: videoId,
+                                title: title,
+                                thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                                channelId: channel.id,
+                                channelName: channel.name,
+                                channelColor: channel.color,
+                                channelLogo: channel.logo,
+                                published: published,
+                                timeAgo: getTimeAgo(published)
+                            });
+                        }
+                    });
+                    
+                    allVideosCache[channelId] = videos;
+                }
+
+                renderVideos(videos);
+
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                videosSection.innerHTML = `
+                    <div class="no-videos">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <p>भिडियो लोड गर्न असफल भयो!</p>
+                        <p class="small text-muted">Error: ${error.message}</p>
+                        <button class="btn btn-sm btn-outline-danger mt-2" onclick="loadVideos('${channelId}')">
+                            <i class="bi bi-arrow-clockwise"></i> Retry
+                        </button>
+                    </div>`;
+            }
+        }
+
+        function renderVideos(videos) {
+            const videosSection = document.getElementById('videosSection');
+            
+            if (!videos || videos.length === 0) {
+                videosSection.innerHTML = `<div class="no-videos"><i class="bi bi-video-off"></i><p>No videos found</p></div>`;
+                return;
+            }
+
+            videosSection.innerHTML = videos.map(v => `
+                <div class="video-card" onclick="playVideo('${v.videoId}', '${escapeHtml(v.title)}')">
+                    <div class="video-thumbnail">
+                        <img src="${v.thumbnail}" alt="${escapeHtml(v.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/480x360?text=No+Image'">
+                        <div class="play-button"><i class="bi bi-play-fill"></i></div>
+                    </div>
+                    <div class="video-info">
+                        <h6 class="video-title">${escapeHtml(v.title)}</h6>
+                        <div class="video-meta">
+                            <div class="channel-avatar">
+                                <div style="background-color: ${v.channelColor}">${v.channelLogo}</div>
+                            </div>
+                            <div class="video-stats">
+                                <span style="color: #e94560">${v.channelName}</span>
+                                <span>•</span>
+                                <span>${v.timeAgo}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function playVideo(videoId, title) {
+            const player = document.getElementById('videoPlayer');
+            document.getElementById('videoModalTitle').textContent = decodeURIComponent(title);
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            
+            const modal = new bootstrap.Modal(document.getElementById('videoModal'));
+            modal.show();
+            
+            document.getElementById('videoModal').addEventListener('hidden.bs.modal', () => {
+                player.src = ''; // Stop video when modal closes
+            }, { once: true });
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            
+            if (selectedChannel) loadVideos(selectedChannel);
+        }
+
+        function getTimeAgo(dateString) {
+            if (!dateString) return 'Unknown';
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 60) return minutes + 'm ago';
+            if (hours < 24) return hours + 'h ago';
+            return days + 'd ago';
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>
