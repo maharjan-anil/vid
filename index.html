@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f0f0f">
-    <meta name="description" content="Nepali Videos - Watch your favorite Nepali YouTube channels">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Nepali Videos</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
@@ -126,8 +123,8 @@
             display: flex;
             gap: 12px;
             padding: 10px 0;
-            cursor: pointer;
             border-bottom: 1px solid #1a1a1a;
+            align-items: center;
         }
         .video-list-item:last-child { border-bottom: none; }
         .video-list-thumb {
@@ -138,9 +135,10 @@
             overflow: hidden;
             position: relative;
             background: #272727;
+            cursor: pointer;
         }
         .video-list-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .video-list-info { flex: 1; min-width: 0; }
+        .video-list-info { flex: 1; min-width: 0; cursor: pointer; }
         .video-list-title {
             font-size: 0.9rem;
             font-weight: 500;
@@ -171,6 +169,30 @@
             color: white;
         }
         .video-list-stats { font-size: 0.8rem; color: #888; }
+        
+        /* Video Actions (Edit/Delete) */
+        .video-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 5px;
+        }
+        .video-action-btn {
+            background: #1a1a1a;
+            border: none;
+            color: #888;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .video-action-btn:hover { background: #272727; color: white; }
+        .video-action-btn.delete:hover { background: #dc3545; color: white; }
+        
         .favorite-btn {
             background: none;
             border: none;
@@ -187,11 +209,21 @@
             background: #0f0f0f;
             border-bottom: 1px solid #272727;
         }
+        .channel-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
         .channel-header-info {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 12px;
+            flex: 1;
+        }
+        .channel-header-actions {
+            display: flex;
+            gap: 8px;
         }
         .channel-header-logo {
             width: 56px;
@@ -263,6 +295,7 @@
             padding: 12px 15px;
             cursor: pointer;
             transition: background 0.2s;
+            align-items: center;
         }
         .channel-video-item:hover { background: #1a1a1a; }
         .channel-video-item.active { background: #272727; }
@@ -364,9 +397,7 @@
         .nav-tab span { font-size: 0.7rem; }
         
         /* Settings Page */
-        .settings-section {
-            padding: 20px 15px;
-        }
+        .settings-section { padding: 20px 15px; }
         .settings-item {
             display: flex;
             justify-content: space-between;
@@ -379,23 +410,10 @@
             transition: background 0.2s;
         }
         .settings-item:hover { background: #272727; }
-        .settings-item-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .settings-item-left i {
-            font-size: 1.3rem;
-            color: #e94560;
-        }
-        .settings-item-text {
-            font-size: 0.95rem;
-        }
-        .settings-item-desc {
-            font-size: 0.75rem;
-            color: #888;
-            margin-top: 2px;
-        }
+        .settings-item-left { display: flex; align-items: center; gap: 12px; }
+        .settings-item-left i { font-size: 1.3rem; color: #e94560; }
+        .settings-item-text { font-size: 0.95rem; }
+        .settings-item-desc { font-size: 0.75rem; color: #888; margin-top: 2px; }
         
         /* Install Prompt */
         .install-prompt {
@@ -443,8 +461,8 @@
                 </button>
                 <h5 class="header-title mb-0" id="pageTitle">Nepali Videos</h5>
             </div>
-            <div class="header-actions">
-                <button class="action-btn" onclick="openAddChannelModal()" title="Add Channel">
+            <div class="header-actions" id="headerActions">
+                <button class="action-btn secondary" onclick="openAddChannelModal()" title="Add Channel">
                     <i class="bi bi-person-plus"></i>
                 </button>
                 <button class="action-btn" onclick="openAddVideoModal()" title="Add Video">
@@ -457,24 +475,24 @@
     <!-- Main Content -->
     <main id="mainContent"></main>
 
-    <!-- Add Channel Modal -->
-    <div class="modal fade" id="addChannelModal" tabindex="-1" aria-hidden="true">
+    <!-- Add/Edit Channel Modal -->
+    <div class="modal fade" id="channelModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-person-plus me-2"></i>Add New Channel</h5>
+                    <h5 class="modal-title" id="channelModalTitle"><i class="bi bi-person-plus me-2"></i>Add New Channel</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addChannelForm">
+                    <form id="channelForm">
+                        <input type="hidden" id="editChannelId">
                         <div class="mb-3">
                             <label class="form-label">Channel Name *</label>
-                            <input type="text" class="form-control" id="inputChannelName" placeholder="e.g., टेक पाना" required>
+                            <input type="text" class="form-control" id="inputChannelName" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Channel Logo (Text/Emoji) *</label>
-                            <input type="text" class="form-control" id="inputChannelLogo" placeholder="e.g., T or 🔥" maxlength="3" required>
-                            <small class="text-muted">1-3 characters or emoji</small>
+                            <input type="text" class="form-control" id="inputChannelLogo" maxlength="3" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Channel Color *</label>
@@ -482,38 +500,39 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" id="inputChannelDesc" rows="3" placeholder="Channel description..."></textarea>
+                            <textarea class="form-control" id="inputChannelDesc" rows="3"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary-custom" onclick="submitNewChannel()">
-                        <i class="bi bi-check-lg me-1"></i>Add Channel
+                    <button type="button" class="btn btn-primary-custom" onclick="submitChannel()">
+                        <i class="bi bi-check-lg me-1"></i><span id="channelSubmitText">Add Channel</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Add Video Modal -->
-    <div class="modal fade" id="addVideoModal" tabindex="-1" aria-hidden="true">
+    <!-- Add/Edit Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add New Video</h5>
+                    <h5 class="modal-title" id="videoModalTitle"><i class="bi bi-plus-circle me-2"></i>Add New Video</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addVideoForm">
+                    <form id="videoForm">
+                        <input type="hidden" id="editVideoId">
                         <div class="mb-3">
                             <label class="form-label">Video ID *</label>
-                            <input type="text" class="form-control" id="inputVideoId" placeholder="e.g., dQw4w9WgXcQ" required>
+                            <input type="text" class="form-control" id="inputVideoId" required>
                             <small class="text-muted">From URL: youtube.com/watch?v=<b>VIDEO_ID</b></small>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Title *</label>
-                            <input type="text" class="form-control" id="inputTitle" placeholder="Video title" required>
+                            <input type="text" class="form-control" id="inputTitle" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Channel *</label>
@@ -521,16 +540,12 @@
                                 <option value="">Select channel...</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Views</label>
-                            <input type="text" class="form-control" id="inputViews" placeholder="e.g., 2.5K views">
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary-custom" onclick="submitNewVideo()">
-                        <i class="bi bi-check-lg me-1"></i>Add Video
+                    <button type="button" class="btn btn-primary-custom" onclick="submitVideo()">
+                        <i class="bi bi-check-lg me-1"></i><span id="videoSubmitText">Add Video</span>
                     </button>
                 </div>
             </div>
@@ -566,17 +581,13 @@
         </div>
     </nav>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script>
         // ==========================================
         // 🔥 FIREBASE CONFIGURATION
-        // ⚠️ Replace with YOUR Firebase config
         // ==========================================
         const firebaseConfig = {
   apiKey: "AIzaSyAeOf5HQZMay4QVID8-x0PzUIo84d-XS_k",
@@ -590,11 +601,7 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        db.enablePersistence({ synchronizeTabs: true }).catch(err => {
-            console.log('Persistence error:', err.code);
-        });
-
-        console.log(' Firebase initialized');
+        db.enablePersistence({ synchronizeTabs: true }).catch(err => console.log('Persistence error:', err.code));
 
         // ==========================================
         // STATE
@@ -612,43 +619,7 @@
         let unsubscribeFavorites = null;
 
         // ==========================================
-        // SERVICE WORKER
-        // ==========================================
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(reg => console.log('SW registered'))
-                    .catch(err => console.log('SW failed:', err));
-            });
-        }
-
-        // ==========================================
-        // PWA INSTALL
-        // ==========================================
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            setTimeout(() => {
-                document.getElementById('installPrompt').classList.add('show');
-            }, 3000);
-        });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => {
-                    deferredPrompt = null;
-                    document.getElementById('installPrompt').classList.remove('show');
-                });
-            }
-        }
-
-        function dismissInstallPrompt() {
-            document.getElementById('installPrompt').classList.remove('show');
-        }
-
-        // ==========================================
-        // INIT - Real-time Listeners
+        // INIT
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             loadInitialData();
@@ -657,59 +628,54 @@
         function loadInitialData() {
             showLoading('Loading...');
             
-            // Listen to channels
-            unsubscribeChannels = db.collection('channels')
-                .onSnapshot(snapshot => {
-                    channels = [];
-                    snapshot.forEach(doc => {
-                        channels.push({ id: doc.id, ...doc.data() });
-                    });
-                    console.log('📡 Channels:', channels.length);
-                    renderCurrentView();
-                }, error => {
-                    console.error('Channels error:', error);
-                    showError('Failed to load channels');
-                });
+            unsubscribeChannels = db.collection('channels').onSnapshot(snapshot => {
+                channels = [];
+                snapshot.forEach(doc => channels.push({ id: doc.id, ...doc.data() }));
+                renderCurrentView();
+            }, error => showError('Failed to load channels'));
             
-            // Listen to videos
-            unsubscribeVideos = db.collection('videos')
-                .orderBy('createdAt', 'desc')
-                .onSnapshot(snapshot => {
-                    allVideos = [];
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        allVideos.push({
-                            id: doc.id,
-                            videoId: data.videoId || '',
-                            title: data.title || '',
-                            channelName: data.channelName || '',
-                            published: data.published || '',
-                            views: data.views || '0 views',
-                            thumbnail: `https://img.youtube.com/vi/${data.videoId}/maxresdefault.jpg`,
-                            createdAt: data.createdAt
-                        });
+            unsubscribeVideos = db.collection('videos').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+                allVideos = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    allVideos.push({
+                        id: doc.id,
+                        videoId: data.videoId || '',
+                        title: data.title || '',
+                        channelName: data.channelName || '',
+                        published: data.published || '',
+                        viewCount: data.viewCount || 0,
+                        thumbnail: `https://img.youtube.com/vi/${data.videoId}/maxresdefault.jpg`,
+                        createdAt: data.createdAt
                     });
-                    console.log('📡 Videos:', allVideos.length);
-                    renderCurrentView();
-                }, error => {
-                    console.error('Videos error:', error);
-                    showError('Failed to load videos');
                 });
+                renderCurrentView();
+            }, error => showError('Failed to load videos'));
 
-            // Listen to favorites
-            unsubscribeFavorites = db.collection('favorites')
-                .onSnapshot(snapshot => {
-                    favorites = [];
-                    snapshot.forEach(doc => {
-                        favorites.push({ id: doc.id, ...doc.data() });
-                    });
-                    console.log('❤️ Favorites:', favorites.length);
-                    if (currentTab === 'favorites') {
-                        renderFavoritesPage();
-                    }
-                }, error => {
-                    console.error('Favorites error:', error);
+            unsubscribeFavorites = db.collection('favorites').onSnapshot(snapshot => {
+                favorites = [];
+                snapshot.forEach(doc => favorites.push({ id: doc.id, ...doc.data() }));
+                if (currentTab === 'favorites') renderFavoritesPage();
+            }, error => console.error('Favorites error:', error));
+        }
+
+        // ==========================================
+        // VIEW COUNT HELPER
+        // ==========================================
+        function formatViews(count) {
+            if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M views';
+            if (count >= 1000) return (count / 1000).toFixed(1) + 'K views';
+            return count + ' views';
+        }
+
+        async function incrementViewCount(videoDocId) {
+            try {
+                await db.collection('videos').doc(videoDocId).update({
+                    viewCount: firebase.firestore.FieldValue.increment(1)
                 });
+            } catch (error) {
+                console.error('Error incrementing view:', error);
+            }
         }
 
         // ==========================================
@@ -717,15 +683,13 @@
         // ==========================================
         function switchTab(tab) {
             currentTab = tab;
-            
-            // Update nav
             document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
             document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
             
-            // Reset state
             currentChannel = null;
             currentPlayingVideo = null;
             document.getElementById('backBtn').style.display = 'none';
+            document.getElementById('headerActions').style.display = 'flex';
             
             if (tab === 'home') {
                 document.getElementById('pageTitle').textContent = 'Nepali Videos';
@@ -740,9 +704,6 @@
             }
         }
 
-        // ==========================================
-        // RENDER CURRENT VIEW
-        // ==========================================
         function renderCurrentView() {
             if (currentTab === 'home') {
                 if (currentPage === 'channel' && currentChannel) {
@@ -764,6 +725,7 @@
             currentPlayingVideo = null;
             document.getElementById('backBtn').style.display = 'none';
             document.getElementById('pageTitle').textContent = 'Nepali Videos';
+            document.getElementById('headerActions').style.display = 'flex';
             
             const mainContent = document.getElementById('mainContent');
             
@@ -774,14 +736,8 @@
             
             let html = '';
             
-            // Channels section
             if (channels.length > 0) {
-                html += `
-                    <div class="channels-section">
-                        <div class="channels-scroll">
-                            <div class="channels-list">
-                `;
-                
+                html += `<div class="channels-section"><div class="channels-scroll"><div class="channels-list">`;
                 channels.forEach(ch => {
                     html += `
                         <div class="channel-item" onclick="openChannel('${escapeAttr(ch.channelName)}')">
@@ -792,52 +748,42 @@
                         </div>
                     `;
                 });
-                
                 html += `</div></div></div>`;
             }
             
-            // Videos section
             html += `<div class="home-videos"><h4 class="section-title">Videos</h4>`;
             
             if (allVideos.length === 0) {
-                html += `
-                    <div class="no-data">
-                        <i class="bi bi-video-off"></i>
-                        <p>No videos yet</p>
-                        <button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()">
-                            <i class="bi bi-plus-lg me-1"></i>Add First Video
-                        </button>
-                    </div>
-                `;
+                html += `<div class="no-data"><i class="bi bi-video-off"></i><p>No videos yet</p>
+                         <button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()"><i class="bi bi-plus-lg me-1"></i>Add First Video</button></div>`;
             } else {
                 allVideos.forEach(video => {
                     const channel = channels.find(c => c.channelName === video.channelName);
                     const isFavorite = favorites.some(f => f.videoId === video.videoId);
                     html += `
                         <div class="video-list-item">
-                            <div class="video-list-thumb" onclick="playVideoFromHome('${video.videoId}')">
-                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" 
-                                     onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
+                            <div class="video-list-thumb" onclick="playVideoFromHome('${video.id}')">
+                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
                             </div>
-                            <div class="video-list-info" onclick="playVideoFromHome('${video.videoId}')">
+                            <div class="video-list-info" onclick="playVideoFromHome('${video.id}')">
                                 <div class="video-list-title">${video.title}</div>
                                 <div class="video-list-channel">
-                                    <span class="video-list-channel-logo" style="background-color: ${channel ? channel.channelColor : '#e94560'}">
-                                        ${channel ? channel.channelLogo : '?'}
-                                    </span>
+                                    <span class="video-list-channel-logo" style="background-color: ${channel ? channel.channelColor : '#e94560'}">${channel ? channel.channelLogo : '?'}</span>
                                     <span>${video.channelName}</span>
                                 </div>
-                                <div class="video-list-stats">${video.views} • ${video.published}</div>
+                                <div class="video-list-stats">${formatViews(video.viewCount)} • ${video.published}</div>
                             </div>
-                            <button class="favorite-btn ${isFavorite ? 'active' : ''}" 
-                                    onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.views}', '${video.published}')">
+                            <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')">
                                 <i class="bi bi-heart${isFavorite ? '-fill' : ''}"></i>
                             </button>
+                            <div class="video-actions">
+                                <button class="video-action-btn" onclick="openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
+                                <button class="video-action-btn delete" onclick="deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>
+                            </div>
                         </div>
                     `;
                 });
             }
-            
             html += `</div>`;
             mainContent.innerHTML = html;
         }
@@ -847,46 +793,33 @@
         // ==========================================
         function renderFavoritesPage() {
             const mainContent = document.getElementById('mainContent');
-            
             if (favorites.length === 0) {
-                mainContent.innerHTML = `
-                    <div class="no-data">
-                        <i class="bi bi-heart"></i>
-                        <h5>No favorites yet</h5>
-                        <p>Click the heart icon on videos to add them here</p>
-                    </div>
-                `;
+                mainContent.innerHTML = `<div class="no-data"><i class="bi bi-heart"></i><h5>No favorites yet</h5><p>Click the heart icon on videos to add them here</p></div>`;
                 return;
             }
             
             let html = `<div class="home-videos"><h4 class="section-title">Favorite Videos (${favorites.length})</h4>`;
-            
             favorites.forEach(video => {
                 const channel = channels.find(c => c.channelName === video.channelName);
                 html += `
                     <div class="video-list-item">
                         <div class="video-list-thumb" onclick="playVideoFromHome('${video.videoId}')">
-                            <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy"
-                                 onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
+                            <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
                         </div>
                         <div class="video-list-info" onclick="playVideoFromHome('${video.videoId}')">
                             <div class="video-list-title">${video.title}</div>
                             <div class="video-list-channel">
-                                <span class="video-list-channel-logo" style="background-color: ${channel ? channel.channelColor : '#e94560'}">
-                                    ${channel ? channel.channelLogo : '?'}
-                                </span>
+                                <span class="video-list-channel-logo" style="background-color: ${channel ? channel.channelColor : '#e94560'}">${channel ? channel.channelLogo : '?'}</span>
                                 <span>${video.channelName}</span>
                             </div>
-                            <div class="video-list-stats">${video.views} • ${video.published}</div>
+                            <div class="video-list-stats">${video.published || ''}</div>
                         </div>
-                        <button class="favorite-btn active" 
-                                onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.views}', '${video.published}')">
+                        <button class="favorite-btn active" onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')">
                             <i class="bi bi-heart-fill"></i>
                         </button>
                     </div>
                 `;
             });
-            
             html += `</div>`;
             mainContent.innerHTML = html;
         }
@@ -895,70 +828,20 @@
         // SETTINGS PAGE
         // ==========================================
         function renderSettingsPage() {
+            document.getElementById('headerActions').style.display = 'none';
             const mainContent = document.getElementById('mainContent');
-            
             mainContent.innerHTML = `
                 <div class="settings-section">
                     <h4 class="section-title">Settings</h4>
-                    
-                    <div class="settings-item" onclick="clearCache()">
-                        <div class="settings-item-left">
-                            <i class="bi bi-trash"></i>
-                            <div>
-                                <div class="settings-item-text">Clear Cache</div>
-                                <div class="settings-item-desc">Remove cached data</div>
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    
-                    <div class="settings-item" onclick="showAppInfo()">
-                        <div class="settings-item-left">
-                            <i class="bi bi-info-circle"></i>
-                            <div>
-                                <div class="settings-item-text">About App</div>
-                                <div class="settings-item-desc">Version 1.0.0</div>
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    
-                    <div class="settings-item" onclick="shareApp()">
-                        <div class="settings-item-left">
-                            <i class="bi bi-share"></i>
-                            <div>
-                                <div class="settings-item-text">Share App</div>
-                                <div class="settings-item-desc">Share with friends</div>
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    
-                    <div class="settings-item" onclick="installApp()">
-                        <div class="settings-item-left">
-                            <i class="bi bi-download"></i>
-                            <div>
-                                <div class="settings-item-text">Install App</div>
-                                <div class="settings-item-desc">Add to home screen</div>
-                            </div>
-                        </div>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    
+                    <div class="settings-item" onclick="clearCache()"><div class="settings-item-left"><i class="bi bi-trash"></i><div><div class="settings-item-text">Clear Cache</div><div class="settings-item-desc">Remove cached data</div></div></div><i class="bi bi-chevron-right"></i></div>
+                    <div class="settings-item" onclick="showAppInfo()"><div class="settings-item-left"><i class="bi bi-info-circle"></i><div><div class="settings-item-text">About App</div><div class="settings-item-desc">Version 1.0.0</div></div></div><i class="bi bi-chevron-right"></i></div>
+                    <div class="settings-item" onclick="shareApp()"><div class="settings-item-left"><i class="bi bi-share"></i><div><div class="settings-item-text">Share App</div><div class="settings-item-desc">Share with friends</div></div></div><i class="bi bi-chevron-right"></i></div>
+                    <div class="settings-item" onclick="installApp()"><div class="settings-item-left"><i class="bi bi-download"></i><div><div class="settings-item-text">Install App</div><div class="settings-item-desc">Add to home screen</div></div></div><i class="bi bi-chevron-right"></i></div>
                     <div class="mt-4 p-3" style="background: #1a1a1a; border-radius: 8px;">
                         <h6 class="mb-2">Statistics</h6>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Channels:</span>
-                            <span>${channels.length}</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Videos:</span>
-                            <span>${allVideos.length}</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <span class="text-muted">Favorites:</span>
-                            <span>${favorites.length}</span>
-                        </div>
+                        <div class="d-flex justify-content-between mb-2"><span class="text-muted">Channels:</span><span>${channels.length}</span></div>
+                        <div class="d-flex justify-content-between mb-2"><span class="text-muted">Videos:</span><span>${allVideos.length}</span></div>
+                        <div class="d-flex justify-content-between"><span class="text-muted">Favorites:</span><span>${favorites.length}</span></div>
                     </div>
                 </div>
             `;
@@ -970,17 +853,13 @@
         function openChannel(channelName, targetVideoId = null) {
             currentPage = 'channel';
             currentChannel = channels.find(c => c.channelName === channelName);
-            
-            if (!currentChannel) {
-                showError('Channel not found');
-                return;
-            }
+            if (!currentChannel) { showError('Channel not found'); return; }
             
             document.getElementById('backBtn').style.display = 'block';
             document.getElementById('pageTitle').textContent = channelName;
+            document.getElementById('headerActions').style.display = 'none';
             
-            const channelVideos = getChannelVideos(channelName);
-            renderChannelPage(channelVideos, targetVideoId);
+            renderChannelPage(getChannelVideos(channelName), targetVideoId);
         }
 
         function getChannelVideos(channelName) {
@@ -989,17 +868,18 @@
 
         function renderChannelPage(videos, targetVideoId = null) {
             if (!currentChannel) return;
-            
             const mainContent = document.getElementById('mainContent');
             
             let html = `
                 <div class="channel-header">
-                    <div class="channel-header-info">
-                        <div class="channel-header-logo" style="background-color: ${currentChannel.channelColor || '#e94560'}">
-                            ${currentChannel.channelLogo || currentChannel.channelName.charAt(0)}
+                    <div class="channel-header-top">
+                        <div class="channel-header-info">
+                            <div class="channel-header-logo" style="background-color: ${currentChannel.channelColor || '#e94560'}">${currentChannel.channelLogo || currentChannel.channelName.charAt(0)}</div>
+                            <div><div class="channel-header-name">${currentChannel.channelName}</div></div>
                         </div>
-                        <div>
-                            <div class="channel-header-name">${currentChannel.channelName}</div>
+                        <div class="channel-header-actions">
+                            <button class="action-btn secondary" onclick="openEditChannelModal('${currentChannel.id}')" title="Edit Channel"><i class="bi bi-pencil"></i></button>
+                            <button class="action-btn secondary" onclick="deleteChannel('${currentChannel.id}')" title="Delete Channel"><i class="bi bi-trash"></i></button>
                         </div>
                     </div>
                     <div class="channel-header-desc">${currentChannel.description || ''}</div>
@@ -1007,129 +887,113 @@
             `;
             
             let videoToPlay = null;
-            if (targetVideoId) {
-                videoToPlay = videos.find(v => v.videoId === targetVideoId);
-            }
-            if (!videoToPlay && videos.length > 0) {
-                videoToPlay = videos[0];
-            }
+            if (targetVideoId) videoToPlay = videos.find(v => v.videoId === targetVideoId);
+            if (!videoToPlay && videos.length > 0) videoToPlay = videos[0];
             
             if (videoToPlay) {
                 currentPlayingVideo = videoToPlay;
-                
                 html += `
-                    <div class="video-player-section">
-                        <div class="video-player-wrapper">
-                            <iframe id="channelVideoPlayer"
-                                src="https://www.youtube.com/embed/${videoToPlay.videoId}?rel=0" 
-                                allowfullscreen allow="autoplay; encrypted-media">
-                            </iframe>
-                        </div>
-                    </div>
+                    <div class="video-player-section"><div class="video-player-wrapper">
+                        <iframe id="channelVideoPlayer" src="https://www.youtube.com/embed/${videoToPlay.videoId}?rel=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    </div></div>
                     <div class="video-details">
                         <div class="video-details-title">${videoToPlay.title}</div>
                         <div class="video-details-meta">
                             <div class="video-details-channel">
-                                <div class="video-details-channel-logo" style="background-color: ${currentChannel.channelColor || '#e94560'}">
-                                    ${currentChannel.channelLogo || '?'}
-                                </div>
+                                <div class="video-details-channel-logo" style="background-color: ${currentChannel.channelColor || '#e94560'}">${currentChannel.channelLogo || '?'}</div>
                                 <span>${currentChannel.channelName}</span>
                             </div>
-                            <span>•</span>
-                            <span>${videoToPlay.views}</span>
-                            <span>•</span>
-                            <span>${videoToPlay.published}</span>
+                            <span>•</span><span>${formatViews(videoToPlay.viewCount)}</span>
+                            <span>•</span><span>${videoToPlay.published}</span>
                         </div>
                     </div>
                 `;
             }
             
             html += `<div class="channel-videos-list">`;
-            
             if (videos.length === 0) {
-                html += `
-                    <div class="no-data">
-                        <i class="bi bi-video-off"></i>
-                        <p>No videos in this channel</p>
-                        <button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()">
-                            <i class="bi bi-plus-lg me-1"></i>Add Video
-                        </button>
-                    </div>
-                `;
+                html += `<div class="no-data"><i class="bi bi-video-off"></i><p>No videos in this channel</p><button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()"><i class="bi bi-plus-lg me-1"></i>Add Video</button></div>`;
             } else {
                 videos.forEach(video => {
-                    const isActive = currentPlayingVideo && currentPlayingVideo.videoId === video.videoId;
+                    const isActive = currentPlayingVideo && currentPlayingVideo.id === video.id;
                     html += `
-                        <div class="channel-video-item ${isActive ? 'active' : ''}" 
-                             onclick="playChannelVideo('${video.videoId}', this)">
+                        <div class="channel-video-item ${isActive ? 'active' : ''}" onclick="playChannelVideo('${video.id}', this)">
                             <div class="channel-video-thumb">
-                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy"
-                                     onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
+                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
                             </div>
                             <div class="channel-video-info">
                                 <div class="channel-video-title">${video.title}</div>
-                                <div class="channel-video-stats">${video.views} • ${video.published}</div>
+                                <div class="channel-video-stats">${formatViews(video.viewCount)} • ${video.published}</div>
+                            </div>
+                            <div class="video-actions">
+                                <button class="video-action-btn" onclick="event.stopPropagation(); openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
+                                <button class="video-action-btn delete" onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>
                             </div>
                         </div>
                     `;
                 });
             }
-            
             html += `</div>`;
             mainContent.innerHTML = html;
             window.scrollTo(0, 0);
         }
 
         // ==========================================
-        // PLAY VIDEO
+        // PLAY VIDEO & INCREMENT VIEW
         // ==========================================
-        function playVideoFromHome(videoId) {
-            const video = allVideos.find(v => v.videoId === videoId);
+        function playVideoFromHome(videoDocId) {
+            const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
-            openChannel(video.channelName, videoId);
+            incrementViewCount(videoDocId); // Increment view count
+            openChannel(video.channelName, video.videoId);
         }
 
-        function playChannelVideo(videoId, element) {
-            const video = allVideos.find(v => v.videoId === videoId);
+        function playChannelVideo(videoDocId, element) {
+            const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
             
+            incrementViewCount(videoDocId); // Increment view count
             currentPlayingVideo = video;
             
             const player = document.getElementById('channelVideoPlayer');
-            if (player) {
-                player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            }
+            if (player) player.src = `https://www.youtube.com/embed/${video.videoId}?autoplay=1&rel=0`;
             
             const detailsTitle = document.querySelector('.video-details-title');
             if (detailsTitle) detailsTitle.textContent = video.title;
             
-            if (element) {
-                document.querySelectorAll('.channel-video-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                element.classList.add('active');
+            const detailsMeta = document.querySelector('.video-details-meta');
+            if (detailsMeta) {
+                detailsMeta.innerHTML = `
+                    <div class="video-details-channel">
+                        <div class="video-details-channel-logo" style="background-color: ${currentChannel.channelColor || '#e94560'}">${currentChannel.channelLogo || '?'}</div>
+                        <span>${currentChannel.channelName}</span>
+                    </div>
+                    <span>•</span><span>${formatViews(video.viewCount + 1)}</span>
+                    <span>•</span><span>${video.published}</span>
+                `;
             }
             
+            if (element) {
+                document.querySelectorAll('.channel-video-item').forEach(item => item.classList.remove('active'));
+                element.classList.add('active');
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ==========================================
         // FAVORITES
         // ==========================================
-        async function toggleFavorite(videoId, title, channelName, views, published) {
+        async function toggleFavorite(videoId, title, channelName, published) {
             const existing = favorites.find(f => f.videoId === videoId);
-            
             if (existing) {
-                // Remove from favorites
                 await db.collection('favorites').doc(existing.id).delete();
                 showToast('Removed from favorites', 'info');
             } else {
-                // Add to favorites
+                const video = allVideos.find(v => v.videoId === videoId);
                 await db.collection('favorites').add({
                     videoId: videoId,
                     title: title,
                     channelName: channelName,
-                    views: views,
                     published: published,
                     thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
                     addedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1142,120 +1006,152 @@
         // NAVIGATION
         // ==========================================
         function goBack() {
-            if (currentPage === 'channel') {
-                switchTab('home');
-            }
+            if (currentPage === 'channel') switchTab('home');
         }
 
         // ==========================================
-        // ADD CHANNEL
+        // CHANNEL CRUD
         // ==========================================
         function openAddChannelModal() {
-            const modal = new bootstrap.Modal(document.getElementById('addChannelModal'));
-            modal.show();
+            document.getElementById('channelModalTitle').innerHTML = '<i class="bi bi-person-plus me-2"></i>Add New Channel';
+            document.getElementById('channelSubmitText').textContent = 'Add Channel';
+            document.getElementById('editChannelId').value = '';
+            document.getElementById('channelForm').reset();
+            document.getElementById('inputChannelColor').value = '#e94560';
+            new bootstrap.Modal(document.getElementById('channelModal')).show();
         }
 
-        async function submitNewChannel() {
+        function openEditChannelModal(channelId) {
+            const channel = channels.find(c => c.id === channelId);
+            if (!channel) return;
+            
+            document.getElementById('channelModalTitle').innerHTML = '<i class="bi bi-pencil me-2"></i>Edit Channel';
+            document.getElementById('channelSubmitText').textContent = 'Update Channel';
+            document.getElementById('editChannelId').value = channelId;
+            document.getElementById('inputChannelName').value = channel.channelName || '';
+            document.getElementById('inputChannelLogo').value = channel.channelLogo || '';
+            document.getElementById('inputChannelColor').value = channel.channelColor || '#e94560';
+            document.getElementById('inputChannelDesc').value = channel.description || '';
+            new bootstrap.Modal(document.getElementById('channelModal')).show();
+        }
+
+        async function submitChannel() {
+            const channelId = document.getElementById('editChannelId').value;
             const channelName = document.getElementById('inputChannelName').value.trim();
             const channelLogo = document.getElementById('inputChannelLogo').value.trim();
             const channelColor = document.getElementById('inputChannelColor').value;
             const description = document.getElementById('inputChannelDesc').value.trim();
             
-            if (!channelName || !channelLogo || !channelColor) {
-                showToast('Please fill all required fields', 'error');
-                return;
-            }
+            if (!channelName || !channelLogo) { showToast('Please fill required fields', 'error'); return; }
             
-            const submitBtn = document.querySelector('#addChannelModal .btn-primary-custom');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Adding...';
-            submitBtn.disabled = true;
+            const btn = document.querySelector('#channelModal .btn-primary-custom');
+            btn.disabled = true;
             
             try {
-                await db.collection('channels').add({
-                    channelName: channelName,
-                    channelLogo: channelLogo,
-                    channelColor: channelColor,
-                    description: description,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                showToast('✅ Channel added successfully!', 'success');
-                
-                const modal = bootstrap.Modal.getInstance(document.getElementById('addChannelModal'));
-                modal.hide();
-                document.getElementById('addChannelForm').reset();
-                document.getElementById('inputChannelColor').value = '#e94560';
-                
+                const data = { channelName, channelLogo, channelColor, description };
+                if (channelId) {
+                    await db.collection('channels').doc(channelId).update(data);
+                    showToast('✅ Channel updated!', 'success');
+                } else {
+                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('channels').add(data);
+                    showToast('✅ Channel added!', 'success');
+                }
+                bootstrap.Modal.getInstance(document.getElementById('channelModal')).hide();
             } catch (error) {
-                console.error('Error adding channel:', error);
                 showToast('❌ Failed: ' + error.message, 'error');
             } finally {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+                btn.disabled = false;
+            }
+        }
+
+        async function deleteChannel(channelId) {
+            if (!confirm('Are you sure you want to delete this channel?')) return;
+            try {
+                await db.collection('channels').doc(channelId).delete();
+                showToast('Channel deleted', 'info');
+                switchTab('home');
+            } catch (error) {
+                showToast('❌ Failed: ' + error.message, 'error');
             }
         }
 
         // ==========================================
-        // ADD VIDEO
+        // VIDEO CRUD
         // ==========================================
         function openAddVideoModal() {
+            document.getElementById('videoModalTitle').innerHTML = '<i class="bi bi-plus-circle me-2"></i>Add New Video';
+            document.getElementById('videoSubmitText').textContent = 'Add Video';
+            document.getElementById('editVideoId').value = '';
+            document.getElementById('videoForm').reset();
+            
             const select = document.getElementById('inputChannel');
             select.innerHTML = '<option value="">Select channel...</option>';
-            
             channels.forEach(ch => {
-                const option = document.createElement('option');
-                option.value = ch.channelName;
-                option.textContent = ch.channelName;
-                select.appendChild(option);
+                select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`;
             });
+            if (currentChannel) select.value = currentChannel.channelName;
             
-            if (currentChannel) {
-                select.value = currentChannel.channelName;
-            }
-            
-            const modal = new bootstrap.Modal(document.getElementById('addVideoModal'));
-            modal.show();
+            new bootstrap.Modal(document.getElementById('videoModal')).show();
         }
 
-        async function submitNewVideo() {
+        function openEditVideoModal(videoDocId) {
+            const video = allVideos.find(v => v.id === videoDocId);
+            if (!video) return;
+            
+            document.getElementById('videoModalTitle').innerHTML = '<i class="bi bi-pencil me-2"></i>Edit Video';
+            document.getElementById('videoSubmitText').textContent = 'Update Video';
+            document.getElementById('editVideoId').value = videoDocId;
+            document.getElementById('inputVideoId').value = video.videoId;
+            document.getElementById('inputTitle').value = video.title;
+            
+            const select = document.getElementById('inputChannel');
+            select.innerHTML = '<option value="">Select channel...</option>';
+            channels.forEach(ch => {
+                select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`;
+            });
+            select.value = video.channelName;
+            
+            new bootstrap.Modal(document.getElementById('videoModal')).show();
+        }
+
+        async function submitVideo() {
+            const videoDocId = document.getElementById('editVideoId').value;
             const videoId = document.getElementById('inputVideoId').value.trim();
             const title = document.getElementById('inputTitle').value.trim();
             const channelName = document.getElementById('inputChannel').value;
-            const views = document.getElementById('inputViews').value.trim();
             
-            if (!videoId || !title || !channelName) {
-                showToast('Please fill all required fields', 'error');
-                return;
-            }
+            if (!videoId || !title || !channelName) { showToast('Please fill required fields', 'error'); return; }
             
-            const submitBtn = document.querySelector('#addVideoModal .btn-primary-custom');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Adding...';
-            submitBtn.disabled = true;
+            const btn = document.querySelector('#videoModal .btn-primary-custom');
+            btn.disabled = true;
             
             try {
-                await db.collection('videos').add({
-                    videoId: videoId,
-                    title: title,
-                    channelName: channelName,
-                    views: views || '0 views',
-                    published: new Date().toISOString().split('T')[0],
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                showToast('✅ Video added successfully!', 'success');
-                
-                const modal = bootstrap.Modal.getInstance(document.getElementById('addVideoModal'));
-                modal.hide();
-                document.getElementById('addVideoForm').reset();
-                
+                const data = { videoId, title, channelName, published: new Date().toISOString().split('T')[0] };
+                if (videoDocId) {
+                    await db.collection('videos').doc(videoDocId).update(data);
+                    showToast('✅ Video updated!', 'success');
+                } else {
+                    data.viewCount = 0;
+                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('videos').add(data);
+                    showToast('✅ Video added!', 'success');
+                }
+                bootstrap.Modal.getInstance(document.getElementById('videoModal')).hide();
             } catch (error) {
-                console.error('Error adding video:', error);
                 showToast('❌ Failed: ' + error.message, 'error');
             } finally {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+                btn.disabled = false;
+            }
+        }
+
+        async function deleteVideo(videoDocId) {
+            if (!confirm('Are you sure you want to delete this video?')) return;
+            try {
+                await db.collection('videos').doc(videoDocId).delete();
+                showToast('Video deleted', 'info');
+            } catch (error) {
+                showToast('❌ Failed: ' + error.message, 'error');
             }
         }
 
@@ -1263,114 +1159,57 @@
         // SETTINGS FUNCTIONS
         // ==========================================
         async function clearCache() {
-            if (confirm('Are you sure you want to clear cache?')) {
+            if (confirm('Clear cache?')) {
                 const cacheNames = await caches.keys();
                 await Promise.all(cacheNames.map(name => caches.delete(name)));
                 showToast('Cache cleared!', 'success');
             }
         }
-
-        function showAppInfo() {
-            alert('Nepali Videos App\nVersion 1.0.0\n\nWatch your favorite Nepali YouTube channels in one place!');
-        }
-
+        function showAppInfo() { alert('Nepali Videos App\nVersion 1.0.0'); }
         async function shareApp() {
             if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Nepali Videos',
-                        text: 'Check out this awesome app for Nepali YouTube videos!',
-                        url: window.location.href
-                    });
-                } catch (err) {
-                    console.log('Share cancelled');
-                }
+                try { await navigator.share({ title: 'Nepali Videos', text: 'Check out this app!', url: window.location.href }); } catch (err) {}
             } else {
-                // Fallback
-                const url = window.location.href;
-                navigator.clipboard.writeText(url);
-                showToast('Link copied to clipboard!', 'success');
+                navigator.clipboard.writeText(window.location.href);
+                showToast('Link copied!', 'success');
             }
         }
 
         // ==========================================
+        // PWA INSTALL
+        // ==========================================
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setTimeout(() => document.getElementById('installPrompt').classList.add('show'), 3000);
+        });
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => { deferredPrompt = null; document.getElementById('installPrompt').classList.remove('show'); });
+            }
+        }
+        function dismissInstallPrompt() { document.getElementById('installPrompt').classList.remove('show'); }
+
+        // ==========================================
         // UTILITIES
         // ==========================================
-        function showLoading(text) {
-            document.getElementById('mainContent').innerHTML = `
-                <div class="loading-container">
-                    <div class="spinner-border" role="status"></div>
-                    <div class="loading-text">${text}</div>
-                </div>
-            `;
-        }
-
+        function showLoading(text) { document.getElementById('mainContent').innerHTML = `<div class="loading-container"><div class="spinner-border" role="status"></div><div class="loading-text">${text}</div></div>`; }
         function renderSkeletonLoading() {
-            return `
-                <div class="channels-section">
-                    <div class="channels-scroll">
-                        <div class="channels-list">
-                            ${[1,2,3,4,5].map(() => `
-                                <div class="channel-item">
-                                    <div class="skeleton" style="width:56px;height:56px;border-radius:50%;"></div>
-                                    <div class="skeleton" style="width:60px;height:12px;margin-top:8px;"></div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-                <div class="home-videos">
-                    <div class="skeleton" style="width:100px;height:20px;margin-bottom:15px;"></div>
-                    ${[1,2,3].map(() => `
-                        <div class="video-list-item">
-                            <div class="skeleton" style="width:160px;height:90px;border-radius:8px;"></div>
-                            <div style="flex:1;">
-                                <div class="skeleton" style="width:100%;height:16px;margin-bottom:8px;"></div>
-                                <div class="skeleton" style="width:60%;height:12px;margin-bottom:8px;"></div>
-                                <div class="skeleton" style="width:40%;height:12px;"></div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
+            return `<div class="channels-section"><div class="channels-scroll"><div class="channels-list">${[1,2,3,4,5].map(() => `<div class="channel-item"><div class="skeleton" style="width:56px;height:56px;border-radius:50%;"></div><div class="skeleton" style="width:60px;height:12px;margin-top:8px;"></div></div>`).join('')}</div></div></div><div class="home-videos"><div class="skeleton" style="width:100px;height:20px;margin-bottom:15px;"></div>${[1,2,3].map(() => `<div class="video-list-item"><div class="skeleton" style="width:160px;height:90px;border-radius:8px;"></div><div style="flex:1;"><div class="skeleton" style="width:100%;height:16px;margin-bottom:8px;"></div><div class="skeleton" style="width:60%;height:12px;margin-bottom:8px;"></div><div class="skeleton" style="width:40%;height:12px;"></div></div></div>`).join('')}</div>`;
         }
-
-        function showError(message) {
-            document.getElementById('mainContent').innerHTML = `
-                <div class="no-data">
-                    <i class="bi bi-exclamation-triangle"></i>
-                    <h5>Error</h5>
-                    <p class="text-muted">${message}</p>
-                    <button class="btn btn-primary-custom mt-3" onclick="loadInitialData()">
-                        <i class="bi bi-arrow-clockwise me-1"></i>Retry
-                    </button>
-                </div>
-            `;
-        }
-
+        function showError(message) { document.getElementById('mainContent').innerHTML = `<div class="no-data"><i class="bi bi-exclamation-triangle"></i><h5>Error</h5><p class="text-muted">${message}</p><button class="btn btn-primary-custom mt-3" onclick="loadInitialData()"><i class="bi bi-arrow-clockwise me-1"></i>Retry</button></div>`; }
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast-custom';
             toast.style.borderLeftColor = type === 'error' ? '#ff4444' : (type === 'info' ? '#00c853' : '#e94560');
-            toast.innerHTML = `
-                <i class="bi bi-${type === 'error' ? 'exclamation-circle' : (type === 'info' ? 'info-circle' : 'check-circle')} me-2"></i>
-                ${message}
-            `;
+            toast.innerHTML = `<i class="bi bi-${type === 'error' ? 'exclamation-circle' : (type === 'info' ? 'info-circle' : 'check-circle')} me-2"></i>${message}`;
             container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
+        function escapeAttr(text) { if (!text) return ''; return text.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
 
-        function escapeAttr(text) {
-            if (!text) return '';
-            return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        }
-
-        // Cleanup
         window.addEventListener('beforeunload', () => {
             if (unsubscribeChannels) unsubscribeChannels();
             if (unsubscribeVideos) unsubscribeVideos();
