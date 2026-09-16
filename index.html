@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f0f0f">
+    <meta name="description" content="Nepali Videos - Watch your favorite Nepali YouTube channels">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Nepali Videos</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -43,6 +48,18 @@
             transition: all 0.3s;
         }
         .add-btn:hover { background: #ff6b6b; transform: scale(1.1); }
+        
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
         
         /* HOME PAGE - Horizontal Channels */
         .channels-section {
@@ -96,9 +113,7 @@
         }
         
         /* HOME PAGE - Video List */
-        .home-videos {
-            padding: 15px;
-        }
+        .home-videos { padding: 15px; }
         .section-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -156,10 +171,7 @@
             font-weight: bold;
             color: white;
         }
-        .video-list-stats {
-            font-size: 0.8rem;
-            color: #888;
-        }
+        .video-list-stats { font-size: 0.8rem; color: #888; }
         
         /* CHANNEL PAGE */
         .channel-header {
@@ -185,21 +197,11 @@
             color: white;
             flex-shrink: 0;
         }
-        .channel-header-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .channel-header-desc {
-            font-size: 0.85rem;
-            color: #aaa;
-            line-height: 1.5;
-        }
+        .channel-header-name { font-size: 1.3rem; font-weight: 600; margin-bottom: 4px; }
+        .channel-header-desc { font-size: 0.85rem; color: #aaa; line-height: 1.5; }
         
-        /* Video Player (Inline) */
-        .video-player-section {
-            background: #000;
-        }
+        /* Video Player */
+        .video-player-section { background: #000; }
         .video-player-wrapper {
             position: relative;
             width: 100%;
@@ -208,14 +210,12 @@
         }
         .video-player-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             border: none;
         }
         
-        /* Video Details (below player) */
+        /* Video Details */
         .video-details {
             padding: 15px;
             background: #0f0f0f;
@@ -235,14 +235,9 @@
             color: #aaa;
             flex-wrap: wrap;
         }
-        .video-details-channel {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .video-details-channel { display: flex; align-items: center; gap: 8px; }
         .video-details-channel-logo {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -253,10 +248,7 @@
         }
         
         /* Channel Videos List */
-        .channel-videos-list {
-            padding: 10px 0;
-            background: #0f0f0f;
-        }
+        .channel-videos-list { padding: 10px 0; background: #0f0f0f; }
         .channel-video-item {
             display: flex;
             gap: 12px;
@@ -275,11 +267,7 @@
             position: relative;
             background: #272727;
         }
-        .channel-video-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .channel-video-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .channel-video-info { flex: 1; min-width: 0; }
         .channel-video-title {
             font-size: 0.9rem;
@@ -291,10 +279,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        .channel-video-stats {
-            font-size: 0.8rem;
-            color: #888;
-        }
+        .channel-video-stats { font-size: 0.8rem; color: #888; }
         
         /* Loading & Error */
         .loading-container {
@@ -307,44 +292,22 @@
         .spinner-border { color: #e94560; width: 3rem; height: 3rem; }
         .loading-text { margin-top: 15px; color: #aaa; }
         
-        .no-data {
-            text-align: center;
-            padding: 60px 20px;
-            color: #aaa;
-        }
+        .no-data { text-align: center; padding: 60px 20px; color: #aaa; }
         .no-data i { font-size: 4rem; margin-bottom: 15px; color: #e94560; }
         
-        /* Add Video Modal */
-        .modal-content {
-            background: #1a1a1a;
-            color: white;
-            border: 1px solid #272727;
-        }
+        /* Modal */
+        .modal-content { background: #1a1a1a; color: white; border: 1px solid #272727; }
         .modal-header { border-bottom: 1px solid #272727; }
         .modal-footer { border-top: 1px solid #272727; }
-        .form-control, .form-select {
-            background: #272727;
-            border: 1px solid #3a3a3a;
-            color: white;
-        }
+        .form-control, .form-select { background: #272727; border: 1px solid #3a3a3a; color: white; }
         .form-control:focus, .form-select:focus {
-            background: #272727;
-            color: white;
+            background: #272727; color: white;
             border-color: #e94560;
             box-shadow: 0 0 0 0.2rem rgba(233, 69, 96, 0.25);
         }
-        .btn-primary-custom {
-            background: #e94560;
-            border: none;
-            color: white;
-            padding: 10px 25px;
-        }
+        .btn-primary-custom { background: #e94560; border: none; color: white; padding: 10px 25px; }
         .btn-primary-custom:hover { background: #ff6b6b; }
-        .btn-secondary-custom {
-            background: #272727;
-            border: 1px solid #3a3a3a;
-            color: white;
-        }
+        .btn-secondary-custom { background: #272727; border: 1px solid #3a3a3a; color: white; }
         
         /* Toast */
         .toast-container {
@@ -363,7 +326,32 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
-        /* Responsive */
+        /* Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            border: 1px solid #e94560;
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            z-index: 9998;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .install-prompt.show { display: flex; }
+        .install-prompt button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
         @media (max-width: 576px) {
             .video-list-thumb, .channel-video-thumb {
                 width: 140px;
@@ -391,9 +379,7 @@
     </header>
 
     <!-- Main Content -->
-    <main id="mainContent">
-        <!-- Dynamic content will be rendered here -->
-    </main>
+    <main id="mainContent"></main>
 
     <!-- Add Video Modal -->
     <div class="modal fade" id="addVideoModal" tabindex="-1" aria-hidden="true">
@@ -401,7 +387,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add New Video</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="addVideoForm">
@@ -436,16 +422,51 @@
         </div>
     </div>
 
+    <!-- Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <div>
+            <strong>Install App</strong><br>
+            <small class="text-muted">Add to home screen</small>
+        </div>
+        <button onclick="installApp()">Install</button>
+        <button class="btn-secondary-custom" onclick="dismissInstallPrompt()" style="padding: 8px 15px; border-radius: 6px;">×</button>
+    </div>
+
     <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase SDK (v9 compat for easy CDN use) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
     <script>
         // ==========================================
-        // CONFIGURATION
+        // 🔥 FIREBASE CONFIGURATION
+        // ⚠️ Replace with YOUR Firebase config
         // ==========================================
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzkla_EWiaCK7cx_ZTMaYFfL757lXGALH0Xl8HLifiyGDgniSBRR818-Gpp3Oat97hr-Q/exec'; // Replace with your actual GAS URL
+       const firebaseConfig = {
+  apiKey: "AIzaSyAeOf5HQZMay4QVID8-x0PzUIo84d-XS_k",
+  authDomain: "my-vid-ccddc.firebaseapp.com",
+  projectId: "my-vid-ccddc",
+  storageBucket: "my-vid-ccddc.firebasestorage.app",
+  messagingSenderId: "510082359037",
+  appId: "1:510082359037:web:361277a4774d68e746a894",
+  measurementId: "G-Q2CQ01NTQ9"
+};
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
         
+        // Enable offline persistence (makes it super fast!)
+        db.enablePersistence({ synchronizeTabs: true }).catch(err => {
+            console.log('Persistence error:', err.code);
+        });
+
+        console.log('🔥 Firebase initialized');
+
         // ==========================================
         // STATE
         // ==========================================
@@ -454,36 +475,106 @@
         let currentChannel = null;
         let currentPlayingVideo = null;
         let currentPage = 'home';
-        
+        let deferredPrompt = null;
+        let unsubscribeChannels = null;
+        let unsubscribeVideos = null;
+
         // ==========================================
-        // INIT
+        // SERVICE WORKER
+        // ==========================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW failed:', err));
+            });
+        }
+
+        // ==========================================
+        // PWA INSTALL
+        // ==========================================
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setTimeout(() => {
+                document.getElementById('installPrompt').classList.add('show');
+            }, 3000);
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    deferredPrompt = null;
+                    document.getElementById('installPrompt').classList.remove('show');
+                });
+            }
+        }
+
+        function dismissInstallPrompt() {
+            document.getElementById('installPrompt').classList.remove('show');
+        }
+
+        // ==========================================
+        // INIT - Real-time Listeners (FAST!)
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             loadInitialData();
         });
-        
-        async function loadInitialData() {
+
+        function loadInitialData() {
             showLoading('Loading...');
             
-            try {
-                // Load channels
-                const channelsRes = await fetch(`${GAS_API_URL}?action=channels`);
-                channels = await channelsRes.json();
-                if (channels.error) throw new Error(channels.error);
-                
-                // Load all videos
-                const videosRes = await fetch(`${GAS_API_URL}?action=allvideos`);
-                allVideos = await videosRes.json();
-                if (allVideos.error) throw new Error(allVideos.error);
-                
-                renderHomePage();
-                
-            } catch (error) {
-                console.error('Error loading data:', error);
-                showError(error.message);
-            }
+            // Listen to channels in real-time
+            unsubscribeChannels = db.collection('channels')
+                .onSnapshot(snapshot => {
+                    channels = [];
+                    snapshot.forEach(doc => {
+                        channels.push({ id: doc.id, ...doc.data() });
+                    });
+                    console.log('📡 Channels updated:', channels.length);
+                    
+                    // If videos already loaded, render
+                    if (allVideos.length > 0 || channels.length > 0) {
+                        if (currentPage === 'home') renderHomePage();
+                    }
+                }, error => {
+                    console.error('Channels error:', error);
+                    showError('Failed to load channels: ' + error.message);
+                });
+            
+            // Listen to videos in real-time (ordered by createdAt desc)
+            unsubscribeVideos = db.collection('videos')
+                .orderBy('createdAt', 'desc')
+                .onSnapshot(snapshot => {
+                    allVideos = [];
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        allVideos.push({
+                            id: doc.id,
+                            videoId: data.videoId || '',
+                            title: data.title || '',
+                            channelName: data.channelName || '',
+                            published: data.published || '',
+                            views: data.views || '0 views',
+                            thumbnail: `https://img.youtube.com/vi/${data.videoId}/maxresdefault.jpg`,
+                            createdAt: data.createdAt
+                        });
+                    });
+                    console.log('📡 Videos updated:', allVideos.length);
+                    
+                    // Render based on current page
+                    if (currentPage === 'home') {
+                        renderHomePage();
+                    } else if (currentPage === 'channel' && currentChannel) {
+                        renderChannelPage(getChannelVideos(currentChannel.channelName));
+                    }
+                }, error => {
+                    console.error('Videos error:', error);
+                    showError('Failed to load videos: ' + error.message);
+                });
         }
-        
+
         // ==========================================
         // HOME PAGE
         // ==========================================
@@ -496,44 +587,38 @@
             
             const mainContent = document.getElementById('mainContent');
             
-            if (channels.length === 0) {
-                mainContent.innerHTML = `
-                    <div class="no-data">
-                        <i class="bi bi-collection"></i>
-                        <h5>No channels found</h5>
-                        <p>Add channels to Google Sheet</p>
-                    </div>
-                `;
+            if (channels.length === 0 && allVideos.length === 0) {
+                // Show skeleton loading
+                mainContent.innerHTML = renderSkeletonLoading();
                 return;
             }
             
-            let html = `
-                <!-- Horizontal Channels Section -->
-                <div class="channels-section">
-                    <div class="channels-scroll">
-                        <div class="channels-list">
-            `;
+            let html = '';
             
-            channels.forEach(ch => {
+            // Channels section
+            if (channels.length > 0) {
                 html += `
-                    <div class="channel-item" onclick="openChannel('${escapeAttr(ch.channelName)}')">
-                        <div class="channel-item-logo" style="background-color: ${ch.channelColor}">
-                            ${ch.channelLogo}
-                        </div>
-                        <div class="channel-item-name">${ch.channelName}</div>
-                    </div>
+                    <div class="channels-section">
+                        <div class="channels-scroll">
+                            <div class="channels-list">
                 `;
-            });
-            
-            html += `
-                        </div>
-                    </div>
-                </div>
                 
-                <!-- All Videos Section -->
-                <div class="home-videos">
-                    <h4 class="section-title">Videos</h4>
-            `;
+                channels.forEach(ch => {
+                    html += `
+                        <div class="channel-item" onclick="openChannel('${escapeAttr(ch.channelName)}')">
+                            <div class="channel-item-logo" style="background-color: ${ch.channelColor || '#e94560'}">
+                                ${ch.channelLogo || ch.channelName.charAt(0)}
+                            </div>
+                            <div class="channel-item-name">${ch.channelName}</div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div></div></div>`;
+            }
+            
+            // Videos section
+            html += `<div class="home-videos"><h4 class="section-title">Videos</h4>`;
             
             if (allVideos.length === 0) {
                 html += `
@@ -551,7 +636,8 @@
                     html += `
                         <div class="video-list-item" onclick="playVideoFromHome('${video.videoId}')">
                             <div class="video-list-thumb">
-                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
+                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" 
+                                     onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
                             </div>
                             <div class="video-list-info">
                                 <div class="video-list-title">${video.title}</div>
@@ -561,7 +647,7 @@
                                     </span>
                                     <span>${video.channelName}</span>
                                 </div>
-                                <div class="video-list-stats">${video.views || '0 views'} • ${video.published || ''}</div>
+                                <div class="video-list-stats">${video.views} • ${video.published}</div>
                             </div>
                         </div>
                     `;
@@ -571,50 +657,40 @@
             html += `</div>`;
             mainContent.innerHTML = html;
         }
-        
+
         // ==========================================
         // CHANNEL PAGE
         // ==========================================
-        async function openChannel(channelName) {
+        function openChannel(channelName, targetVideoId = null) {
             currentPage = 'channel';
             currentChannel = channels.find(c => c.channelName === channelName);
-            currentPlayingVideo = null;
+            
+            if (!currentChannel) {
+                showError('Channel not found');
+                return;
+            }
             
             document.getElementById('backBtn').style.display = 'block';
             document.getElementById('pageTitle').textContent = channelName;
             
-            const mainContent = document.getElementById('mainContent');
-            mainContent.innerHTML = `
-                <div class="loading-container">
-                    <div class="spinner-border" role="status"></div>
-                    <div class="loading-text">Loading videos...</div>
-                </div>
-            `;
-            
-            try {
-                const res = await fetch(`${GAS_API_URL}?action=videos&channel=${encodeURIComponent(channelName)}`);
-                const videos = await res.json();
-                if (videos.error) throw new Error(videos.error);
-                
-                renderChannelPage(videos);
-                
-            } catch (error) {
-                console.error('Error loading channel videos:', error);
-                showError(error.message);
-            }
+            const channelVideos = getChannelVideos(channelName);
+            renderChannelPage(channelVideos, targetVideoId);
         }
-        
-        function renderChannelPage(videos) {
+
+        function getChannelVideos(channelName) {
+            return allVideos.filter(v => v.channelName === channelName);
+        }
+
+        function renderChannelPage(videos, targetVideoId = null) {
             if (!currentChannel) return;
             
             const mainContent = document.getElementById('mainContent');
             
             let html = `
-                <!-- Channel Header -->
                 <div class="channel-header">
                     <div class="channel-header-info">
-                        <div class="channel-header-logo" style="background-color: ${currentChannel.channelColor}">
-                            ${currentChannel.channelLogo}
+                        <div class="channel-header-logo" style="background-color: ${currentChannel.channelColor || '#e94560'}">
+                            ${currentChannel.channelLogo || currentChannel.channelName.charAt(0)}
                         </div>
                         <div>
                             <div class="channel-header-name">${currentChannel.channelName}</div>
@@ -624,44 +700,45 @@
                 </div>
             `;
             
-            // Video Player (if videos exist)
-            if (videos.length > 0) {
-                const firstVideo = videos[0];
-                currentPlayingVideo = firstVideo;
+            // Determine which video to play
+            let videoToPlay = null;
+            if (targetVideoId) {
+                videoToPlay = videos.find(v => v.videoId === targetVideoId);
+            }
+            if (!videoToPlay && videos.length > 0) {
+                videoToPlay = videos[0];
+            }
+            
+            if (videoToPlay) {
+                currentPlayingVideo = videoToPlay;
                 
                 html += `
-                    <!-- Inline Video Player -->
                     <div class="video-player-section">
                         <div class="video-player-wrapper">
-                            <iframe 
-                                id="channelVideoPlayer"
-                                src="https://www.youtube.com/embed/${firstVideo.videoId}?autoplay=1&rel=0" 
-                                allowfullscreen 
-                                allow="autoplay; encrypted-media">
+                            <iframe id="channelVideoPlayer"
+                                src="https://www.youtube.com/embed/${videoToPlay.videoId}?rel=0" 
+                                allowfullscreen allow="autoplay; encrypted-media">
                             </iframe>
                         </div>
                     </div>
-                    
-                    <!-- Video Details -->
                     <div class="video-details">
-                        <div class="video-details-title">${firstVideo.title}</div>
+                        <div class="video-details-title">${videoToPlay.title}</div>
                         <div class="video-details-meta">
                             <div class="video-details-channel">
-                                <div class="video-details-channel-logo" style="background-color: ${currentChannel.channelColor}">
-                                    ${currentChannel.channelLogo}
+                                <div class="video-details-channel-logo" style="background-color: ${currentChannel.channelColor || '#e94560'}">
+                                    ${currentChannel.channelLogo || '?'}
                                 </div>
                                 <span>${currentChannel.channelName}</span>
                             </div>
                             <span>•</span>
-                            <span>${firstVideo.views || '0 views'}</span>
+                            <span>${videoToPlay.views}</span>
                             <span>•</span>
-                            <span>${firstVideo.published || ''}</span>
+                            <span>${videoToPlay.published}</span>
                         </div>
                     </div>
                 `;
             }
             
-            // Video List
             html += `<div class="channel-videos-list">`;
             
             if (videos.length === 0) {
@@ -675,16 +752,18 @@
                     </div>
                 `;
             } else {
-                videos.forEach((video, index) => {
+                videos.forEach(video => {
                     const isActive = currentPlayingVideo && currentPlayingVideo.videoId === video.videoId;
                     html += `
-                        <div class="channel-video-item ${isActive ? 'active' : ''}" onclick="playChannelVideo('${video.videoId}', this)">
+                        <div class="channel-video-item ${isActive ? 'active' : ''}" 
+                             onclick="playChannelVideo('${video.videoId}', this)">
                             <div class="channel-video-thumb">
-                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
+                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy"
+                                     onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
                             </div>
                             <div class="channel-video-info">
                                 <div class="channel-video-title">${video.title}</div>
-                                <div class="channel-video-stats">${video.views || '0 views'} • ${video.published || ''}</div>
+                                <div class="channel-video-stats">${video.views} • ${video.published}</div>
                             </div>
                         </div>
                     `;
@@ -695,42 +774,34 @@
             mainContent.innerHTML = html;
             window.scrollTo(0, 0);
         }
-        
+
         // ==========================================
-        // PLAY VIDEO FUNCTIONS
+        // PLAY VIDEO (FIXED)
         // ==========================================
         function playVideoFromHome(videoId) {
             const video = allVideos.find(v => v.videoId === videoId);
-            if (!video) return;
-            
-            // Open channel page and play video
-            openChannel(video.channelName).then(() => {
-                setTimeout(() => {
-                    const videoElement = document.querySelector(`.channel-video-item:nth-child(${allVideos.findIndex(v => v.videoId === videoId) + 2})`);
-                    if (videoElement) {
-                        playChannelVideo(videoId, videoElement);
-                    }
-                }, 500);
-            });
+            if (!video) {
+                console.error('Video not found:', videoId);
+                return;
+            }
+            console.log('▶️ Playing from home:', video.title);
+            openChannel(video.channelName, videoId);
         }
-        
+
         function playChannelVideo(videoId, element) {
             const video = allVideos.find(v => v.videoId === videoId);
             if (!video) return;
             
             currentPlayingVideo = video;
             
-            // Update player
             const player = document.getElementById('channelVideoPlayer');
             if (player) {
                 player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
             }
             
-            // Update details
             const detailsTitle = document.querySelector('.video-details-title');
             if (detailsTitle) detailsTitle.textContent = video.title;
             
-            // Update active state
             if (element) {
                 document.querySelectorAll('.channel-video-item').forEach(item => {
                     item.classList.remove('active');
@@ -738,10 +809,9 @@
                 element.classList.add('active');
             }
             
-            // Scroll to player
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
+
         // ==========================================
         // NAVIGATION
         // ==========================================
@@ -750,9 +820,9 @@
                 renderHomePage();
             }
         }
-        
+
         // ==========================================
-        // ADD VIDEO FUNCTIONALITY
+        // ADD VIDEO (Firebase - SUPER FAST!)
         // ==========================================
         function openAddVideoModal() {
             const select = document.getElementById('inputChannel');
@@ -772,7 +842,7 @@
             const modal = new bootstrap.Modal(document.getElementById('addVideoModal'));
             modal.show();
         }
-        
+
         async function submitNewVideo() {
             const videoId = document.getElementById('inputVideoId').value.trim();
             const title = document.getElementById('inputTitle').value.trim();
@@ -784,68 +854,39 @@
                 return;
             }
             
-            // Show loading
             const submitBtn = document.querySelector('#addVideoModal .btn-primary-custom');
-            const originalBtnText = submitBtn.innerHTML;
+            const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Adding...';
             submitBtn.disabled = true;
             
             try {
-                const response = await fetch(GAS_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        videoId: videoId,
-                        title: title,
-                        channelName: channelName,
-                        views: views || '0 views',
-                        published: new Date().toISOString().split('T')[0]
-                    })
+                // Add to Firestore (instant!)
+                await db.collection('videos').add({
+                    videoId: videoId,
+                    title: title,
+                    channelName: channelName,
+                    views: views || '0 views',
+                    published: new Date().toISOString().split('T')[0],
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                showToast('✅ Video added successfully!', 'success');
                 
-                const result = await response.json();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addVideoModal'));
+                modal.hide();
+                document.getElementById('addVideoForm').reset();
                 
-                if (result.error) {
-                    throw new Error(result.error);
-                }
-                
-                if (result.success) {
-                    showToast('✅ Video added successfully!', 'success');
-                    
-                    // Close modal
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('addVideoModal'));
-                    modal.hide();
-                    
-                    // Reset form
-                    document.getElementById('addVideoForm').reset();
-                    
-                    // Reload data
-                    await loadInitialData();
-                    
-                    // If on channel page, refresh it
-                    if (currentPage === 'channel' && currentChannel) {
-                        await openChannel(currentChannel.channelName);
-                    }
-                } else {
-                    throw new Error('Failed to add video');
-                }
+                // No need to reload - real-time listener will update automatically!
                 
             } catch (error) {
                 console.error('Error adding video:', error);
-                showToast('❌ Failed to add video: ' + error.message, 'error');
+                showToast('❌ Failed: ' + error.message, 'error');
             } finally {
-                // Restore button
-                submitBtn.innerHTML = originalBtnText;
+                submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         }
-        
+
         // ==========================================
         // UTILITIES
         // ==========================================
@@ -857,7 +898,37 @@
                 </div>
             `;
         }
-        
+
+        function renderSkeletonLoading() {
+            return `
+                <div class="channels-section">
+                    <div class="channels-scroll">
+                        <div class="channels-list">
+                            ${[1,2,3,4,5].map(() => `
+                                <div class="channel-item">
+                                    <div class="skeleton" style="width:56px;height:56px;border-radius:50%;"></div>
+                                    <div class="skeleton" style="width:60px;height:12px;margin-top:8px;"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                <div class="home-videos">
+                    <div class="skeleton" style="width:100px;height:20px;margin-bottom:15px;"></div>
+                    ${[1,2,3].map(() => `
+                        <div class="video-list-item">
+                            <div class="skeleton" style="width:160px;height:90px;border-radius:8px;"></div>
+                            <div style="flex:1;">
+                                <div class="skeleton" style="width:100%;height:16px;margin-bottom:8px;"></div>
+                                <div class="skeleton" style="width:60%;height:12px;margin-bottom:8px;"></div>
+                                <div class="skeleton" style="width:40%;height:12px;"></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
         function showError(message) {
             document.getElementById('mainContent').innerHTML = `
                 <div class="no-data">
@@ -870,14 +941,14 @@
                 </div>
             `;
         }
-        
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast-custom';
-            toast.style.borderLeftColor = type === 'error' ? '#ff4444' : (type === 'info' ? '#00c853' : '#e94560');
+            toast.style.borderLeftColor = type === 'error' ? '#ff4444' : '#e94560';
             toast.innerHTML = `
-                <i class="bi bi-${type === 'error' ? 'exclamation-circle' : (type === 'info' ? 'info-circle' : 'check-circle')} me-2"></i>
+                <i class="bi bi-${type === 'error' ? 'exclamation-circle' : 'check-circle'} me-2"></i>
                 ${message}
             `;
             container.appendChild(toast);
@@ -887,11 +958,17 @@
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
-        
+
         function escapeAttr(text) {
             if (!text) return '';
             return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (unsubscribeChannels) unsubscribeChannels();
+            if (unsubscribeVideos) unsubscribeVideos();
+        });
     </script>
 </body>
 </html>
