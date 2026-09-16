@@ -1,7 +1,7 @@
 {
-  "name": "Nepali Videos",
-  "short_name": "Nepali Videos",
-  "description": "Watch your favorite Nepali YouTube channels",
+  "name": "Video Gallery",
+  "short_name": "Video Gallery",
+  "description": "Watch your favorite videos in one place",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f0f0f",
