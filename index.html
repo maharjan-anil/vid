@@ -384,7 +384,7 @@
                 </button>
                 <h5 class="header-title mb-0" id="pageTitle">Nepali Videos</h5>
             </div>
-            <button class="add-btn" onclick="openAddVideoModal()">
+            <button class="add-btn" onclick="openAddVideoModal()" title="Add Video">
                 <i class="bi bi-plus-lg"></i>
             </button>
         </div>
@@ -396,12 +396,12 @@
     </main>
 
     <!-- Add Video Modal -->
-    <div class="modal fade" id="addVideoModal" tabindex="-1">
+    <div class="modal fade" id="addVideoModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add New Video</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="addVideoForm">
@@ -444,7 +444,7 @@
         // ==========================================
         // CONFIGURATION
         // ==========================================
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzkla_EWiaCK7cx_ZTMaYFfL757lXGALH0Xl8HLifiyGDgniSBRR818-Gpp3Oat97hr-Q/exec';
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzkla_EWiaCK7cx_ZTMaYFfL757lXGALH0Xl8HLifiyGDgniSBRR818-Gpp3Oat97hr-Q/exec'; // Replace with your actual GAS URL
         
         // ==========================================
         // STATE
@@ -466,10 +466,12 @@
             showLoading('Loading...');
             
             try {
+                // Load channels
                 const channelsRes = await fetch(`${GAS_API_URL}?action=channels`);
                 channels = await channelsRes.json();
                 if (channels.error) throw new Error(channels.error);
                 
+                // Load all videos
                 const videosRes = await fetch(`${GAS_API_URL}?action=allvideos`);
                 allVideos = await videosRes.json();
                 if (allVideos.error) throw new Error(allVideos.error);
@@ -477,12 +479,13 @@
                 renderHomePage();
                 
             } catch (error) {
+                console.error('Error loading data:', error);
                 showError(error.message);
             }
         }
         
         // ==========================================
-        // HOME PAGE (Horizontal Channels + All Videos)
+        // HOME PAGE
         // ==========================================
         function renderHomePage() {
             currentPage = 'home';
@@ -503,10 +506,6 @@
                 `;
                 return;
             }
-            
-            // HOME PAGE STRUCTURE:
-            // 1. Horizontal Channels (top)
-            // 2. Video List from all channels (below)
             
             let html = `
                 <!-- Horizontal Channels Section -->
@@ -541,6 +540,9 @@
                     <div class="no-data">
                         <i class="bi bi-video-off"></i>
                         <p>No videos yet</p>
+                        <button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()">
+                            <i class="bi bi-plus-lg me-1"></i>Add First Video
+                        </button>
                     </div>
                 `;
             } else {
@@ -571,7 +573,7 @@
         }
         
         // ==========================================
-        // CHANNEL PAGE (Header + Player + Video List)
+        // CHANNEL PAGE
         // ==========================================
         async function openChannel(channelName) {
             currentPage = 'channel';
@@ -597,6 +599,7 @@
                 renderChannelPage(videos);
                 
             } catch (error) {
+                console.error('Error loading channel videos:', error);
                 showError(error.message);
             }
         }
@@ -605,12 +608,6 @@
             if (!currentChannel) return;
             
             const mainContent = document.getElementById('mainContent');
-            
-            // CHANNEL PAGE STRUCTURE:
-            // 1. Channel Header (logo + name + description)
-            // 2. Video Player (inline, shows first video)
-            // 3. Video Details (below player)
-            // 4. Video List (that channel's videos)
             
             let html = `
                 <!-- Channel Header -->
@@ -672,6 +669,9 @@
                     <div class="no-data">
                         <i class="bi bi-video-off"></i>
                         <p>No videos in this channel</p>
+                        <button class="btn btn-primary-custom mt-3" onclick="openAddVideoModal()">
+                            <i class="bi bi-plus-lg me-1"></i>Add Video
+                        </button>
                     </div>
                 `;
             } else {
@@ -706,9 +706,9 @@
             // Open channel page and play video
             openChannel(video.channelName).then(() => {
                 setTimeout(() => {
-                    const videoElement = allVideos.find(v => v.videoId === videoId);
+                    const videoElement = document.querySelector(`.channel-video-item:nth-child(${allVideos.findIndex(v => v.videoId === videoId) + 2})`);
                     if (videoElement) {
-                        playChannelVideo(videoId, null);
+                        playChannelVideo(videoId, videoElement);
                     }
                 }, 500);
             });
@@ -752,7 +752,7 @@
         }
         
         // ==========================================
-        // ADD VIDEO
+        // ADD VIDEO FUNCTIONALITY
         // ==========================================
         function openAddVideoModal() {
             const select = document.getElementById('inputChannel');
@@ -784,10 +784,18 @@
                 return;
             }
             
+            // Show loading
+            const submitBtn = document.querySelector('#addVideoModal .btn-primary-custom');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Adding...';
+            submitBtn.disabled = true;
+            
             try {
                 const response = await fetch(GAS_API_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         videoId: videoId,
                         title: title,
@@ -797,20 +805,44 @@
                     })
                 });
                 
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const result = await response.json();
-                if (result.error) throw new Error(result.error);
                 
-                showToast('Video added successfully!', 'success');
-                bootstrap.Modal.getInstance(document.getElementById('addVideoModal')).hide();
-                document.getElementById('addVideoForm').reset();
+                if (result.error) {
+                    throw new Error(result.error);
+                }
                 
-                await loadInitialData();
-                if (currentPage === 'channel' && currentChannel) {
-                    openChannel(currentChannel.channelName);
+                if (result.success) {
+                    showToast('✅ Video added successfully!', 'success');
+                    
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addVideoModal'));
+                    modal.hide();
+                    
+                    // Reset form
+                    document.getElementById('addVideoForm').reset();
+                    
+                    // Reload data
+                    await loadInitialData();
+                    
+                    // If on channel page, refresh it
+                    if (currentPage === 'channel' && currentChannel) {
+                        await openChannel(currentChannel.channelName);
+                    }
+                } else {
+                    throw new Error('Failed to add video');
                 }
                 
             } catch (error) {
-                showToast('Failed to add video: ' + error.message, 'error');
+                console.error('Error adding video:', error);
+                showToast('❌ Failed to add video: ' + error.message, 'error');
+            } finally {
+                // Restore button
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
             }
         }
         
@@ -843,9 +875,9 @@
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast-custom';
-            toast.style.borderLeftColor = type === 'error' ? '#ff4444' : '#e94560';
+            toast.style.borderLeftColor = type === 'error' ? '#ff4444' : (type === 'info' ? '#00c853' : '#e94560');
             toast.innerHTML = `
-                <i class="bi bi-${type === 'error' ? 'exclamation-circle' : 'check-circle'} me-2"></i>
+                <i class="bi bi-${type === 'error' ? 'exclamation-circle' : (type === 'info' ? 'info-circle' : 'check-circle')} me-2"></i>
                 ${message}
             `;
             container.appendChild(toast);
