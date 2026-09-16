@@ -19,7 +19,7 @@
             color: #fff; 
             font-family: 'Segoe UI', Roboto, sans-serif; 
             overflow-x: hidden; 
-            padding-bottom: 0;
+            padding-bottom: 80px;
         }
         
         /* Header */
@@ -33,7 +33,8 @@
         }
         .header-title { font-size: 1.2rem; font-weight: 500; }
         .back-btn { color: white !important; font-size: 1.3rem; }
-        .add-btn { 
+        .header-actions { display: flex; gap: 10px; }
+        .action-btn { 
             background: #e94560; 
             color: white; 
             border: none; 
@@ -43,11 +44,13 @@
             display: flex; 
             align-items: center; 
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s;
         }
-        .add-btn:hover { background: #ff6b6b; transform: scale(1.1); }
+        .action-btn:hover { background: #ff6b6b; transform: scale(1.1); }
+        .action-btn.secondary { background: #272727; }
+        .action-btn.secondary:hover { background: #3a3a3a; }
         
         /* Skeleton Loading */
         .skeleton {
@@ -99,9 +102,6 @@
             border: 2px solid transparent;
             transition: all 0.3s;
         }
-        .channel-item.active .channel-item-logo {
-            border-color: #e94560;
-        }
         .channel-item-name {
             font-size: 0.75rem;
             margin-top: 5px;
@@ -118,6 +118,9 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .video-list-item {
             display: flex;
@@ -136,11 +139,7 @@
             position: relative;
             background: #272727;
         }
-        .video-list-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .video-list-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .video-list-info { flex: 1; min-width: 0; }
         .video-list-title {
             font-size: 0.9rem;
@@ -172,6 +171,15 @@
             color: white;
         }
         .video-list-stats { font-size: 0.8rem; color: #888; }
+        .favorite-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .favorite-btn.active { color: #e94560; }
         
         /* CHANNEL PAGE */
         .channel-header {
@@ -308,11 +316,13 @@
         .btn-primary-custom { background: #e94560; border: none; color: white; padding: 10px 25px; }
         .btn-primary-custom:hover { background: #ff6b6b; }
         .btn-secondary-custom { background: #272727; border: 1px solid #3a3a3a; color: white; }
+        .btn-danger-custom { background: #dc3545; border: none; color: white; padding: 10px 25px; }
+        .btn-danger-custom:hover { background: #c82333; }
         
         /* Toast */
         .toast-container {
             position: fixed;
-            bottom: 20px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999;
@@ -326,10 +336,71 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0f0f0f;
+            border-top: 1px solid #272727;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 100;
+        }
+        .nav-tab {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.3s;
+        }
+        .nav-tab.active { color: #e94560; }
+        .nav-tab i { font-size: 1.5rem; margin-bottom: 3px; }
+        .nav-tab span { font-size: 0.7rem; }
+        
+        /* Settings Page */
+        .settings-section {
+            padding: 20px 15px;
+        }
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .settings-item:hover { background: #272727; }
+        .settings-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .settings-item-left i {
+            font-size: 1.3rem;
+            color: #e94560;
+        }
+        .settings-item-text {
+            font-size: 0.95rem;
+        }
+        .settings-item-desc {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 2px;
+        }
+        
         /* Install Prompt */
         .install-prompt {
             position: fixed;
-            bottom: 80px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
             background: #1a1a1a;
@@ -372,14 +443,58 @@
                 </button>
                 <h5 class="header-title mb-0" id="pageTitle">Nepali Videos</h5>
             </div>
-            <button class="add-btn" onclick="openAddVideoModal()" title="Add Video">
-                <i class="bi bi-plus-lg"></i>
-            </button>
+            <div class="header-actions">
+                <button class="action-btn" onclick="openAddChannelModal()" title="Add Channel">
+                    <i class="bi bi-person-plus"></i>
+                </button>
+                <button class="action-btn" onclick="openAddVideoModal()" title="Add Video">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- Main Content -->
     <main id="mainContent"></main>
+
+    <!-- Add Channel Modal -->
+    <div class="modal fade" id="addChannelModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-person-plus me-2"></i>Add New Channel</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addChannelForm">
+                        <div class="mb-3">
+                            <label class="form-label">Channel Name *</label>
+                            <input type="text" class="form-control" id="inputChannelName" placeholder="e.g., टेक पाना" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Channel Logo (Text/Emoji) *</label>
+                            <input type="text" class="form-control" id="inputChannelLogo" placeholder="e.g., T or 🔥" maxlength="3" required>
+                            <small class="text-muted">1-3 characters or emoji</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Channel Color *</label>
+                            <input type="color" class="form-control" id="inputChannelColor" value="#e94560" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="inputChannelDesc" rows="3" placeholder="Channel description..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="submitNewChannel()">
+                        <i class="bi bi-check-lg me-1"></i>Add Channel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Add Video Modal -->
     <div class="modal fade" id="addVideoModal" tabindex="-1" aria-hidden="true">
@@ -435,10 +550,26 @@
     <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-tab active" data-tab="home" onclick="switchTab('home')">
+            <i class="bi bi-house"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-tab" data-tab="favorites" onclick="switchTab('favorites')">
+            <i class="bi bi-heart"></i>
+            <span>Favorites</span>
+        </div>
+        <div class="nav-tab" data-tab="settings" onclick="switchTab('settings')">
+            <i class="bi bi-gear"></i>
+            <span>Settings</span>
+        </div>
+    </nav>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Firebase SDK (v9 compat for easy CDN use) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
@@ -447,7 +578,7 @@
         // 🔥 FIREBASE CONFIGURATION
         // ⚠️ Replace with YOUR Firebase config
         // ==========================================
-       const firebaseConfig = {
+        const firebaseConfig = {
   apiKey: "AIzaSyAeOf5HQZMay4QVID8-x0PzUIo84d-XS_k",
   authDomain: "my-vid-ccddc.firebaseapp.com",
   projectId: "my-vid-ccddc",
@@ -456,28 +587,29 @@
   appId: "1:510082359037:web:361277a4774d68e746a894",
   measurementId: "G-Q2CQ01NTQ9"
 };
-        // Initialize Firebase
+
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        
-        // Enable offline persistence (makes it super fast!)
         db.enablePersistence({ synchronizeTabs: true }).catch(err => {
             console.log('Persistence error:', err.code);
         });
 
-        console.log('🔥 Firebase initialized');
+        console.log(' Firebase initialized');
 
         // ==========================================
         // STATE
         // ==========================================
         let channels = [];
         let allVideos = [];
+        let favorites = [];
         let currentChannel = null;
         let currentPlayingVideo = null;
         let currentPage = 'home';
+        let currentTab = 'home';
         let deferredPrompt = null;
         let unsubscribeChannels = null;
         let unsubscribeVideos = null;
+        let unsubscribeFavorites = null;
 
         // ==========================================
         // SERVICE WORKER
@@ -516,7 +648,7 @@
         }
 
         // ==========================================
-        // INIT - Real-time Listeners (FAST!)
+        // INIT - Real-time Listeners
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             loadInitialData();
@@ -525,25 +657,21 @@
         function loadInitialData() {
             showLoading('Loading...');
             
-            // Listen to channels in real-time
+            // Listen to channels
             unsubscribeChannels = db.collection('channels')
                 .onSnapshot(snapshot => {
                     channels = [];
                     snapshot.forEach(doc => {
                         channels.push({ id: doc.id, ...doc.data() });
                     });
-                    console.log('📡 Channels updated:', channels.length);
-                    
-                    // If videos already loaded, render
-                    if (allVideos.length > 0 || channels.length > 0) {
-                        if (currentPage === 'home') renderHomePage();
-                    }
+                    console.log('📡 Channels:', channels.length);
+                    renderCurrentView();
                 }, error => {
                     console.error('Channels error:', error);
-                    showError('Failed to load channels: ' + error.message);
+                    showError('Failed to load channels');
                 });
             
-            // Listen to videos in real-time (ordered by createdAt desc)
+            // Listen to videos
             unsubscribeVideos = db.collection('videos')
                 .orderBy('createdAt', 'desc')
                 .onSnapshot(snapshot => {
@@ -561,18 +689,70 @@
                             createdAt: data.createdAt
                         });
                     });
-                    console.log('📡 Videos updated:', allVideos.length);
-                    
-                    // Render based on current page
-                    if (currentPage === 'home') {
-                        renderHomePage();
-                    } else if (currentPage === 'channel' && currentChannel) {
-                        renderChannelPage(getChannelVideos(currentChannel.channelName));
-                    }
+                    console.log('📡 Videos:', allVideos.length);
+                    renderCurrentView();
                 }, error => {
                     console.error('Videos error:', error);
-                    showError('Failed to load videos: ' + error.message);
+                    showError('Failed to load videos');
                 });
+
+            // Listen to favorites
+            unsubscribeFavorites = db.collection('favorites')
+                .onSnapshot(snapshot => {
+                    favorites = [];
+                    snapshot.forEach(doc => {
+                        favorites.push({ id: doc.id, ...doc.data() });
+                    });
+                    console.log('❤️ Favorites:', favorites.length);
+                    if (currentTab === 'favorites') {
+                        renderFavoritesPage();
+                    }
+                }, error => {
+                    console.error('Favorites error:', error);
+                });
+        }
+
+        // ==========================================
+        // TAB SWITCHING
+        // ==========================================
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update nav
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            
+            // Reset state
+            currentChannel = null;
+            currentPlayingVideo = null;
+            document.getElementById('backBtn').style.display = 'none';
+            
+            if (tab === 'home') {
+                document.getElementById('pageTitle').textContent = 'Nepali Videos';
+                currentPage = 'home';
+                renderHomePage();
+            } else if (tab === 'favorites') {
+                document.getElementById('pageTitle').textContent = 'Favorite Videos';
+                renderFavoritesPage();
+            } else if (tab === 'settings') {
+                document.getElementById('pageTitle').textContent = 'Settings';
+                renderSettingsPage();
+            }
+        }
+
+        // ==========================================
+        // RENDER CURRENT VIEW
+        // ==========================================
+        function renderCurrentView() {
+            if (currentTab === 'home') {
+                if (currentPage === 'channel' && currentChannel) {
+                    renderChannelPage(getChannelVideos(currentChannel.channelName));
+                } else {
+                    renderHomePage();
+                }
+            } else if (currentTab === 'favorites') {
+                renderFavoritesPage();
+            }
         }
 
         // ==========================================
@@ -588,7 +768,6 @@
             const mainContent = document.getElementById('mainContent');
             
             if (channels.length === 0 && allVideos.length === 0) {
-                // Show skeleton loading
                 mainContent.innerHTML = renderSkeletonLoading();
                 return;
             }
@@ -633,13 +812,14 @@
             } else {
                 allVideos.forEach(video => {
                     const channel = channels.find(c => c.channelName === video.channelName);
+                    const isFavorite = favorites.some(f => f.videoId === video.videoId);
                     html += `
-                        <div class="video-list-item" onclick="playVideoFromHome('${video.videoId}')">
-                            <div class="video-list-thumb">
+                        <div class="video-list-item">
+                            <div class="video-list-thumb" onclick="playVideoFromHome('${video.videoId}')">
                                 <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" 
                                      onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
                             </div>
-                            <div class="video-list-info">
+                            <div class="video-list-info" onclick="playVideoFromHome('${video.videoId}')">
                                 <div class="video-list-title">${video.title}</div>
                                 <div class="video-list-channel">
                                     <span class="video-list-channel-logo" style="background-color: ${channel ? channel.channelColor : '#e94560'}">
@@ -649,6 +829,10 @@
                                 </div>
                                 <div class="video-list-stats">${video.views} • ${video.published}</div>
                             </div>
+                            <button class="favorite-btn ${isFavorite ? 'active' : ''}" 
+                                    onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.views}', '${video.published}')">
+                                <i class="bi bi-heart${isFavorite ? '-fill' : ''}"></i>
+                            </button>
                         </div>
                     `;
                 });
@@ -656,6 +840,128 @@
             
             html += `</div>`;
             mainContent.innerHTML = html;
+        }
+
+        // ==========================================
+        // FAVORITES PAGE
+        // ==========================================
+        function renderFavoritesPage() {
+            const mainContent = document.getElementById('mainContent');
+            
+            if (favorites.length === 0) {
+                mainContent.innerHTML = `
+                    <div class="no-data">
+                        <i class="bi bi-heart"></i>
+                        <h5>No favorites yet</h5>
+                        <p>Click the heart icon on videos to add them here</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `<div class="home-videos"><h4 class="section-title">Favorite Videos (${favorites.length})</h4>`;
+            
+            favorites.forEach(video => {
+                const channel = channels.find(c => c.channelName === video.channelName);
+                html += `
+                    <div class="video-list-item">
+                        <div class="video-list-thumb" onclick="playVideoFromHome('${video.videoId}')">
+                            <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy"
+                                 onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
+                        </div>
+                        <div class="video-list-info" onclick="playVideoFromHome('${video.videoId}')">
+                            <div class="video-list-title">${video.title}</div>
+                            <div class="video-list-channel">
+                                <span class="video-list-channel-logo" style="background-color: ${channel ? channel.channelColor : '#e94560'}">
+                                    ${channel ? channel.channelLogo : '?'}
+                                </span>
+                                <span>${video.channelName}</span>
+                            </div>
+                            <div class="video-list-stats">${video.views} • ${video.published}</div>
+                        </div>
+                        <button class="favorite-btn active" 
+                                onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.views}', '${video.published}')">
+                            <i class="bi bi-heart-fill"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            mainContent.innerHTML = html;
+        }
+
+        // ==========================================
+        // SETTINGS PAGE
+        // ==========================================
+        function renderSettingsPage() {
+            const mainContent = document.getElementById('mainContent');
+            
+            mainContent.innerHTML = `
+                <div class="settings-section">
+                    <h4 class="section-title">Settings</h4>
+                    
+                    <div class="settings-item" onclick="clearCache()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-trash"></i>
+                            <div>
+                                <div class="settings-item-text">Clear Cache</div>
+                                <div class="settings-item-desc">Remove cached data</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
+                    <div class="settings-item" onclick="showAppInfo()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-info-circle"></i>
+                            <div>
+                                <div class="settings-item-text">About App</div>
+                                <div class="settings-item-desc">Version 1.0.0</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
+                    <div class="settings-item" onclick="shareApp()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-share"></i>
+                            <div>
+                                <div class="settings-item-text">Share App</div>
+                                <div class="settings-item-desc">Share with friends</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
+                    <div class="settings-item" onclick="installApp()">
+                        <div class="settings-item-left">
+                            <i class="bi bi-download"></i>
+                            <div>
+                                <div class="settings-item-text">Install App</div>
+                                <div class="settings-item-desc">Add to home screen</div>
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    
+                    <div class="mt-4 p-3" style="background: #1a1a1a; border-radius: 8px;">
+                        <h6 class="mb-2">Statistics</h6>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Channels:</span>
+                            <span>${channels.length}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Videos:</span>
+                            <span>${allVideos.length}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Favorites:</span>
+                            <span>${favorites.length}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         // ==========================================
@@ -700,7 +1006,6 @@
                 </div>
             `;
             
-            // Determine which video to play
             let videoToPlay = null;
             if (targetVideoId) {
                 videoToPlay = videos.find(v => v.videoId === targetVideoId);
@@ -776,15 +1081,11 @@
         }
 
         // ==========================================
-        // PLAY VIDEO (FIXED)
+        // PLAY VIDEO
         // ==========================================
         function playVideoFromHome(videoId) {
             const video = allVideos.find(v => v.videoId === videoId);
-            if (!video) {
-                console.error('Video not found:', videoId);
-                return;
-            }
-            console.log('▶️ Playing from home:', video.title);
+            if (!video) return;
             openChannel(video.channelName, videoId);
         }
 
@@ -813,16 +1114,90 @@
         }
 
         // ==========================================
-        // NAVIGATION
+        // FAVORITES
         // ==========================================
-        function goBack() {
-            if (currentPage === 'channel') {
-                renderHomePage();
+        async function toggleFavorite(videoId, title, channelName, views, published) {
+            const existing = favorites.find(f => f.videoId === videoId);
+            
+            if (existing) {
+                // Remove from favorites
+                await db.collection('favorites').doc(existing.id).delete();
+                showToast('Removed from favorites', 'info');
+            } else {
+                // Add to favorites
+                await db.collection('favorites').add({
+                    videoId: videoId,
+                    title: title,
+                    channelName: channelName,
+                    views: views,
+                    published: published,
+                    thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                    addedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                showToast('Added to favorites ❤️', 'success');
             }
         }
 
         // ==========================================
-        // ADD VIDEO (Firebase - SUPER FAST!)
+        // NAVIGATION
+        // ==========================================
+        function goBack() {
+            if (currentPage === 'channel') {
+                switchTab('home');
+            }
+        }
+
+        // ==========================================
+        // ADD CHANNEL
+        // ==========================================
+        function openAddChannelModal() {
+            const modal = new bootstrap.Modal(document.getElementById('addChannelModal'));
+            modal.show();
+        }
+
+        async function submitNewChannel() {
+            const channelName = document.getElementById('inputChannelName').value.trim();
+            const channelLogo = document.getElementById('inputChannelLogo').value.trim();
+            const channelColor = document.getElementById('inputChannelColor').value;
+            const description = document.getElementById('inputChannelDesc').value.trim();
+            
+            if (!channelName || !channelLogo || !channelColor) {
+                showToast('Please fill all required fields', 'error');
+                return;
+            }
+            
+            const submitBtn = document.querySelector('#addChannelModal .btn-primary-custom');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Adding...';
+            submitBtn.disabled = true;
+            
+            try {
+                await db.collection('channels').add({
+                    channelName: channelName,
+                    channelLogo: channelLogo,
+                    channelColor: channelColor,
+                    description: description,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                showToast('✅ Channel added successfully!', 'success');
+                
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addChannelModal'));
+                modal.hide();
+                document.getElementById('addChannelForm').reset();
+                document.getElementById('inputChannelColor').value = '#e94560';
+                
+            } catch (error) {
+                console.error('Error adding channel:', error);
+                showToast('❌ Failed: ' + error.message, 'error');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // ==========================================
+        // ADD VIDEO
         // ==========================================
         function openAddVideoModal() {
             const select = document.getElementById('inputChannel');
@@ -860,7 +1235,6 @@
             submitBtn.disabled = true;
             
             try {
-                // Add to Firestore (instant!)
                 await db.collection('videos').add({
                     videoId: videoId,
                     title: title,
@@ -876,14 +1250,46 @@
                 modal.hide();
                 document.getElementById('addVideoForm').reset();
                 
-                // No need to reload - real-time listener will update automatically!
-                
             } catch (error) {
                 console.error('Error adding video:', error);
                 showToast('❌ Failed: ' + error.message, 'error');
             } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
+            }
+        }
+
+        // ==========================================
+        // SETTINGS FUNCTIONS
+        // ==========================================
+        async function clearCache() {
+            if (confirm('Are you sure you want to clear cache?')) {
+                const cacheNames = await caches.keys();
+                await Promise.all(cacheNames.map(name => caches.delete(name)));
+                showToast('Cache cleared!', 'success');
+            }
+        }
+
+        function showAppInfo() {
+            alert('Nepali Videos App\nVersion 1.0.0\n\nWatch your favorite Nepali YouTube channels in one place!');
+        }
+
+        async function shareApp() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Nepali Videos',
+                        text: 'Check out this awesome app for Nepali YouTube videos!',
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    console.log('Share cancelled');
+                }
+            } else {
+                // Fallback
+                const url = window.location.href;
+                navigator.clipboard.writeText(url);
+                showToast('Link copied to clipboard!', 'success');
             }
         }
 
@@ -946,9 +1352,9 @@
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast-custom';
-            toast.style.borderLeftColor = type === 'error' ? '#ff4444' : '#e94560';
+            toast.style.borderLeftColor = type === 'error' ? '#ff4444' : (type === 'info' ? '#00c853' : '#e94560');
             toast.innerHTML = `
-                <i class="bi bi-${type === 'error' ? 'exclamation-circle' : 'check-circle'} me-2"></i>
+                <i class="bi bi-${type === 'error' ? 'exclamation-circle' : (type === 'info' ? 'info-circle' : 'check-circle')} me-2"></i>
                 ${message}
             `;
             container.appendChild(toast);
@@ -964,10 +1370,11 @@
             return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         }
 
-        // Cleanup on page unload
+        // Cleanup
         window.addEventListener('beforeunload', () => {
             if (unsubscribeChannels) unsubscribeChannels();
             if (unsubscribeVideos) unsubscribeVideos();
+            if (unsubscribeFavorites) unsubscribeFavorites();
         });
     </script>
 </body>
