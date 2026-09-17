@@ -78,8 +78,6 @@
         .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
         .empty-state i { font-size: 4rem; margin-bottom: 16px; color: var(--text-dim); }
         .empty-state h5 { color: var(--text-primary); margin-bottom: 8px; }
-        .loading-container { text-align: center; padding: 40px; color: var(--text-muted); }
-        .loading-container .spinner-border { width: 2rem; height: 2rem; color: var(--accent); }
         .modal-content { background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 16px; }
         .modal-header { border-bottom: 1px solid var(--border-color); padding: 16px 20px; }
         .modal-title { font-weight: 700; font-size: 1.1rem; }
@@ -133,7 +131,7 @@
     </div>
 
     <div class="page-container" id="mainContent">
-        <div class="loading-container"><div class="spinner-border" role="status"></div><div style="margin-top: 10px;">Loading videos...</div></div>
+        <div class="empty-state"><i class="bi bi-collection-play"></i><h5>Video Gallery</h5><p>Loading your content...</p></div>
     </div>
 
     <div class="modal fade" id="channelModal" tabindex="-1" aria-hidden="true">
@@ -192,9 +190,33 @@
         let channelModalInstance = null, videoModalInstance = null;
 
         auth.onAuthStateChanged(user => { isAdminLoggedIn = !!user; authReady = true; updateAdminUI(); });
-        document.addEventListener('DOMContentLoaded', () => { loadTheme(); loadInitialData(); document.querySelectorAll('.admin-only-btn').forEach(btn => { btn.style.display = 'none'; }); });
 
-        function updateAdminUI() { document.querySelectorAll('.admin-only-btn').forEach(btn => { btn.style.display = isAdminLoggedIn ? 'flex' : 'none'; }); }
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            document.querySelectorAll('.admin-only-btn').forEach(btn => { btn.style.display = 'none'; });
+            renderHomePage(); // ✅ Render empty UI immediately
+            loadInitialData();
+            handleUrlParams();
+        });
+
+        function handleUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const openId = params.get('open');
+            const channelId = params.get('channel');
+            if (openId) {
+                setTimeout(() => {
+                    const video = allVideos.find(v => v.id === openId);
+                    if (video) playVideoFromHome(video.id);
+                }, 1000);
+            } else if (channelId) {
+                setTimeout(() => {
+                    const channel = channels.find(c => c.id === channelId);
+                    if (channel) openChannel(channel.channelName);
+                }, 1000);
+            }
+        }
+
+        function updateAdminUI() { document.querySelectorAll('.admin-only-btn').forEach(btn => { btn.style.display = isAdminLoggedIn ? 'flex' : 'none'; }); if (currentPage === 'channel') renderChannelPage(getChannelVideos(currentChannel ? currentChannel.channelName : '')); else renderHomePage(); }
         function checkAdminAccess(callback) { if (!authReady) { showToast('⏳ Please wait...'); return; } if (isAdminLoggedIn) callback(); else { showToast('🔐 Admin login required'); setTimeout(() => { window.location.href = 'index.html?login=action'; }, 1000); } }
         function loadTheme() { const savedTheme = localStorage.getItem('mero_app_theme') || 'dark'; document.documentElement.setAttribute('data-theme', savedTheme); }
 
@@ -251,7 +273,6 @@
         function toggleDescription() { const desc = document.getElementById('videoDescription'); const btn = document.getElementById('readMoreBtn'); if (!desc || !btn) return; if (desc.classList.contains('expanded')) { desc.classList.remove('expanded'); btn.innerHTML = '<i class="bi bi-chevron-down"></i> Read more'; } else { desc.classList.add('expanded'); btn.innerHTML = '<i class="bi bi-chevron-up"></i> Show less'; } }
         function getChannelVideos(channelName) { return allVideos.filter(v => v.channelName === channelName); }
 
-        function handleBack() { if (currentPage === 'channel') { currentPage = 'home'; currentChannel = null; currentPlayingVideo = null; targetVideoId = null; renderHomePage(); } else { window.location.href = 'index.html'; } }
         function openChannel(channelName, videoIdToPlay) { currentPage = 'channel'; currentChannel = channels.find(c => c.channelName === channelName); if (!currentChannel) { showToast('Channel not found'); return; } if (videoIdToPlay) targetVideoId = videoIdToPlay; renderChannelPage(getChannelVideos(channelName)); }
         function playVideoFromHome(videoDocId) { const video = allVideos.find(v => v.id === videoDocId); if (!video) return; incrementViewCount(videoDocId); openChannel(video.channelName, video.videoId); }
         function playChannelVideo(videoDocId, element) { const video = allVideos.find(v => v.id === videoDocId); if (!video) return; currentPlayingVideo = video; targetVideoId = null; incrementViewCount(videoDocId); const player = document.getElementById('channelVideoPlayer'); if (player) player.src = getVideoEmbedUrl(video); const detailsTitle = document.querySelector('.video-details-title'); if (detailsTitle) detailsTitle.textContent = video.title; const descContainer = document.querySelector('.video-details'); const oldDesc = descContainer ? descContainer.querySelector('.video-details-description') : null; const oldBtn = descContainer ? descContainer.querySelector('.read-more-btn') : null; if (oldDesc) oldDesc.remove(); if (oldBtn) oldBtn.remove(); if (video.description && descContainer) { const newDesc = document.createElement('div'); newDesc.className = 'video-details-description'; newDesc.id = 'videoDescription'; newDesc.textContent = video.description; newDesc.onclick = toggleDescription; const newBtn = document.createElement('button'); newBtn.className = 'read-more-btn'; newBtn.id = 'readMoreBtn'; newBtn.onclick = toggleDescription; newBtn.innerHTML = '<i class="bi bi-chevron-down"></i> Read more'; const meta = descContainer.querySelector('.video-details-meta'); if (meta) { meta.insertAdjacentElement('beforebegin', newBtn); meta.insertAdjacentElement('beforebegin', newDesc); } } const detailsMeta = document.querySelector('.video-details-meta'); if (detailsMeta) { detailsMeta.innerHTML = '<span><i class="bi bi-eye"></i> ' + formatViews(video.viewCount + 1) + '</span><span>•</span><span>' + video.published + '</span>'; } if (element) { document.querySelectorAll('.channel-video-item').forEach(item => item.classList.remove('active')); element.classList.add('active'); } window.scrollTo({ top: 0, behavior: 'smooth' }); }
