@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0f0f0f">
+    <meta name="description" content="Mero App - Your all-in-one digital companion">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mero App">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <title>Mero App</title>
+    
+    <!-- PWA Files -->
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192x192.png">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1a1a1a;
+            --bg-hover: #252525;
+            --border-color: #272727;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #aaaaaa;
+            --text-dim: #666666;
+            --accent: #ffffff;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-hover: #f0f0f0;
+            --border-color: #e0e0e0;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #6a6a6a;
+            --text-dim: #9a9a9a;
+            --accent: #000000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background-color: var(--bg-primary); 
+            color: var(--text-primary); 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* ==========================================
+           HEADER
+           ========================================== */
+        .app-header { 
+            background-color: rgba(15, 15, 15, 0.85); 
+            padding: 14px 20px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        [data-theme="light"] .app-header {
+            background-color: rgba(245, 245, 247, 0.85);
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-logo {
+            width: 32px;
+            height: 32px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+        .header-title { 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+        }
+        .header-btn:hover {
+            background: var(--bg-hover);
+            transform: translateY(-1px);
+        }
+        .header-btn i { font-size: 1.1rem; }
+        
+        /* ==========================================
+           MAIN CONTAINER
+           ========================================== */
+        .home-container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+        
+        /* ==========================================
+           COMPACT INFO CARD
+           ========================================== */
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .greeting-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .greeting-emoji { font-size: 1.5rem; line-height: 1; }
+        .greeting-content { flex: 1; }
+        .greeting-text { 
+            font-size: 1.05rem; 
+            font-weight: 700; 
+            color: var(--text-primary);
+            margin-bottom: 1px;
+        }
+        .greeting-subtext { 
+            font-size: 0.75rem; 
+            color: var(--text-muted);
+        }
+        
+        .info-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+            margin: 12px 0;
+        }
+        
+        .time-section { 
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .time-main {
+            display: flex;
+            align-items: baseline;
+            gap: 3px;
+        }
+        .time-hours { 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 1px;
+        }
+        .time-colon { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            color: var(--accent);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0.3; } }
+        .time-minutes { 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 1px;
+        }
+        .time-seconds {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-left: 3px;
+        }
+        .time-period { 
+            font-size: 0.75rem; 
+            color: var(--bg-primary);
+            background: var(--accent);
+            font-weight: 700;
+            margin-left: 6px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .time-date-info { text-align: right; }
+        .date-display { 
+            font-size: 0.8rem; 
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .day-display { 
+            font-size: 0.7rem; 
+            color: var(--text-dim);
+        }
+        
+        .weather-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+        }
+        [data-theme="light"] .weather-section {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .weather-left { display: flex; align-items: center; gap: 8px; }
+        .weather-icon { font-size: 1.5rem; line-height: 1; }
+        .weather-temp { 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            color: var(--text-primary);
+        }
+        .weather-condition { 
+            font-size: 0.7rem; 
+            color: var(--text-muted);
+            text-transform: capitalize;
+        }
+        .weather-right { text-align: right; }
+        .weather-location { 
+            font-size: 0.75rem; 
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .weather-location i { 
+            color: var(--accent); 
+            margin-right: 2px;
+            font-size: 0.7rem;
+        }
+        .weather-details { 
+            font-size: 0.65rem; 
+            color: var(--text-dim);
+        }
+        .weather-details span { display: inline-block; margin-right: 8px; }
+        .weather-loading { 
+            text-align: center; 
+            padding: 5px; 
+            color: var(--text-dim); 
+            font-size: 0.75rem; 
+            width: 100%;
+        }
+        .weather-loading .spinner-border { 
+            width: 1rem; height: 1rem; color: var(--accent); border-width: 2px;
+            display: inline-block; vertical-align: middle; margin-right: 5px;
+        }
+        
+        /* ==========================================
+           QUICK ACCESS
+           ========================================== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.2px;
+        }
+        .section-title i { color: var(--accent); font-size: 1rem; }
+        .section-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+        
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px 8px;
+            margin-bottom: 24px;
+        }
+        
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            padding: 6px 4px;
+            border-radius: 12px;
+        }
+        .app-item:hover {
+            background: var(--bg-hover);
+        }
+        .app-item:active {
+            transform: scale(0.92);
+        }
+        
+        .app-icon-wrapper {
+            width: 50px;
+            height: 50px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+            position: relative;
+            background-color: #252525;
+            color: #ffffff;
+            border: 1px solid #333333;
+            box-shadow: none;
+            transition: all 0.25s ease;
+        }
+        [data-theme="light"] .app-icon-wrapper {
+            background-color: #e8e8e8;
+            color: #1a1a1a;
+            border-color: #d0d0d0;
+        }
+        .app-item:hover .app-icon-wrapper {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        }
+        [data-theme="light"] .app-item:hover .app-icon-wrapper {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border-color: #1a1a1a;
+        }
+        .app-icon-wrapper i {
+            font-size: 1.4rem;
+        }
+        
+        .app-name {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.2;
+            max-width: 65px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        /* ==========================================
+           SETTINGS PAGE
+           ========================================== */
+        .settings-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-primary);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .settings-overlay.active { display: flex; }
+        
+        .settings-header {
+            background: rgba(15, 15, 15, 0.9);
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 10;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        [data-theme="light"] .settings-header { background: rgba(245, 245, 247, 0.9); }
+        .settings-header-content {
+            display: flex; align-items: center; gap: 12px; max-width: 600px; margin: 0 auto;
+        }
+        .settings-back-btn {
+            width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary);
+            border: 1px solid var(--border-color); display: flex; align-items: center;
+            justify-content: center; cursor: pointer; color: var(--text-primary); transition: all 0.2s;
+        }
+        .settings-back-btn:hover { background: var(--bg-hover); }
+        .settings-header-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+        
+        .settings-content { padding: 20px; max-width: 600px; margin: 0 auto; width: 100%; }
+        .settings-section { margin-bottom: 24px; }
+        .settings-section-title {
+            font-size: 0.75rem; font-weight: 600; color: var(--text-dim);
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; padding-left: 4px;
+        }
+        
+        .settings-group {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .settings-item {
+            display: flex; align-items: center; padding: 14px 16px; cursor: pointer;
+            transition: background 0.2s; border-bottom: 1px solid var(--border-color); gap: 12px;
+        }
+        .settings-item:last-child { border-bottom: none; }
+        .settings-item:hover { background: var(--bg-hover); }
+        
+        .settings-item-icon {
+            width: 32px; height: 32px; border-radius: 8px; display: flex;
+            align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem;
+            background: var(--bg-hover); color: var(--text-primary);
+        }
+        
+        .settings-item-content { flex: 1; min-width: 0; }
+        .settings-item-title { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); margin-bottom: 1px; }
+        .settings-item-subtitle { font-size: 0.75rem; color: var(--text-dim); }
+        .settings-item-arrow { color: var(--text-dim); font-size: 0.9rem; }
+        
+        .theme-options { display: flex; gap: 8px; padding: 12px 16px; }
+        .theme-option {
+            flex: 1; padding: 10px; border-radius: 10px; border: 2px solid var(--border-color);
+            background: var(--bg-secondary); cursor: pointer; text-align: center; transition: all 0.2s;
+        }
+        .theme-option:hover { border-color: var(--text-muted); }
+        .theme-option.active { 
+            border-color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+        .theme-option i { font-size: 1.2rem; display: block; margin-bottom: 4px; color: var(--text-primary); }
+        .theme-option span { font-size: 0.7rem; color: var(--text-secondary); font-weight: 500; }
+        
+        .app-info-card {
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
+            padding: 24px; text-align: center; margin-bottom: 24px;
+        }
+        .app-info-logo {
+            width: 70px; height: 70px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 14px; font-size: 1.8rem; font-weight: 800;
+        }
+        .app-info-name { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        .app-info-version { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 4px; }
+        .app-info-tagline { font-size: 0.75rem; color: var(--text-muted); }
+        
+        .toggle-switch {
+            position: relative; width: 44px; height: 24px; background: var(--border-color);
+            border-radius: 12px; cursor: pointer; transition: background 0.3s; flex-shrink: 0;
+        }
+        .toggle-switch.active { background: var(--text-primary); }
+        .toggle-switch::after {
+            content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px;
+            background: var(--bg-primary); border-radius: 50%; transition: transform 0.3s;
+        }
+        .toggle-switch.active::after { transform: translateX(20px); }
+        
+        .settings-footer { text-align: center; padding: 20px; color: var(--text-dim); font-size: 0.75rem; }
+        
+        /* Toast */
+        .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
+        .toast-custom { 
+            background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; 
+            border-radius: 10px; border-left: 4px solid var(--text-primary);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-brand">
+                <div class="header-logo">M</div>
+                <h5 class="header-title mb-0">Mero App</h5>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="openSearch()" title="Search">
+                    <i class="bi bi-search"></i>
+                </button>
+                <button class="header-btn" onclick="openSettings()" title="Settings">
+                    <i class="bi bi-gear"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="home-container">
+        
+        <!-- Compact Info Card -->
+        <div class="info-card">
+            <!-- Greeting -->
+            <div class="greeting-section">
+                <div class="greeting-emoji" id="greetingIcon"></div>
+                <div class="greeting-content">
+                    <div class="greeting-text" id="greetingText">Hello, Anil!</div>
+                    <div class="greeting-subtext" id="greetingSubtext">Welcome back</div>
+                </div>
+            </div>
+            
+            <div class="info-divider"></div>
+            
+            <!-- Time -->
+            <div class="time-section">
+                <div class="time-main">
+                    <span class="time-hours" id="clockHours">00</span>
+                    <span class="time-colon">:</span>
+                    <span class="time-minutes" id="clockMinutes">00</span>
+                    <span class="time-seconds" id="clockSeconds">:00</span>
+                    <span class="time-period" id="clockPeriod">AM</span>
+                </div>
+                <div class="time-date-info">
+                    <div class="date-display" id="clockDate">Loading...</div>
+                    <div class="day-display" id="clockDay">Loading...</div>
+                </div>
+            </div>
+            
+            <div class="info-divider"></div>
+            
+            <!-- Weather -->
+            <div class="weather-section" id="weatherSection">
+                <div class="weather-loading">
+                    <span class="spinner-border" role="status"></span>
+                    Loading weather...
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Access -->
+        <div class="section-header">
+            <div>
+                <div class="section-title">
+                    <i class="bi bi-grid-3x3-gap-fill"></i>
+                    Quick Access
+                </div>
+                <div class="section-subtitle">Tap to open an app</div>
+            </div>
+        </div>
+        
+        <div class="app-grid">
+            <div class="app-item" onclick="openApp('video-gallery')">
+                <div class="app-icon-wrapper"><i class="bi bi-collection-play-fill"></i></div>
+                <div class="app-name">Video Gallery</div>
+            </div>
+            
+            <div class="app-item" onclick="openApp('phone')">
+                <div class="app-icon-wrapper"><i class="bi bi-telephone-fill"></i></div>
+                <div class="app-name">Phone</div>
+            </div>
+            
+            <div class="app-item" onclick="openApp('tools')">
+                <div class="app-icon-wrapper"><i class="bi bi-tools"></i></div>
+                <div class="app-name">Tools</div>
+            </div>
+            
+            <div class="app-item" onclick="openApp('links')">
+                <div class="app-icon-wrapper"><i class="bi bi-link-45deg"></i></div>
+                <div class="app-name">Links</div>
+            </div>
+            
+            <div class="app-item" onclick="openApp('notes')">
+                <div class="app-icon-wrapper"><i class="bi bi-journal-text"></i></div>
+                <div class="app-name">Notes</div>
+            </div>
+            
+            <div class="app-item" onclick="openApp('images')">
+                <div class="app-icon-wrapper"><i class="bi bi-images"></i></div>
+                <div class="app-name">Images</div>
+            </div>
+            
+            <div class="app-item" onclick="openApp('documents')">
+                <div class="app-icon-wrapper"><i class="bi bi-file-earmark-text-fill"></i></div>
+                <div class="app-name">Documents</div>
+            </div>
+            
+            <div class="app-item" onclick="openApp('calendar')">
+                <div class="app-icon-wrapper"><i class="bi bi-calendar-event-fill"></i></div>
+                <div class="app-name">Calendar</div>
+            </div>
+            
+            <div class="app-item" onclick="openApp('settings')">
+                <div class="app-icon-wrapper"><i class="bi bi-gear-fill"></i></div>
+                <div class="app-name">Settings</div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- ==========================================
+         SETTINGS PAGE
+         ========================================== -->
+    <div class="settings-overlay" id="settingsOverlay">
+        <div class="settings-header">
+            <div class="settings-header-content">
+                <button class="settings-back-btn" onclick="closeSettings()">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <div class="settings-header-title">Settings</div>
+            </div>
+        </div>
+        
+        <div class="settings-content">
+            <!-- App Info -->
+            <div class="app-info-card">
+                <div class="app-info-logo">M</div>
+                <div class="app-info-name">Mero App</div>
+                <div class="app-info-version">Version 1.0.0 (Build 1)</div>
+                <div class="app-info-tagline">Your all-in-one digital companion</div>
+            </div>
+            
+            <!-- Appearance -->
+            <div class="settings-section">
+                <div class="settings-section-title">Appearance</div>
+                <div class="settings-group">
+                    <div class="settings-item" style="flex-direction: column; align-items: stretch;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <div class="settings-item-icon"><i class="bi bi-palette-fill"></i></div>
+                            <div class="settings-item-content">
+                                <div class="settings-item-title">Theme Mode</div>
+                                <div class="settings-item-subtitle">Choose your preferred theme</div>
+                            </div>
+                        </div>
+                        <div class="theme-options">
+                            <div class="theme-option" data-theme="light" onclick="setTheme('light')">
+                                <i class="bi bi-sun-fill"></i><span>Light</span>
+                            </div>
+                            <div class="theme-option active" data-theme="dark" onclick="setTheme('dark')">
+                                <i class="bi bi-moon-fill"></i><span>Dark</span>
+                            </div>
+                            <div class="theme-option" data-theme="auto" onclick="setTheme('auto')">
+                                <i class="bi bi-circle-half"></i><span>Auto</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- General -->
+            <div class="settings-section">
+                <div class="settings-section-title">General</div>
+                <div class="settings-group">
+                    <div class="settings-item" onclick="showToast('Notifications settings coming soon')">
+                        <div class="settings-item-icon"><i class="bi bi-bell-fill"></i></div>
+                        <div class="settings-item-content">
+                            <div class="settings-item-title">Notifications</div>
+                            <div class="settings-item-subtitle">Manage app notifications</div>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+                    <div class="settings-item" onclick="showToast('Language settings coming soon')">
+                        <div class="settings-item-icon"><i class="bi bi-translate"></i></div>
+                        <div class="settings-item-content">
+                            <div class="settings-item-title">Language</div>
+                            <div class="settings-item-subtitle">English (Default)</div>
+                        </div>
+                        <i class="bi bi-chevron-right settings-item-arrow"></i>
+                    </div>
+                    <div class="settings-item" onclick="clearAppCache()">
+                        <div class="settings-item-icon"><i class="bi bi-trash-fill"></i></div>
+                        <div class="settings-item-content">
+                            <div class="settings-item-title">Clear Cache</div>
+                            <div class="settings-item-subtitle">Free up storage space</div>
+                        </div>
+                        <i class="bi bi-chevron-right settings-item-arrow"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PWA -->
+            <div class="settings-section">
+                <div class="settings-section-title">App</div>
+                <div class="settings-group">
+                    <div class="settings-item" onclick="installPWA()">
+                        <div class="settings-item-icon"><i class="bi bi-download"></i></div>
+                        <div class="settings-item-content">
+                            <div class="settings-item-title">Install App</div>
+                            <div class="settings-item-subtitle">Add to home screen</div>
+                        </div>
+                        <i class="bi bi-chevron-right settings-item-arrow"></i>
+                    </div>
+                    <div class="settings-item" onclick="shareApp()">
+                        <div class="settings-item-icon"><i class="bi bi-share-fill"></i></div>
+                        <div class="settings-item-content">
+                            <div class="settings-item-title">Share App</div>
+                            <div class="settings-item-subtitle">Tell your friends about Mero App</div>
+                        </div>
+                        <i class="bi bi-chevron-right settings-item-arrow"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- About -->
+            <div class="settings-section">
+                <div class="settings-section-title">About</div>
+                <div class="settings-group">
+                    <div class="settings-item" onclick="showAppDetails()">
+                        <div class="settings-item-icon"><i class="bi bi-info-circle-fill"></i></div>
+                        <div class="settings-item-content">
+                            <div class="settings-item-title">About App</div>
+                            <div class="settings-item-subtitle">Version, developer info & more</div>
+                        </div>
+                        <i class="bi bi-chevron-right settings-item-arrow"></i>
+                    </div>
+                    <div class="settings-item" onclick="showToast('Privacy Policy coming soon')">
+                        <div class="settings-item-icon"><i class="bi bi-shield-lock-fill"></i></div>
+                        <div class="settings-item-content">
+                            <div class="settings-item-title">Privacy Policy</div>
+                            <div class="settings-item-subtitle">How we handle your data</div>
+                        </div>
+                        <i class="bi bi-chevron-right settings-item-arrow"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Support -->
+            <div class="settings-section">
+                <div class="settings-section-title">Support</div>
+                <div class="settings-group">
+                    <div class="settings-item" onclick="showToast('Feedback: anil@meroapp.com')">
+                        <div class="settings-item-icon"><i class="bi bi-envelope-fill"></i></div>
+                        <div class="settings-item-content">
+                            <div class="settings-item-title">Send Feedback</div>
+                            <div class="settings-item-subtitle">Report issues or suggest features</div>
+                        </div>
+                        <i class="bi bi-chevron-right settings-item-arrow"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-footer">
+                Made with precision by Anil Maharjan<br>
+                © 2026 Mero App. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ==========================================
+        // PWA INSTALL
+        // ==========================================
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('[PWA] Install prompt available');
+        });
+        
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(choiceResult => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('App installed successfully!');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                showToast('Use browser menu → "Add to Home Screen"');
+            }
+        }
+        
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('[PWA] SW registered:', reg.scope))
+                    .catch(err => console.log('[PWA] SW failed:', err));
+            });
+        }
+
+        // ==========================================
+        // THEME MANAGEMENT
+        // ==========================================
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('mero_app_theme', theme);
+            document.querySelectorAll('.theme-option').forEach(el => {
+                el.classList.toggle('active', el.dataset.theme === theme);
+            });
+            showToast(`Theme changed to ${theme}`);
+        }
+
+        function loadTheme() {
+            const saved = localStorage.getItem('mero_app_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            document.querySelectorAll('.theme-option').forEach(el => {
+                el.classList.toggle('active', el.dataset.theme === saved);
+            });
+        }
+
+        // ==========================================
+        // CLOCK & DATE
+        // ==========================================
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const period = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            
+            document.getElementById('clockHours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('clockMinutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('clockSeconds').textContent = ':' + seconds.toString().padStart(2, '0');
+            document.getElementById('clockPeriod').textContent = period;
+            
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', options);
+            const dayOptions = { weekday: 'long' };
+            document.getElementById('clockDay').textContent = now.toLocaleDateString('en-US', dayOptions);
+            
+            updateGreeting(now.getHours());
+        }
+        
+        // ==========================================
+        // GREETING
+        // ==========================================
+        function updateGreeting(hour24) {
+            const greetingText = document.getElementById('greetingText');
+            const greetingIcon = document.getElementById('greetingIcon');
+            const greetingSubtext = document.getElementById('greetingSubtext');
+            
+            if (hour24 >= 5 && hour24 < 12) {
+                greetingText.textContent = 'Good Morning, Anil!';
+                greetingIcon.textContent = '🌅';
+                greetingSubtext.textContent = 'Start your day productively';
+            } else if (hour24 >= 12 && hour24 < 17) {
+                greetingText.textContent = 'Good Afternoon, Anil!';
+                greetingIcon.textContent = '☀️';
+                greetingSubtext.textContent = 'Hope your day is going well';
+            } else if (hour24 >= 17 && hour24 < 21) {
+                greetingText.textContent = 'Good Evening, Anil!';
+                greetingIcon.textContent = '🌆';
+                greetingSubtext.textContent = 'Time to relax and unwind';
+            } else {
+                greetingText.textContent = 'Good Night, Anil!';
+                greetingIcon.textContent = '🌙';
+                greetingSubtext.textContent = 'Rest well for tomorrow';
+            }
+        }
+        
+        // ==========================================
+        // WEATHER
+        // ==========================================
+        async function loadWeather() {
+            const weatherSection = document.getElementById('weatherSection');
+            try {
+                let lat = 27.7172, lon = 85.3240, locationName = 'Kathmandu';
+                if (navigator.geolocation) {
+                    try {
+                        const position = await new Promise((resolve, reject) => {
+                            navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
+                        });
+                        lat = position.coords.latitude;
+                        lon = position.coords.longitude;
+                        try {
+                            const geoRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+                            const geoData = await geoRes.json();
+                            if (geoData.city || geoData.locality) locationName = geoData.city || geoData.locality;
+                        } catch (e) {}
+                    } catch (e) {}
+                }
+                const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+                const weatherData = await weatherRes.json();
+                const current = weatherData.current_weather;
+                const temp = Math.round(current.temperature);
+                const weatherInfo = getWeatherInfo(current.weathercode);
+                
+                weatherSection.innerHTML = `
+                    <div class="weather-left">
+                        <div class="weather-icon">${weatherInfo.icon}</div>
+                        <div>
+                            <div class="weather-temp">${temp}°C</div>
+                            <div class="weather-condition">${weatherInfo.condition}</div>
+                        </div>
+                    </div>
+                    <div class="weather-right">
+                        <div class="weather-location"><i class="bi bi-geo-alt-fill"></i> ${locationName}</div>
+                        <div class="weather-details">
+                            <span><i class="bi bi-wind"></i> ${current.windspeed} km/h</span>
+                            <span><i class="bi bi-compass"></i> ${getWindDirection(current.winddirection)}</span>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                weatherSection.innerHTML = `
+                    <div class="weather-left">
+                        <div class="weather-icon">⚠️</div>
+                        <div><div class="weather-temp">--°C</div><div class="weather-condition">Unavailable</div></div>
+                    </div>
+                    <div class="weather-right">
+                        <div class="weather-location"><i class="bi bi-geo-alt-fill"></i> Error</div>
+                        <div class="weather-details"><span>Check connection</span></div>
+                    </div>
+                `;
+            }
+        }
+        
+        function getWeatherInfo(code) {
+            const map = {
+                0: { icon: '☀️', condition: 'Clear sky' }, 1: { icon: '🌤️', condition: 'Mainly clear' },
+                2: { icon: '⛅', condition: 'Partly cloudy' }, 3: { icon: '☁️', condition: 'Overcast' },
+                45: { icon: '🌫️', condition: 'Foggy' }, 51: { icon: '🌦️', condition: 'Light drizzle' },
+                61: { icon: '🌧️', condition: 'Slight rain' }, 63: { icon: '🌧️', condition: 'Rain' },
+                71: { icon: '🌨️', condition: 'Slight snow' }, 75: { icon: '❄️', condition: 'Heavy snow' },
+                95: { icon: '⛈️', condition: 'Thunderstorm' }
+            };
+            return map[code] || { icon: '🌡️', condition: 'Unknown' };
+        }
+        function getWindDirection(degrees) {
+            return ['N','NE','E','SE','S','SW','W','NW'][Math.round(degrees/45)%8];
+        }
+        
+        // ==========================================
+        // SETTINGS
+        // ==========================================
+        function openSettings() {
+            document.getElementById('settingsOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeSettings() {
+            document.getElementById('settingsOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function showAppDetails() {
+            alert('Mero App v1.0.0\n\nDeveloped by: Anil Maharjan\nWebsite: maharjan-anil.com.np\n\n© 2026 All Rights Reserved');
+        }
+        async function clearAppCache() {
+            if (confirm('Clear all cached data?')) {
+                try {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(cacheNames.map(n => caches.delete(n)));
+                    showToast('Cache cleared successfully');
+                } catch (e) { showToast('Cache cleared'); }
+            }
+        }
+        async function shareApp() {
+            if (navigator.share) {
+                try { await navigator.share({ title: 'Mero App', text: 'Check out Mero App!', url: window.location.href }); } catch (err) {}
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast('Link copied to clipboard!');
+            }
+        }
+        
+        // ==========================================
+        // APP LAUNCHER
+        // ==========================================
+        function openApp(appName) {
+            const actions = {
+                'video-gallery': () => { window.location.href = 'videogallery.html'; },
+                'phone': () => { window.location.href = 'phone.html'; },
+                'tools': () => { window.location.href = 'tools.html'; },
+                'links': () => showToast('Opening Links...'),
+                'notes': () => showToast('Opening Notes...'),
+                'images': () => showToast('Opening Image Gallery...'),
+                'documents': () => showToast('Opening Documents...'),
+                'calendar': () => { window.location.href = 'calendar.html'; },
+                'settings': () => openSettings()
+            };
+            if (actions[appName]) actions[appName]();
+        }
+        
+        function openSearch() { showToast('Search coming soon'); }
+        
+        // ==========================================
+        // TOAST
+        // ==========================================
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast-custom';
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => { 
+                toast.style.opacity = '0'; 
+                toast.style.transition = 'opacity 0.3s'; 
+                setTimeout(() => toast.remove(), 300); 
+            }, 2500);
+        }
+        
+        // ==========================================
+        // INITIALIZE
+        // ==========================================
+        loadTheme();
+        updateClock();
+        setInterval(updateClock, 1000);
+        loadWeather();
+        setInterval(loadWeather, 600000);
+    </script>
+</body>
+</html>
