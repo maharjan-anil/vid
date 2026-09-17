@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#0f0f0f">
     <meta name="description" content="Mero App - Your all-in-one digital companion">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -173,7 +171,7 @@
         .greeting-emoji { font-size: 1.5rem; line-height: 1; }
         .greeting-content { flex: 1; }
         .greeting-text { 
-            font-size: 1.05rem; 
+            font-size: 1.5rem; 
             font-weight: 700; 
             color: var(--text-primary);
             margin-bottom: 1px;
@@ -193,7 +191,7 @@
             display: flex;
             align-items: baseline;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .time-main {
             display: flex;
@@ -238,13 +236,28 @@
         }
         .time-date-info { text-align: right; }
         .date-display { 
-            font-size: 0.8rem; 
+            font-size: 0.9rem; 
             color: var(--text-secondary);
             font-weight: 500;
         }
         .day-display { 
-            font-size: 0.7rem; 
+            font-size: 0.8rem; 
             color: var(--text-dim);
+        }
+        
+        /* ✅ Nepali Date Widget Container */
+        .nepali-date-container {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            min-height: 24px;
+        }
+        .nepali-date-container iframe {
+            border: none;
+            border-radius: 4px;
         }
         
         .weather-section {
@@ -280,7 +293,7 @@
         .weather-location i { 
             color: var(--accent); 
             margin-right: 2px;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
         }
         .weather-details { 
             font-size: 0.65rem; 
@@ -559,6 +572,11 @@
                 <div class="time-date-info">
                     <div class="date-display" id="clockDate">Loading...</div>
                     <div class="day-display" id="clockDay">Loading...</div>
+                    <!-- ✅ Nepali Date Widget -->
+                    <div class="nepali-date-container">
+                        <iframe scrolling="no" border="0" frameborder="0" marginwidth="0" marginheight="0" allowtransparency="true" src="https://www.ashesh.com.np/linknepali-time.php?dwn=only&font_color=FFFFFF&font_size=14
+                        &api=711193q225" width="165" height="22"></iframe>
+                    </div>
                 </div>
             </div>
             
@@ -878,11 +896,11 @@
                 greetingSubtext.textContent = 'Start your day productively';
             } else if (hour24 >= 12 && hour24 < 17) {
                 greetingText.textContent = 'Good Afternoon, Anil!';
-                greetingIcon.textContent = '☀️';
+                greetingIcon.textContent = '️';
                 greetingSubtext.textContent = 'Hope your day is going well';
             } else if (hour24 >= 17 && hour24 < 21) {
                 greetingText.textContent = 'Good Evening, Anil!';
-                greetingIcon.textContent = '🌆';
+                greetingIcon.textContent = '';
                 greetingSubtext.textContent = 'Time to relax and unwind';
             } else {
                 greetingText.textContent = 'Good Night, Anil!';
@@ -937,7 +955,7 @@
             } catch (error) {
                 weatherSection.innerHTML = `
                     <div class="weather-left">
-                        <div class="weather-icon">⚠️</div>
+                        <div class="weather-icon">️</div>
                         <div><div class="weather-temp">--°C</div><div class="weather-condition">Unavailable</div></div>
                     </div>
                     <div class="weather-right">
@@ -950,12 +968,12 @@
         
         function getWeatherInfo(code) {
             const map = {
-                0: { icon: '☀️', condition: 'Clear sky' }, 1: { icon: '🌤️', condition: 'Mainly clear' },
+                0: { icon: '☀️', condition: 'Clear sky' }, 1: { icon: '️', condition: 'Mainly clear' },
                 2: { icon: '⛅', condition: 'Partly cloudy' }, 3: { icon: '☁️', condition: 'Overcast' },
-                45: { icon: '🌫️', condition: 'Foggy' }, 51: { icon: '🌦️', condition: 'Light drizzle' },
-                61: { icon: '🌧️', condition: 'Slight rain' }, 63: { icon: '🌧️', condition: 'Rain' },
-                71: { icon: '🌨️', condition: 'Slight snow' }, 75: { icon: '❄️', condition: 'Heavy snow' },
-                95: { icon: '⛈️', condition: 'Thunderstorm' }
+                45: { icon: '️', condition: 'Foggy' }, 51: { icon: '🌦️', condition: 'Light drizzle' },
+                61: { icon: '🌧️', condition: 'Slight rain' }, 63: { icon: '️', condition: 'Rain' },
+                71: { icon: '️', condition: 'Slight snow' }, 75: { icon: '❄️', condition: 'Heavy snow' },
+                95: { icon: '️', condition: 'Thunderstorm' }
             };
             return map[code] || { icon: '🌡️', condition: 'Unknown' };
         }
