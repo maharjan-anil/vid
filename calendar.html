@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f0f0f">
+    <meta name="description" content="Nepali Calendar & Panchang - Mero App">
+    <title>Calendar - Mero App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1a1a1a;
+            --bg-hover: #252525;
+            --border-color: #272727;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #aaaaaa;
+            --text-dim: #666666;
+            --accent: #ffffff;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-hover: #f0f0f0;
+            --border-color: #e0e0e0;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #6a6a6a;
+            --text-dim: #9a9a9a;
+            --accent: #000000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background-color: var(--bg-primary); 
+            color: var(--text-primary); 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* ==========================================
+           HEADER
+           ========================================== */
+        .app-header { 
+            background-color: rgba(15, 15, 15, 0.85); 
+            padding: 14px 20px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        [data-theme="light"] .app-header { background-color: rgba(245, 245, 247, 0.85); }
+        
+        .header-content { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+        .header-btn {
+            width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary);
+            border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s ease; color: var(--text-primary); text-decoration: none;
+        }
+        .header-btn:hover { background: var(--bg-hover); transform: translateY(-1px); }
+        .header-btn i { font-size: 1.1rem; }
+        .header-title { 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            color: var(--text-primary);
+            flex: 1;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================
+           MAIN CONTAINER
+           ========================================== */
+        .page-container { 
+            padding: 20px; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding-bottom: 40px; 
+        }
+
+        /* Page Intro */
+        .page-intro {
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .page-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================
+           WIDGET CARDS
+           ========================================== */
+        .widget-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .widget-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .widget-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: var(--bg-hover);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+        
+        .widget-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        .widget-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .widget-content {
+            width: 100%;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        .widget-content iframe {
+            display: block;
+            width: 100%;
+            border: none;
+        }
+
+        /* Loading State */
+        .widget-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            min-height: 200px;
+        }
+        .widget-loading .spinner-border {
+            width: 2rem;
+            height: 2rem;
+            color: var(--accent);
+            border-width: 2px;
+            margin-bottom: 12px;
+        }
+        .widget-loading-text {
+            font-size: 0.85rem;
+        }
+
+        /* Widget Copyright */
+        .widget-copyright {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            padding: 10px 12px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+        .widget-copyright a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .widget-copyright a:hover { 
+            text-decoration: underline; 
+        }
+
+        /* Quick Info Bar */
+        .info-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 10px;
+            text-align: center;
+        }
+        .info-item-icon {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+        .info-item-label {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .info-item-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Toast */
+        .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
+        .toast-custom { 
+            background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; 
+            border-radius: 10px; border-left: 4px solid var(--accent); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem; 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <a href="index.html" class="header-btn" title="Back to Home">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <h5 class="header-title mb-0">CALENDAR</h5>
+            <button class="header-btn" onclick="shareCalendar()" title="Share">
+                <i class="bi bi-share"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="page-container">
+        
+        <!-- Page Intro -->
+        <div class="page-intro">
+            <div class="page-title">Nepali Calendar & Panchang</div>
+            <div class="page-subtitle">Daily dates, tithi, and astrological details</div>
+        </div>
+
+        <!-- Quick Info Bar -->
+        <div class="info-bar">
+            <div class="info-item">
+                <div class="info-item-icon">📅</div>
+                <div class="info-item-label">Today</div>
+                <div class="info-item-value" id="todayDate">Loading...</div>
+            </div>
+            <div class="info-item">
+                <div class="info-item-icon"></div>
+                <div class="info-item-label">Tithi</div>
+                <div class="info-item-value" id="todayTithi">Loading...</div>
+            </div>
+            <div class="info-item">
+                <div class="info-item-icon">⭐</div>
+                <div class="info-item-label">Nakshatra</div>
+                <div class="info-item-value" id="todayNakshatra">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Nepali Calendar Widget -->
+        <div class="widget-card">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="bi bi-calendar3"></i>
+                </div>
+                <div>
+                    <div class="widget-title">Nepali Calendar</div>
+                    <div class="widget-subtitle">Monthly view with Tithi & Events</div>
+                </div>
+            </div>
+            <div class="widget-content">
+                <div class="widget-loading" id="calendarLoader">
+                    <div class="spinner-border" role="status"></div>
+                    <div class="widget-loading-text">Loading Calendar...</div>
+                </div>
+                <script 
+                    src="https://www.ashesh.com.np/calendar-widget/calendar.js?width=100%&height=725&tithi=1&event=1&radius=12&api=761093q268" 
+                    onload="document.getElementById('calendarLoader').style.display='none'">
+                </script>
+            </div>
+        </div>
+
+        <!-- Nepali Panchang Widget -->
+        <div class="widget-card">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="bi bi-sun"></i>
+                </div>
+                <div>
+                    <div class="widget-title">Daily Panchang</div>
+                    <div class="widget-subtitle">Today's astrological details</div>
+                </div>
+            </div>
+            <div class="widget-content">
+                <div class="widget-loading" id="panchangLoader">
+                    <div class="spinner-border" role="status"></div>
+                    <div class="widget-loading-text">Loading Panchang...</div>
+                </div>
+                <iframe 
+                    src="https://www.ashesh.com.np/panchang/widget.php?header_title=Nepali Panchang&header_color=e6e5e2&api=761095q313" 
+                    frameborder="0" 
+                    scrolling="no" 
+                    marginwidth="0" 
+                    marginheight="0" 
+                    style="border:none; overflow:hidden; width:100%; height:365px; border-radius:8px;" 
+                    allowtransparency="true"
+                    onload="document.getElementById('panchangLoader').style.display='none'">
+                </iframe>
+                <div class="widget-copyright">
+                    © <a href="https://www.ashesh.com.np/panchang/" title="Nepal Panchanga" target="_top">Nepal Panchanga</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ==========================================
+        // THEME MANAGEMENT
+        // ==========================================
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('mero_app_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+
+        // ==========================================
+        // TODAY'S DATE INFO
+        // ==========================================
+        function updateTodayInfo() {
+            const now = new Date();
+            
+            // English date
+            const options = { day: 'numeric', month: 'short' };
+            document.getElementById('todayDate').textContent = now.toLocaleDateString('en-US', options);
+            
+            // Placeholder for Tithi & Nakshatra (would come from panchang API)
+            // For now showing day of week
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            document.getElementById('todayTithi').textContent = days[now.getDay()];
+            document.getElementById('todayNakshatra').textContent = 'BS ' + (now.getFullYear() + 57);
+        }
+
+        // ==========================================
+        // SHARE CALENDAR
+        // ==========================================
+        async function shareCalendar() {
+            const shareData = {
+                title: 'Nepali Calendar - Mero App',
+                text: 'Check out Nepali Calendar & Panchang on Mero App!',
+                url: window.location.href
+            };
+            
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.log('Share cancelled');
+                }
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast('Link copied to clipboard!');
+            }
+        }
+
+        // ==========================================
+        // TOAST
+        // ==========================================
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast-custom';
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => { 
+                toast.style.opacity = '0'; 
+                toast.style.transition = 'opacity 0.3s'; 
+                setTimeout(() => toast.remove(), 300); 
+            }, 2500);
+        }
+
+        // ==========================================
+        // INITIALIZE
+        // ==========================================
+        loadTheme();
+        updateTodayInfo();
+    </script>
+</body>
+</html>
