@@ -4,88 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f0f0f">
+    <meta name="description" content="Mero App - Your all-in-one digital companion">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mero App">
     <title>Mero App</title>
     <link rel="manifest" href="./manifest.json">
     <link rel="apple-touch-icon" href="./icons/icon-192x192.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    
     <style>
         :root {
-            --bg-primary: #0f0f0f;
-            --bg-secondary: #1a1a1a;
-            --bg-card: #1a1a1a;
-            --bg-hover: #252525;
-            --border-color: #272727;
-            --text-primary: #ffffff;
-            --text-secondary: #e0e0e0;
-            --text-muted: #aaaaaa;
-            --text-dim: #666666;
-            --accent: #ffffff;
+            --bg-primary: #0f0f0f; --bg-secondary: #1a1a1a; --bg-card: #1a1a1a; --bg-hover: #252525;
+            --border-color: #272727; --text-primary: #ffffff; --text-secondary: #e0e0e0;
+            --text-muted: #aaaaaa; --text-dim: #666666; --accent: #ffffff;
         }
         [data-theme="light"] {
-            --bg-primary: #f5f5f7;
-            --bg-secondary: #ffffff;
-            --bg-card: #ffffff;
-            --bg-hover: #f0f0f0;
-            --border-color: #e0e0e0;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --text-muted: #6a6a6a;
-            --text-dim: #9a9a9a;
-            --accent: #000000;
+            --bg-primary: #f5f5f7; --bg-secondary: #ffffff; --bg-card: #ffffff; --bg-hover: #f0f0f0;
+            --border-color: #e0e0e0; --text-primary: #1a1a1a; --text-secondary: #4a4a4a;
+            --text-muted: #6a6a6a; --text-dim: #9a9a9a; --accent: #000000;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background-color: var(--bg-primary); 
-            color: var(--text-primary); 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .app-header { 
-            background-color: rgba(15, 15, 15, 0.85); 
-            padding: 14px 20px; 
-            position: sticky; top: 0; z-index: 100; 
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(20px);
-        }
-        [data-theme="light"] .app-header { background-color: rgba(245, 245, 247, 0.85); }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; }
+        .app-header { background-color: rgba(15,15,15,0.85); padding: 14px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(20px); }
+        [data-theme="light"] .app-header { background-color: rgba(245,245,247,0.85); }
         .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 600px; margin: 0 auto; }
         .header-brand { display: flex; align-items: center; gap: 10px; }
-        .header-logo {
-            width: 32px; height: 32px; background: var(--text-primary); color: var(--bg-primary);
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
-            font-size: 1rem; font-weight: 800;
-        }
+        .header-logo { width: 32px; height: 32px; background: var(--text-primary); color: var(--bg-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; }
         .header-title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); }
-        .header-actions { display: flex; align-items: center; gap: 8px; }
-        .header-btn {
-            width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary);
-            border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s; color: var(--text-primary);
-        }
+        .header-actions { display: flex; gap: 8px; }
+        .header-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; color: var(--text-primary); }
         .header-btn:hover { background: var(--bg-hover); transform: translateY(-1px); }
-        .header-btn i { font-size: 1.1rem; }
-        .header-btn.active-search { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
-
         .home-container { padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 40px; }
-
-        /* Info Card */
-        .info-card {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 16px; padding: 20px; margin-bottom: 24px;
-        }
+        .info-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 24px; }
         .greeting-text { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
         .greeting-subtext { font-size: 0.85rem; color: var(--text-muted); }
         .datetime-row { display: flex; align-items: center; justify-content: space-between; margin: 12px 0 4px; }
         .date-display { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
-        .time-badge {
-            font-size: 0.95rem; font-weight: 700; color: var(--text-primary);
-            background: var(--bg-secondary); border: 1px solid var(--border-color);
-            padding: 4px 12px; border-radius: 8px; font-variant-numeric: tabular-nums;
-        }
+        .time-badge { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 4px 12px; border-radius: 8px; font-variant-numeric: tabular-nums; }
         .nepali-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; font-weight: 500; }
         .info-divider { height: 1px; background: var(--border-color); margin: 16px 0; }
         .weather-row { display: flex; align-items: center; justify-content: space-between; }
@@ -96,8 +52,6 @@
         .weather-details { font-size: 0.75rem; color: var(--text-dim); display: flex; gap: 10px; margin-top: 4px; }
         .weather-loading { text-align: center; padding: 10px; color: var(--text-dim); font-size: 0.85rem; width: 100%; }
         .weather-loading .spinner-border { width: 1.2rem; height: 1.2rem; color: var(--text-muted); border-width: 2px; }
-
-        /* Quick Access */
         .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
         .section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
         .section-title i { color: var(--accent); }
@@ -106,215 +60,90 @@
         .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 6px 4px; border-radius: 12px; transition: all 0.25s; }
         .app-item:hover { background: var(--bg-hover); }
         .app-item:active { transform: scale(0.92); }
-        .app-icon-wrapper {
-            width: 50px; height: 50px; border-radius: 13px; display: flex; align-items: center;
-            justify-content: center; margin-bottom: 6px; background-color: #252525; color: #fff;
-            border: 1px solid #333; transition: all 0.25s;
-        }
+        .app-icon-wrapper { width: 50px; height: 50px; border-radius: 13px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; background-color: #252525; color: #fff; border: 1px solid #333; transition: all 0.25s; }
         .app-item:hover .app-icon-wrapper { background-color: #000; transform: translateY(-2px); }
         .app-icon-wrapper i { font-size: 1.4rem; }
         .app-name { font-size: 0.7rem; color: var(--text-secondary); text-align: center; font-weight: 500; max-width: 65px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-        /* ==========================================
-           🔍 GLOBAL SEARCH MODAL
-           ========================================== */
-        .search-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-primary); z-index: 9998;
-            display: none; flex-direction: column;
-        }
+        .search-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-primary); z-index: 9998; display: none; flex-direction: column; }
         .search-overlay.active { display: flex; }
-        .search-overlay-header {
-            background: var(--bg-card); border-bottom: 1px solid var(--border-color);
-            padding: 14px 20px; display: flex; align-items: center; gap: 12px;
-        }
-        .search-overlay-back {
-            width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary);
-            border: 1px solid var(--border-color); display: flex; align-items: center;
-            justify-content: center; cursor: pointer; color: var(--text-primary);
-        }
-        .search-overlay-input {
-            flex: 1; background: var(--bg-secondary); border: 1px solid var(--border-color);
-            border-radius: 10px; padding: 10px 14px; color: var(--text-primary);
-            font-size: 0.95rem; outline: none;
-        }
+        .search-overlay-header { background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+        .search-overlay-back { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary); }
+        .search-overlay-input { flex: 1; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px 14px; color: var(--text-primary); font-size: 0.95rem; outline: none; }
         .search-overlay-input:focus { border-color: var(--accent); }
-        .search-overlay-body {
-            flex: 1; overflow-y: auto; padding: 16px 20px; max-width: 600px; margin: 0 auto; width: 100%;
-        }
-        .search-results-empty {
-            text-align: center; padding: 60px 20px; color: var(--text-muted);
-        }
+        .search-overlay-body { flex: 1; overflow-y: auto; padding: 16px 20px; max-width: 600px; margin: 0 auto; width: 100%; }
+        .search-results-empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
         .search-results-empty i { font-size: 3rem; color: var(--text-dim); margin-bottom: 12px; }
-        .search-group-title {
-            font-size: 0.75rem; font-weight: 600; color: var(--text-dim);
-            text-transform: uppercase; letter-spacing: 0.5px; margin: 16px 0 10px;
-            padding-left: 4px;
-        }
+        .search-group-title { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin: 16px 0 10px; padding-left: 4px; }
         .search-group-title:first-child { margin-top: 0; }
-        .search-result-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px;
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 12px; margin-bottom: 8px; cursor: pointer;
-            transition: all 0.2s;
-        }
+        .search-result-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; }
         .search-result-item:hover { background: var(--bg-hover); border-color: var(--text-dim); }
-        .search-result-icon {
-            width: 40px; height: 40px; border-radius: 10px; background: var(--bg-secondary);
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-            font-size: 1.1rem; color: var(--text-primary);
-        }
+        .search-result-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; color: var(--text-primary); }
         .search-result-icon.link-icon { color: #e94560; }
         .search-result-icon.doc-icon { color: #2196f3; }
-        .search-result-icon.img-icon { color: #4caf50; }
-        .search-result-icon.pdf-icon { color: #f44336; }
         .search-result-content { flex: 1; min-width: 0; }
-        .search-result-title {
-            font-size: 0.9rem; font-weight: 600; color: var(--text-primary);
-            margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-        }
-        .search-result-subtitle {
-            font-size: 0.75rem; color: var(--text-dim);
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-        }
+        .search-result-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .search-result-subtitle { font-size: 0.75rem; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .search-result-arrow { color: var(--text-dim); font-size: 0.9rem; }
         .search-loading { text-align: center; padding: 40px; color: var(--text-muted); }
         .search-loading .spinner-border { width: 2rem; height: 2rem; color: var(--accent); }
-
-        /* ==========================================
-           🔐 LOGIN MODAL
-           ========================================== */
-        .login-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
-            z-index: 9997; display: none; align-items: center; justify-content: center;
-            padding: 20px;
-        }
+        .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 9997; display: none; align-items: center; justify-content: center; padding: 20px; }
         .login-overlay.active { display: flex; }
-        .login-box {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 16px; padding: 28px; max-width: 400px; width: 100%;
-        }
+        .login-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 28px; max-width: 400px; width: 100%; }
         .login-box-header { text-align: center; margin-bottom: 20px; }
-        .login-box-icon {
-            width: 60px; height: 60px; border-radius: 14px; background: var(--bg-secondary);
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 12px; font-size: 1.5rem; color: var(--accent);
-        }
+        .login-box-icon { width: 60px; height: 60px; border-radius: 14px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 1.5rem; color: var(--accent); }
         .login-box-title { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
         .login-box-subtitle { font-size: 0.85rem; color: var(--text-muted); }
         .login-form-group { margin-bottom: 14px; }
-        .login-form-label {
-            font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);
-            margin-bottom: 6px; display: block;
-        }
-        .login-form-input {
-            width: 100%; padding: 12px 14px; background: var(--bg-secondary);
-            border: 1px solid var(--border-color); border-radius: 10px;
-            color: var(--text-primary); font-size: 0.95rem; outline: none;
-        }
+        .login-form-label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+        .login-form-input { width: 100%; padding: 12px 14px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); font-size: 0.95rem; outline: none; }
         .login-form-input:focus { border-color: var(--accent); }
-        .login-error {
-            background: rgba(220,53,69,0.15); color: #dc3545; padding: 10px 12px;
-            border-radius: 8px; font-size: 0.85rem; margin-bottom: 14px; display: none;
-        }
+        .login-error { background: rgba(220,53,69,0.15); color: #dc3545; padding: 10px 12px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 14px; display: none; }
         .login-error.show { display: block; }
-        .login-btn {
-            width: 100%; padding: 12px; background: var(--accent); color: var(--bg-primary);
-            border: none; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
-            cursor: pointer; transition: opacity 0.2s;
-        }
+        .login-btn { width: 100%; padding: 12px; background: var(--accent); color: var(--bg-primary); border: none; border-radius: 10px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: opacity 0.2s; }
         .login-btn:hover { opacity: 0.9; }
         .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .login-cancel {
-            width: 100%; padding: 10px; background: transparent; color: var(--text-muted);
-            border: 1px solid var(--border-color); border-radius: 10px; font-weight: 500;
-            font-size: 0.9rem; cursor: pointer; margin-top: 8px;
-        }
+        .login-cancel { width: 100%; padding: 10px; background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 10px; font-weight: 500; font-size: 0.9rem; cursor: pointer; margin-top: 8px; }
         .login-cancel:hover { background: var(--bg-hover); }
-
-        /* Settings */
-        .settings-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-primary); z-index: 200; display: none;
-            flex-direction: column; overflow-y: auto;
-        }
+        .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-primary); z-index: 200; display: none; flex-direction: column; overflow-y: auto; }
         .settings-overlay.active { display: flex; }
-        .settings-header {
-            background: rgba(15,15,15,0.9); padding: 14px 20px; border-bottom: 1px solid var(--border-color);
-            position: sticky; top: 0; z-index: 10; backdrop-filter: blur(20px);
-        }
+        .settings-header { background: rgba(15,15,15,0.9); padding: 14px 20px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 10; backdrop-filter: blur(20px); }
         [data-theme="light"] .settings-header { background: rgba(245,245,247,0.9); }
         .settings-header-content { display: flex; align-items: center; gap: 12px; max-width: 600px; margin: 0 auto; }
-        .settings-back-btn {
-            width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary);
-            border: 1px solid var(--border-color); display: flex; align-items: center;
-            justify-content: center; cursor: pointer; color: var(--text-primary);
-        }
+        .settings-back-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary); }
         .settings-header-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
         .settings-content { padding: 20px; max-width: 600px; margin: 0 auto; width: 100%; }
         .settings-section { margin-bottom: 24px; }
-        .settings-section-title {
-            font-size: 0.75rem; font-weight: 600; color: var(--text-dim);
-            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; padding-left: 4px;
-        }
+        .settings-section-title { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; padding-left: 4px; }
         .settings-group { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
-        .settings-item {
-            display: flex; align-items: center; padding: 14px 16px; cursor: pointer;
-            transition: background 0.2s; border-bottom: 1px solid var(--border-color); gap: 12px;
-        }
+        .settings-item { display: flex; align-items: center; padding: 14px 16px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid var(--border-color); gap: 12px; }
         .settings-item:last-child { border-bottom: none; }
         .settings-item:hover { background: var(--bg-hover); }
-        .settings-item-icon {
-            width: 32px; height: 32px; border-radius: 8px; display: flex;
-            align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem;
-            background: var(--bg-hover); color: var(--text-primary);
-        }
+        .settings-item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; background: var(--bg-hover); color: var(--text-primary); }
         .settings-item-content { flex: 1; min-width: 0; }
         .settings-item-title { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); margin-bottom: 1px; }
         .settings-item-subtitle { font-size: 0.75rem; color: var(--text-dim); }
         .settings-item-arrow { color: var(--text-dim); font-size: 0.9rem; }
         .theme-options { display: flex; gap: 8px; padding: 12px 16px; }
-        .theme-option {
-            flex: 1; padding: 10px; border-radius: 10px; border: 2px solid var(--border-color);
-            background: var(--bg-secondary); cursor: pointer; text-align: center; transition: all 0.2s;
-        }
+        .theme-option { flex: 1; padding: 10px; border-radius: 10px; border: 2px solid var(--border-color); background: var(--bg-secondary); cursor: pointer; text-align: center; transition: all 0.2s; }
         .theme-option:hover { border-color: var(--text-muted); }
         .theme-option.active { border-color: var(--text-primary); background: var(--bg-hover); }
         .theme-option i { font-size: 1.2rem; display: block; margin-bottom: 4px; color: var(--text-primary); }
         .theme-option span { font-size: 0.7rem; color: var(--text-secondary); font-weight: 500; }
-        .app-info-card {
-            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
-            padding: 24px; text-align: center; margin-bottom: 24px;
-        }
-        .app-info-logo {
-            width: 70px; height: 70px; background: var(--text-primary); color: var(--bg-primary);
-            border-radius: 18px; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 14px; font-size: 1.8rem; font-weight: 800;
-        }
+        .app-info-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; text-align: center; margin-bottom: 24px; }
+        .app-info-logo { width: 70px; height: 70px; background: var(--text-primary); color: var(--bg-primary); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 1.8rem; font-weight: 800; }
         .app-info-name { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
         .app-info-version { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 4px; }
         .app-info-tagline { font-size: 0.75rem; color: var(--text-muted); }
-        .admin-status {
-            display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
-            border-radius: 12px; font-size: 0.7rem; font-weight: 600; margin-top: 8px;
-        }
+        .admin-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; margin-top: 8px; }
         .admin-status.logged-in { background: rgba(76,175,80,0.15); color: #4caf50; }
         .admin-status.logged-out { background: rgba(255,152,0,0.15); color: #ff9800; }
         .admin-status .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
         .settings-footer { text-align: center; padding: 20px; color: var(--text-dim); font-size: 0.75rem; }
-
-        /* Toast */
         .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
-        .toast-custom { 
-            background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; 
-            border-radius: 10px; border-left: 4px solid var(--text-primary);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem;
-        }
+        .toast-custom { background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; border-radius: 10px; border-left: 4px solid var(--text-primary); box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem; }
     </style>
 </head>
 <body>
-
     <header class="app-header">
         <div class="header-content">
             <div class="header-brand">
@@ -322,12 +151,8 @@
                 <h5 class="header-title mb-0">Mero App</h5>
             </div>
             <div class="header-actions">
-                <button class="header-btn" id="globalSearchBtn" onclick="openGlobalSearch()" title="Search">
-                    <i class="bi bi-search"></i>
-                </button>
-                <button class="header-btn" onclick="openSettings()" title="Settings">
-                    <i class="bi bi-gear"></i>
-                </button>
+                <button class="header-btn" onclick="openGlobalSearch()" title="Search"><i class="bi bi-search"></i></button>
+                <button class="header-btn" onclick="openSettings()" title="Settings"><i class="bi bi-gear"></i></button>
             </div>
         </div>
     </header>
@@ -355,62 +180,30 @@
         </div>
 
         <div class="app-grid">
-            <div class="app-item" onclick="openApp('video-gallery')">
-                <div class="app-icon-wrapper"><i class="bi bi-collection-play-fill"></i></div>
-                <div class="app-name">Video Gallery</div>
-            </div>
-            <div class="app-item" onclick="openApp('phone')">
-                <div class="app-icon-wrapper"><i class="bi bi-telephone-fill"></i></div>
-                <div class="app-name">Phone</div>
-            </div>
-            <div class="app-item" onclick="openApp('tools')">
-                <div class="app-icon-wrapper"><i class="bi bi-tools"></i></div>
-                <div class="app-name">Tools</div>
-            </div>
-            <div class="app-item" onclick="openApp('links')">
-                <div class="app-icon-wrapper"><i class="bi bi-link-45deg"></i></div>
-                <div class="app-name">Links</div>
-            </div>
-            <div class="app-item" onclick="openApp('notes')">
-                <div class="app-icon-wrapper"><i class="bi bi-journal-text"></i></div>
-                <div class="app-name">Notes</div>
-            </div>
-            <div class="app-item" onclick="openApp('images')">
-                <div class="app-icon-wrapper"><i class="bi bi-images"></i></div>
-                <div class="app-name">Images</div>
-            </div>
-            <div class="app-item" onclick="openApp('documents')">
-                <div class="app-icon-wrapper"><i class="bi bi-file-earmark-text-fill"></i></div>
-                <div class="app-name">Documents</div>
-            </div>
-            <div class="app-item" onclick="openApp('calendar')">
-                <div class="app-icon-wrapper"><i class="bi bi-calendar-event-fill"></i></div>
-                <div class="app-name">Calendar</div>
-            </div>
-            <div class="app-item" onclick="openApp('settings')">
-                <div class="app-icon-wrapper"><i class="bi bi-gear-fill"></i></div>
-                <div class="app-name">Settings</div>
-            </div>
+            <div class="app-item" onclick="openApp('video-gallery')"><div class="app-icon-wrapper"><i class="bi bi-collection-play-fill"></i></div><div class="app-name">Video Gallery</div></div>
+            <div class="app-item" onclick="openApp('phone')"><div class="app-icon-wrapper"><i class="bi bi-telephone-fill"></i></div><div class="app-name">Phone</div></div>
+            <div class="app-item" onclick="openApp('tools')"><div class="app-icon-wrapper"><i class="bi bi-tools"></i></div><div class="app-name">Tools</div></div>
+            <div class="app-item" onclick="openApp('links')"><div class="app-icon-wrapper"><i class="bi bi-link-45deg"></i></div><div class="app-name">Links</div></div>
+            <div class="app-item" onclick="openApp('notes')"><div class="app-icon-wrapper"><i class="bi bi-journal-text"></i></div><div class="app-name">Notes</div></div>
+            <div class="app-item" onclick="openApp('images')"><div class="app-icon-wrapper"><i class="bi bi-images"></i></div><div class="app-name">Images</div></div>
+            <div class="app-item" onclick="openApp('documents')"><div class="app-icon-wrapper"><i class="bi bi-file-earmark-text-fill"></i></div><div class="app-name">Documents</div></div>
+            <div class="app-item" onclick="openApp('calendar')"><div class="app-icon-wrapper"><i class="bi bi-calendar-event-fill"></i></div><div class="app-name">Calendar</div></div>
+            <div class="app-item" onclick="openApp('settings')"><div class="app-icon-wrapper"><i class="bi bi-gear-fill"></i></div><div class="app-name">Settings</div></div>
         </div>
     </div>
 
-    <!-- 🔍 GLOBAL SEARCH OVERLAY -->
+    <!-- Global Search Overlay -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-overlay-header">
-            <button class="search-overlay-back" onclick="closeGlobalSearch()">
-                <i class="bi bi-chevron-left"></i>
-            </button>
+            <button class="search-overlay-back" onclick="closeGlobalSearch()"><i class="bi bi-chevron-left"></i></button>
             <input type="text" class="search-overlay-input" id="globalSearchInput" placeholder="Search links, documents..." oninput="performGlobalSearch()">
         </div>
         <div class="search-overlay-body" id="searchResultsBody">
-            <div class="search-results-empty">
-                <i class="bi bi-search"></i>
-                <p>Start typing to search across the app</p>
-            </div>
+            <div class="search-results-empty"><i class="bi bi-search"></i><p>Start typing to search across the app</p></div>
         </div>
     </div>
 
-    <!-- 🔐 LOGIN MODAL -->
+    <!-- Login Modal -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
             <div class="login-box-header">
@@ -419,17 +212,9 @@
                 <div class="login-box-subtitle">Sign in to perform this action</div>
             </div>
             <div class="login-error" id="loginError"></div>
-            <div class="login-form-group">
-                <label class="login-form-label">Email</label>
-                <input type="email" class="login-form-input" id="loginEmail" placeholder="admin@meroapp.com" autocomplete="email">
-            </div>
-            <div class="login-form-group">
-                <label class="login-form-label">Password</label>
-                <input type="password" class="login-form-input" id="loginPassword" placeholder="Enter password" autocomplete="current-password">
-            </div>
-            <button class="login-btn" id="loginBtn" onclick="performLogin()">
-                <i class="bi bi-box-arrow-in-right"></i> Sign In
-            </button>
+            <div class="login-form-group"><label class="login-form-label">Email</label><input type="email" class="login-form-input" id="loginEmail" placeholder="admin@meroapp.com"></div>
+            <div class="login-form-group"><label class="login-form-label">Password</label><input type="password" class="login-form-input" id="loginPassword" placeholder="Enter password"></div>
+            <button class="login-btn" id="loginBtn" onclick="performLogin()"><i class="bi bi-box-arrow-in-right"></i> Sign In</button>
             <button class="login-cancel" onclick="closeLoginModal()">Cancel</button>
         </div>
     </div>
@@ -448,44 +233,30 @@
                 <div class="app-info-name">Mero App</div>
                 <div class="app-info-version">Version 1.0.0 (Build 1)</div>
                 <div class="app-info-tagline">Your all-in-one digital companion</div>
-                <div class="admin-status logged-out" id="adminStatusBadge">
-                    <span class="dot"></span>
-                    <span id="adminStatusText">Not Logged In</span>
-                </div>
+                <div class="admin-status logged-out" id="adminStatusBadge"><span class="dot"></span><span id="adminStatusText">Not Logged In</span></div>
             </div>
-
             <div class="settings-section">
                 <div class="settings-section-title">Account</div>
                 <div class="settings-group">
                     <div class="settings-item" id="adminLoginItem" onclick="handleAdminAction()">
                         <div class="settings-item-icon"><i class="bi bi-person-lock-fill"></i></div>
-                        <div class="settings-item-content">
-                            <div class="settings-item-title" id="adminActionTitle">Admin Login</div>
-                            <div class="settings-item-subtitle" id="adminActionSubtitle">Sign in to manage content</div>
-                        </div>
+                        <div class="settings-item-content"><div class="settings-item-title" id="adminActionTitle">Admin Login</div><div class="settings-item-subtitle" id="adminActionSubtitle">Sign in to manage content</div></div>
                         <i class="bi bi-chevron-right settings-item-arrow"></i>
                     </div>
                     <div class="settings-item" id="adminLogoutItem" onclick="performLogout()" style="display:none;">
                         <div class="settings-item-icon" style="background: rgba(220,53,69,0.15); color: #dc3545;"><i class="bi bi-box-arrow-right"></i></div>
-                        <div class="settings-item-content">
-                            <div class="settings-item-title" style="color: #dc3545;">Logout</div>
-                            <div class="settings-item-subtitle">Sign out from admin account</div>
-                        </div>
+                        <div class="settings-item-content"><div class="settings-item-title" style="color: #dc3545;">Logout</div><div class="settings-item-subtitle">Sign out from admin account</div></div>
                         <i class="bi bi-chevron-right settings-item-arrow"></i>
                     </div>
                 </div>
             </div>
-
             <div class="settings-section">
                 <div class="settings-section-title">Appearance</div>
                 <div class="settings-group">
                     <div class="settings-item" style="flex-direction: column; align-items: stretch;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
                             <div class="settings-item-icon"><i class="bi bi-palette-fill"></i></div>
-                            <div class="settings-item-content">
-                                <div class="settings-item-title">Theme Mode</div>
-                                <div class="settings-item-subtitle">Choose your preferred theme</div>
-                            </div>
+                            <div class="settings-item-content"><div class="settings-item-title">Theme Mode</div><div class="settings-item-subtitle">Choose your preferred theme</div></div>
                         </div>
                         <div class="theme-options">
                             <div class="theme-option" data-theme="light" onclick="setTheme('light')"><i class="bi bi-sun-fill"></i><span>Light</span></div>
@@ -495,37 +266,28 @@
                     </div>
                 </div>
             </div>
-
             <div class="settings-section">
                 <div class="settings-section-title">About</div>
                 <div class="settings-group">
                     <div class="settings-item" onclick="showAppDetails()">
                         <div class="settings-item-icon"><i class="bi bi-info-circle-fill"></i></div>
-                        <div class="settings-item-content">
-                            <div class="settings-item-title">About App</div>
-                            <div class="settings-item-subtitle">Version, developer info & more</div>
-                        </div>
+                        <div class="settings-item-content"><div class="settings-item-title">About App</div><div class="settings-item-subtitle">Version, developer info & more</div></div>
                         <i class="bi bi-chevron-right settings-item-arrow"></i>
                     </div>
                 </div>
             </div>
-
             <div class="settings-footer">Made with precision by Anil Maharjan<br>© 2026 Mero App. All rights reserved.</div>
         </div>
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // ==========================================
-        // 🔥 FIREBASE CONFIG
-        // ==========================================
         const firebaseConfig = {
   apiKey: "AIzaSyAeOf5HQZMay4QVID8-x0PzUIo84d-XS_k",
   authDomain: "my-vid-ccddc.firebaseapp.com",
@@ -539,35 +301,16 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // ==========================================
-        //  ADMIN AUTH STATE
-        // ==========================================
         let isAdminLoggedIn = false;
         let adminEmail = '';
-        let pendingAction = null; // Stores callback when login is required
+        let pendingAction = null;
+        let searchTimeout = null;
 
         auth.onAuthStateChanged(user => {
-            if (user) {
-                isAdminLoggedIn = true;
-                adminEmail = user.email;
-                localStorage.setItem('mero_admin_logged_in', 'true');
-                localStorage.setItem('mero_admin_email', user.email);
-            } else {
-                isAdminLoggedIn = false;
-                adminEmail = '';
-                localStorage.removeItem('mero_admin_logged_in');
-                localStorage.removeItem('mero_admin_email');
-            }
+            if (user) { isAdminLoggedIn = true; adminEmail = user.email; localStorage.setItem('mero_admin_logged_in', 'true'); localStorage.setItem('mero_admin_email', user.email); }
+            else { isAdminLoggedIn = false; adminEmail = ''; localStorage.removeItem('mero_admin_logged_in'); localStorage.removeItem('mero_admin_email'); }
             updateAdminUI();
         });
-
-        // Check saved state on load
-        function checkSavedAuth() {
-            const saved = localStorage.getItem('mero_admin_logged_in');
-            if (saved === 'true') {
-                // Will be confirmed by onAuthStateChanged
-            }
-        }
 
         function updateAdminUI() {
             const badge = document.getElementById('adminStatusBadge');
@@ -576,27 +319,17 @@
             const logoutItem = document.getElementById('adminLogoutItem');
             const actionTitle = document.getElementById('adminActionTitle');
             const actionSubtitle = document.getElementById('adminActionSubtitle');
-
             if (isAdminLoggedIn) {
-                badge.className = 'admin-status logged-in';
-                statusText.textContent = `Logged in as ${adminEmail}`;
-                loginItem.style.display = 'none';
-                logoutItem.style.display = 'flex';
-                if (actionTitle) actionTitle.textContent = 'Logged In';
-                if (actionSubtitle) actionSubtitle.textContent = adminEmail;
+                badge.className = 'admin-status logged-in'; statusText.textContent = `Logged in as ${adminEmail}`;
+                loginItem.style.display = 'none'; logoutItem.style.display = 'flex';
+                if (actionTitle) actionTitle.textContent = 'Logged In'; if (actionSubtitle) actionSubtitle.textContent = adminEmail;
             } else {
-                badge.className = 'admin-status logged-out';
-                statusText.textContent = 'Not Logged In';
-                loginItem.style.display = 'flex';
-                logoutItem.style.display = 'none';
-                if (actionTitle) actionTitle.textContent = 'Admin Login';
-                if (actionSubtitle) actionSubtitle.textContent = 'Sign in to manage content';
+                badge.className = 'admin-status logged-out'; statusText.textContent = 'Not Logged In';
+                loginItem.style.display = 'flex'; logoutItem.style.display = 'none';
+                if (actionTitle) actionTitle.textContent = 'Admin Login'; if (actionSubtitle) actionSubtitle.textContent = 'Sign in to manage content';
             }
         }
 
-        // ==========================================
-        // 🔐 LOGIN / LOGOUT FUNCTIONS
-        // ==========================================
         function openLoginModal(callback) {
             pendingAction = callback;
             document.getElementById('loginError').classList.remove('show');
@@ -605,398 +338,83 @@
             document.getElementById('loginOverlay').classList.add('active');
             setTimeout(() => document.getElementById('loginEmail').focus(), 100);
         }
-
-        function closeLoginModal() {
-            document.getElementById('loginOverlay').classList.remove('active');
-            pendingAction = null;
-        }
-
+        function closeLoginModal() { document.getElementById('loginOverlay').classList.remove('active'); pendingAction = null; }
         async function performLogin() {
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             const errorEl = document.getElementById('loginError');
             const btn = document.getElementById('loginBtn');
-
-            if (!email || !password) {
-                errorEl.textContent = 'Please enter email and password';
-                errorEl.classList.add('show');
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Signing in...';
-            errorEl.classList.remove('show');
-
+            if (!email || !password) { errorEl.textContent = 'Please enter email and password'; errorEl.classList.add('show'); return; }
+            btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Signing in...'; errorEl.classList.remove('show');
             try {
                 await auth.signInWithEmailAndPassword(email, password);
-                closeLoginModal();
-                showToast('✅ Admin login successful!');
-                if (pendingAction) {
-                    setTimeout(() => {
-                        if (typeof pendingAction === 'function') pendingAction();
-                        pendingAction = null;
-                    }, 300);
-                }
+                closeLoginModal(); showToast('✅ Admin login successful!');
+                if (pendingAction) { setTimeout(() => { if (typeof pendingAction === 'function') pendingAction(); pendingAction = null; }, 300); }
             } catch (error) {
                 let msg = 'Login failed. Please try again.';
                 if (error.code === 'auth/user-not-found') msg = 'No account found with this email';
                 else if (error.code === 'auth/wrong-password') msg = 'Incorrect password';
                 else if (error.code === 'auth/invalid-email') msg = 'Invalid email format';
-                else if (error.code === 'auth/too-many-requests') msg = 'Too many attempts. Try later';
-                errorEl.textContent = msg;
-                errorEl.classList.add('show');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Sign In';
-            }
+                errorEl.textContent = msg; errorEl.classList.add('show');
+            } finally { btn.disabled = false; btn.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Sign In'; }
         }
-
-        async function performLogout() {
-            if (!confirm('Are you sure you want to logout?')) return;
-            try {
-                await auth.signOut();
-                showToast('Logged out successfully');
-            } catch (e) {
-                showToast('Logout failed');
-            }
-        }
-
-        function handleAdminAction() {
-            if (isAdminLoggedIn) {
-                showToast(`Already logged in as ${adminEmail}`);
-            } else {
-                openLoginModal();
-            }
-        }
-
-        // ==========================================
-        // 🔐 PROTECTED ACTION WRAPPER
-        // Call this before any add/edit/delete
-        // ==========================================
-        function requireAdmin(callback) {
-            if (isAdminLoggedIn) {
-                callback();
-            } else {
-                openLoginModal(callback);
-            }
-        }
-
-        // Make requireAdmin globally available for other pages
+        async function performLogout() { if (!confirm('Are you sure you want to logout?')) return; try { await auth.signOut(); showToast('Logged out successfully'); } catch (e) { showToast('Logout failed'); } }
+        function handleAdminAction() { if (isAdminLoggedIn) showToast(`Already logged in as ${adminEmail}`); else openLoginModal(); }
+        function requireAdmin(callback) { if (isAdminLoggedIn) callback(); else openLoginModal(callback); }
         window.requireAdmin = requireAdmin;
         window.isAdminLoggedIn = () => isAdminLoggedIn;
 
-        // ==========================================
-        // 🔍 GLOBAL SEARCH
-        // ==========================================
-        let searchTimeout = null;
-
-        function openGlobalSearch() {
-            document.getElementById('searchOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => document.getElementById('globalSearchInput').focus(), 100);
-        }
-
-        function closeGlobalSearch() {
-            document.getElementById('searchOverlay').classList.remove('active');
-            document.getElementById('globalSearchInput').value = '';
-            document.getElementById('searchResultsBody').innerHTML = `
-                <div class="search-results-empty">
-                    <i class="bi bi-search"></i>
-                    <p>Start typing to search across the app</p>
-                </div>
-            `;
-            document.body.style.overflow = '';
-        }
-
-        function performGlobalSearch() {
-            clearTimeout(searchTimeout);
-            const query = document.getElementById('globalSearchInput').value.trim().toLowerCase();
-            
-            if (query.length < 2) {
-                document.getElementById('searchResultsBody').innerHTML = `
-                    <div class="search-results-empty">
-                        <i class="bi bi-search"></i>
-                        <p>Type at least 2 characters to search</p>
-                    </div>
-                `;
-                return;
-            }
-
-            searchTimeout = setTimeout(() => executeGlobalSearch(query), 300);
-        }
-
+        function openGlobalSearch() { document.getElementById('searchOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('globalSearchInput').focus(), 100); }
+        function closeGlobalSearch() { document.getElementById('searchOverlay').classList.remove('active'); document.getElementById('globalSearchInput').value = ''; document.getElementById('searchResultsBody').innerHTML = '<div class="search-results-empty"><i class="bi bi-search"></i><p>Start typing to search across the app</p></div>'; document.body.style.overflow = ''; }
+        function performGlobalSearch() { clearTimeout(searchTimeout); const query = document.getElementById('globalSearchInput').value.trim().toLowerCase(); if (query.length < 2) { document.getElementById('searchResultsBody').innerHTML = '<div class="search-results-empty"><i class="bi bi-search"></i><p>Type at least 2 characters to search</p></div>'; return; } searchTimeout = setTimeout(() => executeGlobalSearch(query), 300); }
         async function executeGlobalSearch(query) {
             const body = document.getElementById('searchResultsBody');
-            body.innerHTML = `<div class="search-loading"><div class="spinner-border" role="status"></div><p style="margin-top:10px;">Searching...</p></div>`;
-
+            body.innerHTML = '<div class="search-loading"><div class="spinner-border" role="status"></div><p style="margin-top:10px;">Searching...</p></div>';
             try {
-                // Search Links
-                const linksSnap = await db.collection('links').get();
-                const linksResults = [];
-                linksSnap.forEach(doc => {
-                    const d = doc.data();
-                    if (
-                        (d.title && d.title.toLowerCase().includes(query)) ||
-                        (d.description && d.description.toLowerCase().includes(query)) ||
-                        (d.url && d.url.toLowerCase().includes(query))
-                    ) {
-                        linksResults.push({ id: doc.id, ...d, type: 'link' });
-                    }
-                });
-
-                // Search Documents
-                const docsSnap = await db.collection('documents').get();
-                const docsResults = [];
-                docsSnap.forEach(doc => {
-                    const d = doc.data();
-                    if (
-                        (d.name && d.name.toLowerCase().includes(query)) ||
-                        (d.description && d.description.toLowerCase().includes(query))
-                    ) {
-                        docsResults.push({ id: doc.id, ...d, type: 'document' });
-                    }
-                });
-
+                const linksSnap = await db.collection('links').get(); const linksResults = [];
+                linksSnap.forEach(doc => { const d = doc.data(); if ((d.title && d.title.toLowerCase().includes(query)) || (d.description && d.description.toLowerCase().includes(query)) || (d.url && d.url.toLowerCase().includes(query))) linksResults.push({ id: doc.id, ...d, type: 'link' }); });
+                const docsSnap = await db.collection('documents').get(); const docsResults = [];
+                docsSnap.forEach(doc => { const d = doc.data(); if ((d.name && d.name.toLowerCase().includes(query)) || (d.description && d.description.toLowerCase().includes(query))) docsResults.push({ id: doc.id, ...d, type: 'document' }); });
                 renderSearchResults(linksResults, docsResults);
-            } catch (error) {
-                console.error('Search error:', error);
-                body.innerHTML = `
-                    <div class="search-results-empty">
-                        <i class="bi bi-exclamation-triangle"></i>
-                        <p>Search failed. Check connection.</p>
-                    </div>
-                `;
-            }
+            } catch (error) { console.error('Search error:', error); body.innerHTML = '<div class="search-results-empty"><i class="bi bi-exclamation-triangle"></i><p>Search failed. Check connection.</p></div>'; }
         }
-
         function renderSearchResults(links, docs) {
             const body = document.getElementById('searchResultsBody');
-            
-            if (links.length === 0 && docs.length === 0) {
-                body.innerHTML = `
-                    <div class="search-results-empty">
-                        <i class="bi bi-emoji-frown"></i>
-                        <p>No results found</p>
-                        <p style="font-size:0.8rem; color: var(--text-dim);">Try different keywords</p>
-                    </div>
-                `;
-                return;
-            }
-
+            if (links.length === 0 && docs.length === 0) { body.innerHTML = '<div class="search-results-empty"><i class="bi bi-emoji-frown"></i><p>No results found</p><p style="font-size:0.8rem; color: var(--text-dim);">Try different keywords</p></div>'; return; }
             let html = '';
-
-            if (links.length > 0) {
-                html += `<div class="search-group-title">🔗 Links (${links.length})</div>`;
-                links.forEach(item => {
-                    html += `
-                        <div class="search-result-item" onclick="navigateToSearchResult('link', '${item.id}')">
-                            <div class="search-result-icon link-icon"><i class="bi bi-link-45deg"></i></div>
-                            <div class="search-result-content">
-                                <div class="search-result-title">${escapeHtml(item.title)}</div>
-                                <div class="search-result-subtitle">${escapeHtml(item.url || item.description || '')}</div>
-                            </div>
-                            <i class="bi bi-chevron-right search-result-arrow"></i>
-                        </div>
-                    `;
-                });
-            }
-
-            if (docs.length > 0) {
-                html += `<div class="search-group-title">📄 Documents (${docs.length})</div>`;
-                docs.forEach(item => {
-                    const iconClass = item.type === 'image' ? 'img-icon' : 
-                                     item.type === 'pdf' ? 'pdf-icon' : 'doc-icon';
-                    const icon = item.type === 'image' ? 'bi-image' : 
-                                item.type === 'pdf' ? 'bi-file-earmark-pdf' : 'bi-file-earmark-text';
-                    html += `
-                        <div class="search-result-item" onclick="navigateToSearchResult('document', '${item.id}')">
-                            <div class="search-result-icon ${iconClass}"><i class="bi ${icon}"></i></div>
-                            <div class="search-result-content">
-                                <div class="search-result-title">${escapeHtml(item.name)}</div>
-                                <div class="search-result-subtitle">${escapeHtml(item.description || item.type || '')}</div>
-                            </div>
-                            <i class="bi bi-chevron-right search-result-arrow"></i>
-                        </div>
-                    `;
-                });
-            }
-
+            if (links.length > 0) { html += '<div class="search-group-title">🔗 Links (' + links.length + ')</div>'; links.forEach(item => { html += '<div class="search-result-item" onclick="navigateToSearchResult(\'link\', \'' + item.id + '\')"><div class="search-result-icon link-icon"><i class="bi bi-link-45deg"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.title) + '</div><div class="search-result-subtitle">' + escapeHtml(item.url || item.description || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>'; }); }
+            if (docs.length > 0) { html += '<div class="search-group-title">📄 Documents (' + docs.length + ')</div>'; docs.forEach(item => { const iconClass = item.type === 'image' ? 'doc-icon' : item.type === 'pdf' ? 'doc-icon' : 'doc-icon'; const icon = item.type === 'image' ? 'bi-image' : item.type === 'pdf' ? 'bi-file-earmark-pdf' : 'bi-file-earmark-text'; html += '<div class="search-result-item" onclick="navigateToSearchResult(\'document\', \'' + item.id + '\')"><div class="search-result-icon ' + iconClass + '"><i class="bi ' + icon + '"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.name) + '</div><div class="search-result-subtitle">' + escapeHtml(item.description || item.type || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>'; }); }
             body.innerHTML = html;
         }
+        function navigateToSearchResult(type, id) { if (type === 'link') window.location.href = 'links.html?open=' + id; else if (type === 'document') window.location.href = 'documents.html?open=' + id; }
+        function escapeHtml(text) { if (!text) return ''; const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
 
-        function navigateToSearchResult(type, id) {
-            if (type === 'link') {
-                // Pass item ID via URL param
-                window.location.href = `links.html?open=${id}`;
-            } else if (type === 'document') {
-                window.location.href = `documents.html?open=${id}`;
-            }
-        }
+        function setTheme(theme) { document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('mero_app_theme', theme); document.querySelectorAll('.theme-option').forEach(el => { el.classList.toggle('active', el.dataset.theme === theme); }); showToast('Theme changed to ' + theme); }
+        function loadTheme() { const saved = localStorage.getItem('mero_app_theme') || 'dark'; document.documentElement.setAttribute('data-theme', saved); document.querySelectorAll('.theme-option').forEach(el => { el.classList.toggle('active', el.dataset.theme === saved); }); }
 
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // ==========================================
-        // THEME
-        // ==========================================
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('mero_app_theme', theme);
-            document.querySelectorAll('.theme-option').forEach(el => {
-                el.classList.toggle('active', el.dataset.theme === theme);
-            });
-            showToast(`Theme changed to ${theme}`);
-        }
-        function loadTheme() {
-            const saved = localStorage.getItem('mero_app_theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', saved);
-            document.querySelectorAll('.theme-option').forEach(el => {
-                el.classList.toggle('active', el.dataset.theme === saved);
-            });
-        }
-
-        // ==========================================
-        // CLOCK & GREETING
-        // ==========================================
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = now.getMinutes();
-            const period = hours >= 12 ? 'PM' : 'AM';
-            const displayHours = hours % 12;
-            const finalHours = displayHours ? displayHours : 12;
-            document.getElementById('timeBadge').textContent = 
-                `${finalHours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')} ${period}`;
-            const options = { year: 'numeric', month: 'short', day: 'numeric', weekday: 'long' };
-            document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', options);
-            updateGreeting(hours);
-        }
-        function updateGreeting(h) {
-            const t = document.getElementById('greetingText');
-            const s = document.getElementById('greetingSubtext');
-            if (h >= 5 && h < 12) { t.textContent = 'Good Morning, Anil!'; s.textContent = 'Hope you have a great day ahead'; }
-            else if (h >= 12 && h < 17) { t.textContent = 'Good Afternoon, Anil!'; s.textContent = 'Hope your day is going well'; }
-            else if (h >= 17 && h < 21) { t.textContent = 'Good Evening, Anil!'; s.textContent = 'Time to relax and unwind'; }
-            else { t.textContent = 'Good Night, Anil!'; s.textContent = 'Rest well for tomorrow'; }
-        }
-        function getNepaliDate() {
-            const now = new Date();
-            const nepaliMonths = ['बैशाख','जेठ','असार','श्रावण','भदौ','असोज','कार्तिक','मंसिर','पुष','माघ','फागुन','चैत'];
-            const nepaliDays = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार'];
-            function toNepaliNum(num) {
-                const d = ['०','१','२','३','४','५','६','७','८','९'];
-                return num.toString().split('').map(x => d[parseInt(x)]).join('');
-            }
-            return `वि.सं. ${toNepaliNum(2083)} ${nepaliMonths[5]} ${toNepaliNum(1)}, ${nepaliDays[now.getDay()]}`;
-        }
+        function updateClock() { const now = new Date(); let hours = now.getHours(); const minutes = now.getMinutes(); const period = hours >= 12 ? 'PM' : 'AM'; const displayHours = hours % 12; const finalHours = displayHours ? displayHours : 12; document.getElementById('timeBadge').textContent = finalHours.toString().padStart(2,'0') + ':' + minutes.toString().padStart(2,'0') + ' ' + period; const options = { year: 'numeric', month: 'short', day: 'numeric', weekday: 'long' }; document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', options); updateGreeting(hours); }
+        function updateGreeting(h) { const t = document.getElementById('greetingText'); const s = document.getElementById('greetingSubtext'); if (h >= 5 && h < 12) { t.textContent = 'Good Morning, Anil!'; s.textContent = 'Hope you have a great day ahead'; } else if (h >= 12 && h < 17) { t.textContent = 'Good Afternoon, Anil!'; s.textContent = 'Hope your day is going well'; } else if (h >= 17 && h < 21) { t.textContent = 'Good Evening, Anil!'; s.textContent = 'Time to relax and unwind'; } else { t.textContent = 'Good Night, Anil!'; s.textContent = 'Rest well for tomorrow'; } }
+        function getNepaliDate() { const now = new Date(); const nepaliMonths = ['बैशाख','जेठ','असार','श्रावण','भदौ','असोज','कार्तिक','मंसिर','पुष','माघ','फागुन','चैत']; const nepaliDays = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार']; function toNepaliNum(num) { const d = ['०','१','२','३','४','५','६','७','८','९']; return num.toString().split('').map(x => d[parseInt(x)]).join(''); } return 'वि.सं. ' + toNepaliNum(2083) + ' ' + nepaliMonths[5] + ' ' + toNepaliNum(1) + ', ' + nepaliDays[now.getDay()]; }
         function updateNepaliDate() { document.getElementById('nepaliDate').textContent = getNepaliDate(); }
 
-        // ==========================================
-        // WEATHER
-        // ==========================================
-        async function loadWeather() {
-            const row = document.getElementById('weatherRow');
-            try {
-                let lat = 27.7172, lon = 85.3240, loc = 'Kathmandu';
-                if (navigator.geolocation) {
-                    try {
-                        const pos = await new Promise((r,j) => navigator.geolocation.getCurrentPosition(r,j,{timeout:5000}));
-                        lat = pos.coords.latitude; lon = pos.coords.longitude;
-                        try {
-                            const g = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
-                            const gd = await g.json();
-                            if (gd.city || gd.locality) loc = gd.city || gd.locality;
-                        } catch(e){}
-                    } catch(e){}
-                }
-                const wr = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-                const wd = await wr.json();
-                const c = wd.current_weather;
-                const temp = Math.round(c.temperature);
-                const info = getWeatherInfo(c.weathercode);
-                row.innerHTML = `
-                    <div><div class="weather-temp">${temp}°C</div><div class="weather-condition">${info.condition}</div></div>
-                    <div style="text-align:right;">
-                        <div class="weather-location"><i class="bi bi-geo-alt-fill"></i> ${loc}</div>
-                        <div class="weather-details"><span><i class="bi bi-wind"></i> ${c.windspeed} km/h</span><span><i class="bi bi-compass"></i> ${getWindDir(c.winddirection)}</span></div>
-                    </div>
-                `;
-            } catch(e) {
-                row.innerHTML = `<div><div class="weather-temp">--°C</div><div class="weather-condition">Unavailable</div></div><div style="text-align:right;"><div class="weather-location"><i class="bi bi-geo-alt-fill"></i> Error</div></div>`;
-            }
-        }
-        function getWeatherInfo(c) {
-            const m = {0:{condition:'Clear sky'},1:{condition:'Mainly clear'},2:{condition:'Partly cloudy'},3:{condition:'Overcast'},45:{condition:'Foggy'},61:{condition:'Slight rain'},63:{condition:'Rain'},95:{condition:'Thunderstorm'}};
-            return m[c] || {condition:'Unknown'};
-        }
+        async function loadWeather() { const row = document.getElementById('weatherRow'); try { let lat = 27.7172, lon = 85.3240, loc = 'Kathmandu'; if (navigator.geolocation) { try { const pos = await new Promise((r,j) => navigator.geolocation.getCurrentPosition(r,j,{timeout:5000})); lat = pos.coords.latitude; lon = pos.coords.longitude; try { const g = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lon + '&localityLanguage=en'); const gd = await g.json(); if (gd.city || gd.locality) loc = gd.city || gd.locality; } catch(e){} } catch(e){} } const wr = await fetch('https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon + '&current_weather=true'); const wd = await wr.json(); const c = wd.current_weather; const temp = Math.round(c.temperature); const info = getWeatherInfo(c.weathercode); row.innerHTML = '<div><div class="weather-temp">' + temp + '°C</div><div class="weather-condition">' + info.condition + '</div></div><div style="text-align:right;"><div class="weather-location"><i class="bi bi-geo-alt-fill"></i> ' + loc + '</div><div class="weather-details"><span><i class="bi bi-wind"></i> ' + c.windspeed + ' km/h</span><span><i class="bi bi-compass"></i> ' + getWindDir(c.winddirection) + '</span></div></div>'; } catch(e) { row.innerHTML = '<div><div class="weather-temp">--°C</div><div class="weather-condition">Unavailable</div></div><div style="text-align:right;"><div class="weather-location"><i class="bi bi-geo-alt-fill"></i> Error</div></div>'; } }
+        function getWeatherInfo(c) { const m = {0:{condition:'Clear sky'},1:{condition:'Mainly clear'},2:{condition:'Partly cloudy'},3:{condition:'Overcast'},45:{condition:'Foggy'},61:{condition:'Slight rain'},63:{condition:'Rain'},95:{condition:'Thunderstorm'}}; return m[c] || {condition:'Unknown'}; }
         function getWindDir(d) { return ['N','NE','E','SE','S','SW','W','NW'][Math.round(d/45)%8]; }
 
-        // ==========================================
-        // SETTINGS
-        // ==========================================
         function openSettings() { document.getElementById('settingsOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
         function closeSettings() { document.getElementById('settingsOverlay').classList.remove('active'); document.body.style.overflow = ''; }
         function showAppDetails() { alert('Mero App v1.0.0\n\nDeveloped by: Anil Maharjan\nWebsite: maharjan-anil.com.np\n\n© 2026 All Rights Reserved'); }
 
-        // ==========================================
-        // APP LAUNCHER
-        // ==========================================
-        function openApp(name) {
-            const actions = {
-                'video-gallery': () => window.location.href = 'videogallery.html',
-                'phone': () => window.location.href = 'phone.html',
-                'tools': () => window.location.href = 'tools.html',
-                'links': () => window.location.href = 'links.html',
-                'notes': () => showToast('Notes coming soon'),
-                'images': () => showToast('Images coming soon'),
-                'documents': () => window.location.href = 'documents.html',
-                'calendar': () => window.location.href = 'calendar.html',
-                'settings': () => openSettings()
-            };
-            if (actions[name]) actions[name]();
-        }
+        function openApp(name) { const actions = { 'video-gallery': () => window.location.href = 'videogallery.html', 'phone': () => window.location.href = 'phone.html', 'tools': () => window.location.href = 'tools.html', 'links': () => window.location.href = 'links.html', 'notes': () => showToast('Notes coming soon'), 'images': () => showToast('Images coming soon'), 'documents': () => window.location.href = 'documents.html', 'calendar': () => window.location.href = 'calendar.html', 'settings': () => openSettings() }; if (actions[name]) actions[name](); }
 
-        // ==========================================
-        // TOAST
-        // ==========================================
-        function showToast(msg) {
-            const c = document.getElementById('toastContainer');
-            const t = document.createElement('div');
-            t.className = 'toast-custom';
-            t.textContent = msg;
-            c.appendChild(t);
-            setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 2500);
-        }
+        function showToast(msg) { const c = document.getElementById('toastContainer'); const t = document.createElement('div'); t.className = 'toast-custom'; t.textContent = msg; c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 2500); }
 
-        // ==========================================
-        // KEYBOARD SHORTCUTS
-        // ==========================================
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (document.getElementById('searchOverlay').classList.contains('active')) closeGlobalSearch();
-                else if (document.getElementById('loginOverlay').classList.contains('active')) closeLoginModal();
-            }
-            // Ctrl/Cmd + K to open search
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                openGlobalSearch();
-            }
-        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (document.getElementById('searchOverlay').classList.contains('active')) closeGlobalSearch(); else if (document.getElementById('loginOverlay').classList.contains('active')) closeLoginModal(); else if (document.getElementById('settingsOverlay').classList.contains('active')) closeSettings(); } if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); } });
 
-        // ==========================================
-        // INIT
-        // ==========================================
-        checkSavedAuth();
-        loadTheme();
-        updateClock();
-        updateNepaliDate();
-        setInterval(updateClock, 1000);
-        loadWeather();
-        setInterval(loadWeather, 600000);
+        loadTheme(); updateClock(); updateNepaliDate(); setInterval(updateClock, 1000); loadWeather(); setInterval(loadWeather, 600000);
+
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js').then(reg => console.log('[PWA] SW registered:', reg.scope)).catch(err => console.log('[PWA] SW failed:', err)); }); }
+        let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
     </script>
 </body>
 </html>
