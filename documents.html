@@ -9,578 +9,147 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0f0f0f;
-            --bg-secondary: #1a1a1a;
-            --bg-card: #1a1a1a;
-            --bg-hover: #252525;
-            --border-color: #272727;
-            --text-primary: #ffffff;
-            --text-secondary: #e0e0e0;
-            --text-muted: #aaaaaa;
-            --text-dim: #666666;
-            --accent: #ffffff;
+            --bg-primary: #0f0f0f; --bg-secondary: #1a1a1a; --bg-card: #1a1a1a; --bg-hover: #252525;
+            --border-color: #272727; --text-primary: #ffffff; --text-secondary: #e0e0e0;
+            --text-muted: #aaaaaa; --text-dim: #666666; --accent: #ffffff;
         }
-
         [data-theme="light"] {
-            --bg-primary: #f5f5f7;
-            --bg-secondary: #ffffff;
-            --bg-card: #ffffff;
-            --bg-hover: #f0f0f0;
-            --border-color: #e0e0e0;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --text-muted: #6a6a6a;
-            --text-dim: #9a9a9a;
-            --accent: #000000;
+            --bg-primary: #f5f5f7; --bg-secondary: #ffffff; --bg-card: #ffffff; --bg-hover: #f0f0f0;
+            --border-color: #e0e0e0; --text-primary: #1a1a1a; --text-secondary: #4a4a4a;
+            --text-muted: #6a6a6a; --text-dim: #9a9a9a; --accent: #000000;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            background-color: var(--bg-primary); 
-            color: var(--text-primary); 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; }
 
-        /* Header */
-        .app-header { 
-            background-color: rgba(15, 15, 15, 0.85); 
-            padding: 14px 20px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
+        .app-header { background-color: rgba(15, 15, 15, 0.85); padding: 14px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(20px); }
         [data-theme="light"] .app-header { background-color: rgba(245, 245, 247, 0.85); }
-        
-        .header-content { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            max-width: 600px; 
-            margin: 0 auto; 
-        }
+        .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 600px; margin: 0 auto; }
         .header-left { display: flex; align-items: center; gap: 12px; }
-        .header-btn {
-            width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary);
-            border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s ease; color: var(--text-primary); text-decoration: none;
-        }
+        .header-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; color: var(--text-primary); text-decoration: none; }
         .header-btn:hover { background: var(--bg-hover); transform: translateY(-1px); }
         .header-btn i { font-size: 1.1rem; }
-        .header-title { 
-            font-size: 1.15rem; 
-            font-weight: 700; 
-            color: var(--text-primary);
-            letter-spacing: 1px;
-        }
-        .add-btn {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .header-title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); letter-spacing: 1px; }
+        .add-btn { background: var(--accent); color: var(--bg-primary); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s; }
         .add-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        /* Main Container */
-        .page-container { 
-            padding: 20px; 
-            max-width: 600px; 
-            margin: 0 auto; 
-            padding-bottom: 40px; 
-        }
-
-        /* Search */
-        .search-container {
-            position: relative;
-            margin-bottom: 16px;
-        }
-        .search-input {
-            width: 100%;
-            padding: 14px 16px 14px 44px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.2s;
-        }
+        .page-container { padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 40px; }
+        .search-container { position: relative; margin-bottom: 16px; }
+        .search-input { width: 100%; padding: 14px 16px 14px 44px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-primary); font-size: 0.95rem; outline: none; }
         .search-input:focus { border-color: var(--accent); }
         .search-input::placeholder { color: var(--text-dim); }
-        .search-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-dim);
-            font-size: 1.1rem;
-        }
+        .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 1.1rem; }
 
-        /* Source Filter */
-        .source-filter {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        .source-chip {
-            flex: 1;
-            padding: 10px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
+        .source-filter { display: flex; gap: 8px; margin-bottom: 20px; }
+        .source-chip { flex: 1; padding: 10px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .source-chip:hover { border-color: var(--text-muted); }
-        .source-chip.active {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border-color: var(--accent);
-        }
-        .source-chip i { font-size: 1rem; }
+        .source-chip.active { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
 
-        /* Category Filter */
-        .category-filter {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            padding-bottom: 4px;
-        }
+        .category-filter { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
         .category-filter::-webkit-scrollbar { display: none; }
-        .category-chip {
-            padding: 8px 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
+        .category-chip { padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
         .category-chip:hover { border-color: var(--text-muted); }
-        .category-chip.active {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border-color: var(--accent);
-        }
+        .category-chip.active { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
 
-        /* Documents Grid */
-        .docs-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
+        .docs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 
-        .doc-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            overflow: hidden;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            position: relative;
-        }
-        .doc-card:hover {
-            background: var(--bg-hover);
-            border-color: var(--text-dim);
-            transform: translateY(-2px);
-        }
+        .doc-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; transition: all 0.2s ease; cursor: pointer; position: relative; }
+        .doc-card:hover { background: var(--bg-hover); border-color: var(--text-dim); transform: translateY(-2px); }
 
-        /* Thumbnail Area */
-        .doc-thumbnail {
-            width: 100%;
-            height: 140px;
-            background: var(--bg-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .doc-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .doc-thumbnail .file-icon {
-            font-size: 3rem;
-            color: var(--text-muted);
-        }
-        
-        /* Source Badge - Logo Only, Dim */
-        .source-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 26px;
-            height: 26px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            transition: all 0.2s;
-        }
-        .source-badge.drive {
-            background: rgba(66, 133, 244, 0.5);
-        }
-        .source-badge.dropbox {
-            background: rgba(0, 97, 255, 0.5);
-        }
-        .source-badge:hover {
-            color: rgba(255, 255, 255, 0.95);
-        }
-        .source-badge.drive:hover {
-            background: rgba(66, 133, 244, 0.8);
-        }
-        .source-badge.dropbox:hover {
-            background: rgba(0, 97, 255, 0.8);
-        }
+        .doc-thumbnail { width: 100%; height: 140px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .doc-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+        .doc-thumbnail .file-icon { font-size: 3rem; color: var(--text-muted); }
 
-        /* Type Badge - Dim */
-        .type-badge {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            background: rgba(0, 0, 0, 0.4);
-            color: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            transition: all 0.2s;
-        }
-        .type-badge:hover {
-            background: rgba(0, 0, 0, 0.7);
-            color: rgba(255, 255, 255, 0.95);
-        }
+        .source-badge { position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 6px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.75); backdrop-filter: blur(2px); transition: all 0.2s; }
+        .source-badge.drive { background: rgba(66, 133, 244, 0.5); }
+        .source-badge.dropbox { background: rgba(0, 97, 255, 0.5); }
+        .source-badge:hover { color: rgba(255, 255, 255, 0.95); }
+        .source-badge.drive:hover { background: rgba(66, 133, 244, 0.8); }
+        .source-badge.dropbox:hover { background: rgba(0, 97, 255, 0.8); }
 
-        /* Card Content */
-        .doc-content {
-            padding: 10px 12px;
-        }
-        .doc-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+        .type-badge { position: absolute; bottom: 8px; left: 8px; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; background: rgba(0, 0, 0, 0.4); color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(2px); transition: all 0.2s; }
+        .type-badge:hover { background: rgba(0, 0, 0, 0.7); color: rgba(255, 255, 255, 0.95); }
 
-        /* Description */
-        .doc-description {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            min-height: 20px;
-        }
+        .doc-content { padding: 10px 12px; }
+        .doc-title { font-size: 0.8rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .doc-description { font-size: 0.7rem; color: var(--text-muted); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; min-height: 20px; }
         .doc-description:empty { display: none; }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-            grid-column: 1 / -1;
-        }
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 16px;
-            color: var(--text-dim);
-        }
-        .empty-state h5 {
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); grid-column: 1 / -1; }
+        .empty-state i { font-size: 4rem; margin-bottom: 16px; color: var(--text-dim); }
+        .empty-state h5 { color: var(--text-primary); margin-bottom: 8px; }
+        .loading-container { text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1; }
+        .loading-container .spinner-border { width: 2rem; height: 2rem; color: var(--accent); }
 
-        /* Loading */
-        .loading-container {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-            grid-column: 1 / -1;
-        }
-        .loading-container .spinner-border {
-            width: 2rem;
-            height: 2rem;
-            color: var(--accent);
-        }
-
-        /* Modal */
-        .modal-content {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            border-radius: 16px;
-        }
-        .modal-header {
-            border-bottom: 1px solid var(--border-color);
-            padding: 16px 20px;
-        }
+        .modal-content { background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 16px; }
+        .modal-header { border-bottom: 1px solid var(--border-color); padding: 16px 20px; }
         .modal-title { font-weight: 700; font-size: 1.1rem; }
         .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
         [data-theme="light"] .btn-close-white { filter: none; }
         .modal-body { padding: 20px; }
-        .modal-footer {
-            border-top: 1px solid var(--border-color);
-            padding: 16px 20px;
-        }
-        .form-control, .form-select {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-        .form-control:focus, .form-select:focus {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
-        }
-        .form-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        .form-text {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-        }
-        .btn-custom-primary {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border: none;
-            font-weight: 600;
-        }
-        .btn-custom-primary:hover { opacity: 0.9; }
-        .btn-custom-secondary {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-        .btn-custom-secondary:hover { background: var(--bg-hover); }
+        .modal-footer { border-top: 1px solid var(--border-color); padding: 16px 20px; }
+        .form-control, .form-select { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); }
+        .form-control:focus, .form-select:focus { background: var(--bg-secondary); color: var(--text-primary); border-color: var(--accent); box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1); }
+        .form-label { color: var(--text-secondary); font-weight: 500; margin-bottom: 8px; }
+        .form-text { color: var(--text-dim); font-size: 0.8rem; }
+        .btn-custom-primary { background: var(--accent); color: var(--bg-primary); border: none; font-weight: 600; }
+        .btn-custom-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
 
-        /* Toast */
         .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
-        .toast-custom { 
-            background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; 
-            border-radius: 10px; border-left: 4px solid var(--accent); 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem; 
-        }
+        .toast-custom { background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; border-radius: 10px; border-left: 4px solid var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem; }
 
-        /* ==========================================
-           FULL SCREEN PREVIEW MODAL
-           ========================================== */
-        .preview-modal {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-primary);
-            z-index: 9999;
-            display: none;
-            flex-direction: column;
-        }
+        .preview-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-primary); z-index: 9999; display: none; flex-direction: column; }
         .preview-modal.active { display: flex; }
-        .preview-header {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
-            gap: 12px;
-        }
-        .preview-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            flex: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            min-width: 0;
-        }
-        .preview-actions { 
-            display: flex; 
-            gap: 6px; 
-            flex-shrink: 0;
-        }
-        .preview-btn {
-            width: 34px; height: 34px; border-radius: 8px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--text-muted); transition: all 0.2s;
-            text-decoration: none;
-        }
-        .preview-btn:hover { 
-            background: var(--bg-hover); 
-            color: var(--text-primary); 
-        }
-        .preview-btn.edit:hover {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border-color: var(--accent);
-        }
-        .preview-btn.delete {
-            color: #dc3545;
-        }
-        .preview-btn.delete:hover {
-            background: #dc3545;
-            color: white;
-            border-color: #dc3545;
-        }
-        .preview-btn i { font-size: 0.95rem; }
-        
-        .preview-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: auto;
-            padding: 20px;
-            position: relative;
-        }
-        .preview-content img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-        .preview-content iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 8px;
-            background: white;
-        }
-        .preview-fallback {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .preview-fallback i {
-            font-size: 5rem;
-            color: var(--text-dim);
-            margin-bottom: 16px;
-        }
-        .preview-fallback p {
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-        .preview-fallback a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: var(--accent);
-            color: var(--bg-primary);
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-        .preview-fallback a:hover { opacity: 0.9; }
+        .preview-header { background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 12px; }
+        .preview-title { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+        .preview-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        .preview-btn { width: 34px; height: 34px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.2s; text-decoration: none; }
+        .preview-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .preview-btn.edit:hover { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
+        .preview-btn.delete { color: #dc3545; }
+        .preview-btn.delete:hover { background: #dc3545; color: white; border-color: #dc3545; }
+        .preview-content { flex: 1; display: flex; align-items: center; justify-content: center; overflow: auto; padding: 20px; }
+        .preview-content img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
+        .preview-content iframe { width: 100%; height: 100%; border: none; border-radius: 8px; background: white; }
+        .preview-fallback { text-align: center; padding: 40px 20px; }
+        .preview-fallback i { font-size: 5rem; color: var(--text-dim); margin-bottom: 16px; }
+        .preview-fallback p { color: var(--text-muted); margin-bottom: 16px; }
+        .preview-fallback a { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--accent); color: var(--bg-primary); border-radius: 10px; text-decoration: none; font-weight: 600; }
 
-        /* Responsive */
         @media (max-width: 576px) {
-            .docs-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
+            .docs-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
             .doc-thumbnail { height: 110px; }
             .doc-description { -webkit-line-clamp: 1; font-size: 0.65rem; }
-            .source-badge {
-                width: 22px;
-                height: 22px;
-                font-size: 0.7rem;
-            }
-            .preview-header {
-                padding: 10px 12px;
-            }
-            .preview-btn {
-                width: 32px;
-                height: 32px;
-            }
-            .preview-title {
-                font-size: 0.85rem;
-            }
+            .source-badge { width: 22px; height: 22px; font-size: 0.7rem; }
+            .preview-header { padding: 10px 12px; }
+            .preview-btn { width: 32px; height: 32px; }
+            .preview-title { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header class="app-header">
         <div class="header-content">
             <div class="header-left">
-                <a href="index.html" class="header-btn" title="Back to Home">
-                    <i class="bi bi-arrow-left"></i>
-                </a>
+                <a href="index.html" class="header-btn" title="Back to Home"><i class="bi bi-arrow-left"></i></a>
                 <h5 class="header-title mb-0">DOCUMENTS</h5>
             </div>
-            <button class="add-btn" onclick="openAddModal()">
-                <i class="bi bi-plus-lg"></i>
-                Add File
+            <button class="add-btn admin-only-btn" onclick="openAddModal()" style="display:none;">
+                <i class="bi bi-plus-lg"></i> Add File
             </button>
         </div>
     </header>
 
-    <!-- Main Content -->
     <div class="page-container">
         <div class="search-container">
             <i class="bi bi-search search-icon"></i>
             <input type="text" class="search-input" id="searchInput" placeholder="Search files..." oninput="filterDocs()">
         </div>
-
         <div class="source-filter">
-            <div class="source-chip active" data-source="all" onclick="filterBySource('all')">
-                <i class="bi bi-collection"></i> All
-            </div>
-            <div class="source-chip" data-source="drive" onclick="filterBySource('drive')">
-                <i class="bi bi-google"></i> Drive
-            </div>
-            <div class="source-chip" data-source="dropbox" onclick="filterBySource('dropbox')">
-                <i class="bi bi-box"></i> Dropbox
-            </div>
+            <div class="source-chip active" data-source="all" onclick="filterBySource('all')"><i class="bi bi-collection"></i> All</div>
+            <div class="source-chip" data-source="drive" onclick="filterBySource('drive')"><i class="bi bi-google"></i> Drive</div>
+            <div class="source-chip" data-source="dropbox" onclick="filterBySource('dropbox')"><i class="bi bi-box"></i> Dropbox</div>
         </div>
-
         <div class="category-filter">
             <div class="category-chip active" onclick="filterByCategory('all')">All Files</div>
             <div class="category-chip" onclick="filterByCategory('image')">Images</div>
@@ -589,12 +158,8 @@
             <div class="category-chip" onclick="filterByCategory('video')">Videos</div>
             <div class="category-chip" onclick="filterByCategory('other')">Other</div>
         </div>
-
         <div class="docs-grid" id="docsGrid">
-            <div class="loading-container">
-                <div class="spinner-border" role="status"></div>
-                <div style="margin-top: 10px;">Loading files...</div>
-            </div>
+            <div class="loading-container"><div class="spinner-border" role="status"></div><div style="margin-top: 10px;">Loading files...</div></div>
         </div>
     </div>
 
@@ -609,36 +174,11 @@
                 <div class="modal-body">
                     <form id="fileForm">
                         <input type="hidden" id="fileId">
-                        <div class="mb-3">
-                            <label class="form-label">File Source *</label>
-                            <select class="form-select" id="fileSource" onchange="onSourceChange()" required>
-                                <option value="drive">Google Drive</option>
-                                <option value="dropbox">Dropbox</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">File URL / Link *</label>
-                            <input type="url" class="form-control" id="fileUrl" placeholder="Paste file link here" required>
-                            <small class="form-text" id="urlHelp">Google Drive: Use shareable link or file ID</small>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">File Name *</label>
-                            <input type="text" class="form-control" id="fileName" placeholder="e.g., My Document" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">File Type *</label>
-                            <select class="form-select" id="fileType" required>
-                                <option value="image">Image (JPG, PNG, GIF)</option>
-                                <option value="pdf">PDF Document</option>
-                                <option value="document">Document (DOC, XLS, PPT)</option>
-                                <option value="video">Video</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" id="fileDescription" rows="2" placeholder="Optional description"></textarea>
-                        </div>
+                        <div class="mb-3"><label class="form-label">File Source *</label><select class="form-select" id="fileSource" onchange="onSourceChange()" required><option value="drive">Google Drive</option><option value="dropbox">Dropbox</option></select></div>
+                        <div class="mb-3"><label class="form-label">File URL / Link *</label><input type="url" class="form-control" id="fileUrl" placeholder="Paste file link here" required><small class="form-text" id="urlHelp">Google Drive: Use shareable link or file ID</small></div>
+                        <div class="mb-3"><label class="form-label">File Name *</label><input type="text" class="form-control" id="fileName" placeholder="e.g., My Document" required></div>
+                        <div class="mb-3"><label class="form-label">File Type *</label><select class="form-select" id="fileType" required><option value="image">Image (JPG, PNG, GIF)</option><option value="pdf">PDF Document</option><option value="document">Document (DOC, XLS, PPT)</option><option value="video">Video</option><option value="other">Other</option></select></div>
+                        <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="fileDescription" rows="2" placeholder="Optional description"></textarea></div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -649,42 +189,26 @@
         </div>
     </div>
 
-    <!-- ✅ Full Screen Preview Modal (with Edit/Delete in header) -->
+    <!-- Full Screen Preview Modal -->
     <div class="preview-modal" id="previewModal">
         <div class="preview-header">
             <div class="preview-title" id="previewTitle">Loading...</div>
             <div class="preview-actions">
-                <!-- ✅ NEW: Edit Button -->
-                <button class="preview-btn edit" id="previewEditBtn" title="Edit">
-                    <i class="bi bi-pencil"></i>
-                </button>
-                <!-- ✅ NEW: Delete Button -->
-                <button class="preview-btn delete" id="previewDeleteBtn" title="Delete">
-                    <i class="bi bi-trash"></i>
-                </button>
-                <!-- Download Button -->
-                <a class="preview-btn" id="previewDownloadBtn" href="#" target="_blank" title="Download">
-                    <i class="bi bi-download"></i>
-                </a>
-                <!-- Open in New Tab Button -->
-                <a class="preview-btn" id="previewOpenBtn" href="#" target="_blank" title="Open in New Tab">
-                    <i class="bi bi-box-arrow-up-right"></i>
-                </a>
-                <!-- Close Button -->
-                <button class="preview-btn" onclick="closePreview()" title="Close">
-                    <i class="bi bi-x-lg"></i>
-                </button>
+                <button class="preview-btn edit" id="previewEditBtn" title="Edit"><i class="bi bi-pencil"></i></button>
+                <button class="preview-btn delete" id="previewDeleteBtn" title="Delete"><i class="bi bi-trash"></i></button>
+                <a class="preview-btn" id="previewDownloadBtn" href="#" target="_blank" title="Download"><i class="bi bi-download"></i></a>
+                <a class="preview-btn" id="previewOpenBtn" href="#" target="_blank" title="Open in New Tab"><i class="bi bi-box-arrow-up-right"></i></a>
+                <button class="preview-btn" onclick="closePreview()" title="Close"><i class="bi bi-x-lg"></i></button>
             </div>
         </div>
         <div class="preview-content" id="previewContent"></div>
     </div>
 
-    <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -697,9 +221,9 @@
   appId: "1:510082359037:web:361277a4774d68e746a894",
   measurementId: "G-Q2CQ01NTQ9"
 };
-
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
 
         let allFiles = [];
         let currentCategory = 'all';
@@ -707,6 +231,32 @@
         let searchQuery = '';
         let fileModalInstance = null;
         let currentPreviewFile = null;
+        let isAdminLoggedIn = false;
+
+        auth.onAuthStateChanged(user => {
+            isAdminLoggedIn = !!user;
+            updateAdminUI();
+        });
+        if (localStorage.getItem('mero_admin_logged_in') === 'true') {
+            isAdminLoggedIn = true;
+            updateAdminUI();
+        }
+
+        function updateAdminUI() {
+            document.querySelectorAll('.admin-only-btn').forEach(btn => {
+                btn.style.display = isAdminLoggedIn ? 'flex' : 'none';
+            });
+            renderDocs();
+        }
+
+        function checkAdminAccess(callback) {
+            if (isAdminLoggedIn) {
+                callback();
+            } else {
+                showToast(' Admin login required');
+                setTimeout(() => { window.location.href = 'index.html?login=action'; }, 1000);
+            }
+        }
 
         function loadTheme() {
             const savedTheme = localStorage.getItem('mero_app_theme') || 'dark';
@@ -716,24 +266,24 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
             loadFiles();
+            const params = new URLSearchParams(window.location.search);
+            const openId = params.get('open');
+            if (openId) {
+                setTimeout(() => {
+                    const file = allFiles.find(f => f.id === openId);
+                    if (file) openPreview(file.id);
+                }, 1500);
+            }
         });
 
         function loadFiles() {
-            db.collection('documents')
-                .orderBy('createdAt', 'desc')
-                .onSnapshot(snapshot => {
-                    allFiles = [];
-                    snapshot.forEach(doc => {
-                        allFiles.push({ id: doc.id, ...doc.data() });
-                    });
-                    renderDocs();
-                }, error => {
-                    console.error('Error loading files:', error);
-                    showToast('Failed to load files');
-                });
+            db.collection('documents').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+                allFiles = [];
+                snapshot.forEach(doc => { allFiles.push({ id: doc.id, ...doc.data() }); });
+                renderDocs();
+            }, error => { console.error('Error loading files:', error); showToast('Failed to load files'); });
         }
 
-        // Google Drive URL Helpers
         function extractDriveFileId(url) {
             if (!url) return null;
             const match1 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
@@ -742,141 +292,46 @@
             if (match2 && match2[1]) return match2[1];
             const match3 = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
             if (match3 && match3[1]) return match3[1];
-            if (!url.includes('/') && !url.includes('http') && url.length > 10) {
-                return url.trim();
-            }
+            if (!url.includes('/') && !url.includes('http') && url.length > 10) return url.trim();
             return null;
         }
 
-        function getDriveThumbnail(fileId) {
-            if (!fileId) return null;
-            return `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`;
-        }
+        function getDriveThumbnail(fileId) { if (!fileId) return null; return `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`; }
+        function getDriveDownloadUrl(fileId) { if (!fileId) return null; return `https://drive.google.com/uc?export=download&id=${fileId}`; }
+        function getDropboxDirectUrl(url) { if (!url) return null; return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('?dl=0', '').replace('?dl=1', ''); }
+        function getDropboxDownloadUrl(url) { if (!url) return null; return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('?dl=0', '?dl=1').replace(/\?$/, '?dl=1'); }
 
-        function getDriveDownloadUrl(fileId) {
-            if (!fileId) return null;
-            return `https://drive.google.com/uc?export=download&id=${fileId}`;
-        }
-
-        function getDropboxDirectUrl(url) {
-            if (!url) return null;
-            return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com')
-                      .replace('?dl=0', '').replace('?dl=1', '');
-        }
-
-        function getDropboxDownloadUrl(url) {
-            if (!url) return null;
-            return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com')
-                      .replace('?dl=0', '?dl=1').replace(/\?$/, '?dl=1');
-        }
-
-        function getFileIcon(type) {
-            const icons = {
-                image: 'bi-file-earmark-image',
-                pdf: 'bi-file-earmark-pdf',
-                document: 'bi-file-earmark-text',
-                video: 'bi-file-earmark-play',
-                other: 'bi-file-earmark'
-            };
-            return icons[type] || 'bi-file-earmark';
-        }
-
-        function getFileColor(type) {
-            const colors = {
-                image: '#4caf50',
-                pdf: '#f44336',
-                document: '#2196f3',
-                video: '#9c27b0',
-                other: '#607d8b'
-            };
-            return colors[type] || '#607d8b';
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function escapeAttr(text) {
-            if (!text) return '';
-            return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        }
+        function getFileIcon(type) { const icons = { image: 'bi-file-earmark-image', pdf: 'bi-file-earmark-pdf', document: 'bi-file-earmark-text', video: 'bi-file-earmark-play', other: 'bi-file-earmark' }; return icons[type] || 'bi-file-earmark'; }
+        function getFileColor(type) { const colors = { image: '#4caf50', pdf: '#f44336', document: '#2196f3', video: '#9c27b0', other: '#607d8b' }; return colors[type] || '#607d8b'; }
+        function escapeHtml(text) { if (!text) return ''; const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+        function escapeAttr(text) { if (!text) return ''; return text.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
 
         function getDownloadUrl(file) {
-            if (file.source === 'drive') {
-                const fileId = extractDriveFileId(file.url);
-                if (fileId) return getDriveDownloadUrl(fileId);
-            } else if (file.source === 'dropbox') {
-                return getDropboxDownloadUrl(file.url);
-            }
+            if (file.source === 'drive') { const fileId = extractDriveFileId(file.url); if (fileId) return getDriveDownloadUrl(fileId); }
+            else if (file.source === 'dropbox') { return getDropboxDownloadUrl(file.url); }
             return file.url;
         }
 
-        // ==========================================
-        // ✅ UPDATED: RENDER (No overlay buttons)
-        // ==========================================
         function renderDocs() {
             const grid = document.getElementById('docsGrid');
-            
             let filtered = allFiles;
-            
-            if (currentSource !== 'all') {
-                filtered = filtered.filter(f => f.source === currentSource);
-            }
-            
-            if (currentCategory !== 'all') {
-                filtered = filtered.filter(f => f.type === currentCategory);
-            }
-            
-            if (searchQuery) {
-                const query = searchQuery.toLowerCase();
-                filtered = filtered.filter(f => 
-                    f.name.toLowerCase().includes(query) || 
-                    (f.description && f.description.toLowerCase().includes(query))
-                );
-            }
-            
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="bi bi-folder2-open"></i>
-                        <h5>No files found</h5>
-                        <p>${searchQuery || currentCategory !== 'all' || currentSource !== 'all' ? 'Try different filters' : 'Add your first file to get started'}</p>
-                    </div>
-                `;
-                return;
-            }
-            
+            if (currentSource !== 'all') filtered = filtered.filter(f => f.source === currentSource);
+            if (currentCategory !== 'all') filtered = filtered.filter(f => f.type === currentCategory);
+            if (searchQuery) { const query = searchQuery.toLowerCase(); filtered = filtered.filter(f => f.name.toLowerCase().includes(query) || (f.description && f.description.toLowerCase().includes(query))); }
+            if (filtered.length === 0) { grid.innerHTML = `<div class="empty-state"><i class="bi bi-folder2-open"></i><h5>No files found</h5><p>${searchQuery || currentCategory !== 'all' || currentSource !== 'all' ? 'Try different filters' : 'Add your first file to get started'}</p></div>`; return; }
             grid.innerHTML = filtered.map(file => {
                 const fileId = file.source === 'drive' ? extractDriveFileId(file.url) : null;
-                
                 let thumbnail = null;
-                if (file.source === 'drive' && file.type === 'image' && fileId) {
-                    thumbnail = getDriveThumbnail(fileId);
-                } else if (file.source === 'dropbox' && file.type === 'image') {
-                    thumbnail = getDropboxDirectUrl(file.url);
-                }
-                
+                if (file.source === 'drive' && file.type === 'image' && fileId) thumbnail = getDriveThumbnail(fileId);
+                else if (file.source === 'dropbox' && file.type === 'image') thumbnail = getDropboxDirectUrl(file.url);
                 const iconClass = getFileIcon(file.type);
                 const iconColor = getFileColor(file.type);
-                
                 return `
                     <div class="doc-card" onclick="openPreview('${file.id}')">
                         <div class="doc-thumbnail">
-                            ${thumbnail 
-                                ? `<img src="${thumbnail}" alt="${escapeAttr(file.name)}" loading="lazy" onerror="this.style.display='none'; this.parentElement.querySelector('.file-icon').style.display='flex'">` 
-                                : ''}
-                            <div class="file-icon" style="display: ${thumbnail ? 'none' : 'flex'}; color: ${iconColor}">
-                                <i class="bi ${iconClass}"></i>
-                            </div>
-                            
-                            <!-- Source Badge - Logo Only -->
-                            <span class="source-badge ${file.source}" title="${file.source === 'drive' ? 'Google Drive' : 'Dropbox'}">
-                                <i class="bi bi-${file.source === 'drive' ? 'google' : 'box'}"></i>
-                            </span>
-                            
+                            ${thumbnail ? `<img src="${thumbnail}" alt="${escapeAttr(file.name)}" loading="lazy" onerror="this.style.display='none'; this.parentElement.querySelector('.file-icon').style.display='flex'">` : ''}
+                            <div class="file-icon" style="display: ${thumbnail ? 'none' : 'flex'}; color: ${iconColor}"><i class="bi ${iconClass}"></i></div>
+                            <span class="source-badge ${file.source}" title="${file.source === 'drive' ? 'Google Drive' : 'Dropbox'}"><i class="bi bi-${file.source === 'drive' ? 'google' : 'box'}"></i></span>
                             <span class="type-badge">${file.type}</span>
                         </div>
                         <div class="doc-content">
@@ -888,264 +343,104 @@
             }).join('');
         }
 
-        function filterByCategory(category) {
-            currentCategory = category;
-            document.querySelectorAll('.category-chip').forEach(chip => {
-                chip.classList.remove('active');
-                if (chip.textContent.toLowerCase().includes(category === 'all' ? 'all' : category)) {
-                    chip.classList.add('active');
-                }
-            });
-            renderDocs();
-        }
+        function filterByCategory(category) { currentCategory = category; document.querySelectorAll('.category-chip').forEach(chip => { chip.classList.remove('active'); if (chip.textContent.toLowerCase().includes(category === 'all' ? 'all' : category)) chip.classList.add('active'); }); renderDocs(); }
+        function filterBySource(source) { currentSource = source; document.querySelectorAll('.source-chip').forEach(chip => { chip.classList.toggle('active', chip.dataset.source === source); }); renderDocs(); }
+        function filterDocs() { searchQuery = document.getElementById('searchInput').value; renderDocs(); }
 
-        function filterBySource(source) {
-            currentSource = source;
-            document.querySelectorAll('.source-chip').forEach(chip => {
-                chip.classList.toggle('active', chip.dataset.source === source);
-            });
-            renderDocs();
-        }
-
-        function filterDocs() {
-            searchQuery = document.getElementById('searchInput').value;
-            renderDocs();
-        }
-
-        // ==========================================
-        // ✅ UPDATED: PREVIEW (with Edit/Delete in header)
-        // ==========================================
         function openPreview(fileId) {
             const file = allFiles.find(f => f.id === fileId);
             if (!file) return;
-            
             currentPreviewFile = file;
             document.getElementById('previewTitle').textContent = file.name;
-            
-            // Set download and open buttons
             const downloadUrl = getDownloadUrl(file);
             document.getElementById('previewDownloadBtn').href = downloadUrl;
             document.getElementById('previewOpenBtn').href = file.url;
-            
-            // ✅ Set up Edit button
+
+            // Protected Edit button
             document.getElementById('previewEditBtn').onclick = function() {
+                if (!isAdminLoggedIn) { closePreview(); window.location.href = 'index.html?login=edit'; return; }
                 closePreview();
                 setTimeout(() => openEditModal(file.id), 100);
             };
-            
-            // ✅ Set up Delete button
+            // Protected Delete button
             document.getElementById('previewDeleteBtn').onclick = function() {
+                if (!isAdminLoggedIn) { closePreview(); window.location.href = 'index.html?login=delete'; return; }
                 if (confirm('Are you sure you want to delete this file?')) {
-                    deleteFile(file.id).then(() => {
-                        closePreview();
-                    });
+                    deleteFile(file.id).then(() => closePreview());
                 }
             };
-            
+
             const content = document.getElementById('previewContent');
             const fileId_drive = file.source === 'drive' ? extractDriveFileId(file.url) : null;
-            
+
             if (file.type === 'image') {
                 let imageUrl = '';
                 let fallbackHtml = '';
-                
                 if (file.source === 'drive' && fileId_drive) {
                     imageUrl = `https://lh3.googleusercontent.com/d/${fileId_drive}=w1200`;
-                    fallbackHtml = `<div class="preview-fallback">
-                        <i class="bi bi-file-earmark-image"></i>
-                        <p>Image preview unavailable.</p>
-                        <a href="https://drive.google.com/uc?export=view&id=${fileId_drive}" target="_blank">
-                            <i class="bi bi-box-arrow-up-right"></i> Open Image
-                        </a>
-                    </div>`;
+                    fallbackHtml = `<div class="preview-fallback"><i class="bi bi-file-earmark-image"></i><p>Image preview unavailable.</p><a href="https://drive.google.com/uc?export=view&id=${fileId_drive}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Open Image</a></div>`;
                 } else if (file.source === 'dropbox') {
                     imageUrl = getDropboxDirectUrl(file.url);
-                    fallbackHtml = `<div class="preview-fallback">
-                        <i class="bi bi-file-earmark-image"></i>
-                        <p>Image preview unavailable.</p>
-                        <a href="${file.url}" target="_blank">
-                            <i class="bi bi-box-arrow-up-right"></i> Open Image
-                        </a>
-                    </div>`;
+                    fallbackHtml = `<div class="preview-fallback"><i class="bi bi-file-earmark-image"></i><p>Image preview unavailable.</p><a href="${file.url}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Open Image</a></div>`;
                 }
-                
-                content.innerHTML = `
-                    <img src="${imageUrl}" 
-                         alt="${escapeHtml(file.name)}" 
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                    ${fallbackHtml}
-                `;
+                content.innerHTML = `<img src="${imageUrl}" alt="${escapeHtml(file.name)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">${fallbackHtml}`;
                 const fallback = content.querySelector('.preview-fallback');
                 if (fallback) fallback.style.display = 'none';
-                
             } else if (file.type === 'pdf') {
                 let embedUrl = '';
-                if (file.source === 'drive' && fileId_drive) {
-                    embedUrl = `https://drive.google.com/file/d/${fileId_drive}/preview`;
-                } else if (file.source === 'dropbox') {
-                    embedUrl = getDropboxDirectUrl(file.url) + '#toolbar=0';
-                }
-                
-                if (embedUrl) {
-                    content.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
-                } else {
-                    content.innerHTML = `<div class="preview-fallback">
-                        <i class="bi bi-file-earmark-pdf"></i>
-                        <p>PDF preview unavailable.</p>
-                        <a href="${file.url}" target="_blank">
-                            <i class="bi bi-box-arrow-up-right"></i> Open PDF
-                        </a>
-                    </div>`;
-                }
-                
+                if (file.source === 'drive' && fileId_drive) embedUrl = `https://drive.google.com/file/d/${fileId_drive}/preview`;
+                else if (file.source === 'dropbox') embedUrl = getDropboxDirectUrl(file.url) + '#toolbar=0';
+                if (embedUrl) content.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+                else content.innerHTML = `<div class="preview-fallback"><i class="bi bi-file-earmark-pdf"></i><p>PDF preview unavailable.</p><a href="${file.url}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Open PDF</a></div>`;
             } else if (file.type === 'video') {
                 let embedUrl = '';
-                if (file.source === 'drive' && fileId_drive) {
-                    embedUrl = `https://drive.google.com/file/d/${fileId_drive}/preview`;
-                } else if (file.source === 'dropbox') {
-                    embedUrl = getDropboxDirectUrl(file.url);
-                }
-                
-                if (embedUrl) {
-                    content.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
-                } else {
-                    content.innerHTML = `<div class="preview-fallback">
-                        <i class="bi bi-file-earmark-play"></i>
-                        <p>Video preview unavailable.</p>
-                        <a href="${file.url}" target="_blank">
-                            <i class="bi bi-box-arrow-up-right"></i> Open Video
-                        </a>
-                    </div>`;
-                }
-                
+                if (file.source === 'drive' && fileId_drive) embedUrl = `https://drive.google.com/file/d/${fileId_drive}/preview`;
+                else if (file.source === 'dropbox') embedUrl = getDropboxDirectUrl(file.url);
+                if (embedUrl) content.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+                else content.innerHTML = `<div class="preview-fallback"><i class="bi bi-file-earmark-play"></i><p>Video preview unavailable.</p><a href="${file.url}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Open Video</a></div>`;
             } else {
-                content.innerHTML = `
-                    <div class="preview-fallback">
-                        <i class="bi ${getFileIcon(file.type)}" style="color: ${getFileColor(file.type)}"></i>
-                        <p><strong>${escapeHtml(file.name)}</strong></p>
-                        <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 16px;">
-                            ${file.description || 'No preview available'}
-                        </p>
-                        <a href="${escapeAttr(file.url)}" target="_blank">
-                            <i class="bi bi-box-arrow-up-right"></i> Open File
-                        </a>
-                    </div>
-                `;
+                content.innerHTML = `<div class="preview-fallback"><i class="bi ${getFileIcon(file.type)}" style="color: ${getFileColor(file.type)}"></i><p><strong>${escapeHtml(file.name)}</strong></p><p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 16px;">${file.description || 'No preview available'}</p><a href="${escapeAttr(file.url)}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Open File</a></div>`;
             }
-            
             document.getElementById('previewModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        function closePreview() {
-            document.getElementById('previewModal').classList.remove('active');
-            document.getElementById('previewContent').innerHTML = '';
-            document.body.style.overflow = '';
-            currentPreviewFile = null;
-        }
+        function closePreview() { document.getElementById('previewModal').classList.remove('active'); document.getElementById('previewContent').innerHTML = ''; document.body.style.overflow = ''; currentPreviewFile = null; }
 
-        // CRUD Operations
-        function onSourceChange() {
-            const source = document.getElementById('fileSource').value;
-            const help = document.getElementById('urlHelp');
-            if (source === 'drive') {
-                help.innerHTML = 'Google Drive: Paste shareable link or just the File ID<br><small style="color: var(--text-dim)">Make sure file sharing is set to "Anyone with the link"</small>';
-            } else {
-                help.textContent = 'Dropbox: Use shareable link (make sure it\'s public)';
-            }
-        }
+        function onSourceChange() { const source = document.getElementById('fileSource').value; const help = document.getElementById('urlHelp'); if (source === 'drive') help.innerHTML = 'Google Drive: Paste shareable link or just the File ID<br><small style="color: var(--text-dim)">Make sure file sharing is set to "Anyone with the link"</small>'; else help.textContent = 'Dropbox: Use shareable link (make sure it\'s public)'; }
 
-        function openAddModal() {
-            document.getElementById('modalTitle').textContent = 'Add File';
-            document.getElementById('fileForm').reset();
-            document.getElementById('fileId').value = '';
-            onSourceChange();
-            if (!fileModalInstance) fileModalInstance = new bootstrap.Modal(document.getElementById('fileModal'));
-            fileModalInstance.show();
-        }
+        function openAddModal() { checkAdminAccess(() => { document.getElementById('modalTitle').textContent = 'Add File'; document.getElementById('fileForm').reset(); document.getElementById('fileId').value = ''; onSourceChange(); if (!fileModalInstance) fileModalInstance = new bootstrap.Modal(document.getElementById('fileModal')); fileModalInstance.show(); }); }
 
-        function openEditModal(fileId) {
-            const file = allFiles.find(f => f.id === fileId);
-            if (!file) return;
-            
-            document.getElementById('modalTitle').textContent = 'Edit File';
-            document.getElementById('fileId').value = fileId;
-            document.getElementById('fileSource').value = file.source || 'drive';
-            document.getElementById('fileUrl').value = file.url;
-            document.getElementById('fileName').value = file.name;
-            document.getElementById('fileType').value = file.type || 'other';
-            document.getElementById('fileDescription').value = file.description || '';
-            onSourceChange();
-            
-            if (!fileModalInstance) fileModalInstance = new bootstrap.Modal(document.getElementById('fileModal'));
-            fileModalInstance.show();
-        }
+        function openEditModal(fileId) { checkAdminAccess(() => { const file = allFiles.find(f => f.id === fileId); if (!file) return; document.getElementById('modalTitle').textContent = 'Edit File'; document.getElementById('fileId').value = fileId; document.getElementById('fileSource').value = file.source || 'drive'; document.getElementById('fileUrl').value = file.url; document.getElementById('fileName').value = file.name; document.getElementById('fileType').value = file.type || 'other'; document.getElementById('fileDescription').value = file.description || ''; onSourceChange(); if (!fileModalInstance) fileModalInstance = new bootstrap.Modal(document.getElementById('fileModal')); fileModalInstance.show(); }); }
 
         async function saveFile() {
+            if (!isAdminLoggedIn) { showToast(' Session expired'); window.location.href = 'index.html?login=save'; return; }
             const id = document.getElementById('fileId').value;
             const source = document.getElementById('fileSource').value;
             let url = document.getElementById('fileUrl').value.trim();
             const name = document.getElementById('fileName').value.trim();
             const type = document.getElementById('fileType').value;
             const description = document.getElementById('fileDescription').value.trim();
-            
             if (!url || !name) { showToast('Please fill all required fields'); return; }
-            
-            if (source === 'drive' && !url.includes('drive.google.com') && !url.includes('http')) {
-                url = `https://drive.google.com/file/d/${url}/view`;
-            }
-            
+            if (source === 'drive' && !url.includes('drive.google.com') && !url.includes('http')) url = `https://drive.google.com/file/d/${url}/view`;
             try {
-                const data = {
-                    source: source,
-                    url: url,
-                    name: name,
-                    type: type,
-                    description: description,
-                    updatedAt: new Date()
-                };
-                
-                if (id) {
-                    await db.collection('documents').doc(id).update(data);
-                    showToast('File updated!');
-                } else {
-                    data.createdAt = new Date();
-                    await db.collection('documents').add(data);
-                    showToast('File added!');
-                }
+                const data = { source, url, name, type, description, updatedAt: new Date() };
+                if (id) { await db.collection('documents').doc(id).update(data); showToast('File updated!'); }
+                else { data.createdAt = new Date(); await db.collection('documents').add(data); showToast('File added!'); }
                 fileModalInstance.hide();
-            } catch (error) {
-                console.error('Error saving file:', error);
-                showToast('Failed to save file');
-            }
+            } catch (error) { console.error('Error saving file:', error); showToast('Failed to save file'); }
         }
 
         async function deleteFile(fileId) {
-            try {
-                await db.collection('documents').doc(fileId).delete();
-                showToast('File deleted');
-            } catch (error) {
-                console.error('Error deleting file:', error);
-                showToast('Failed to delete file');
-            }
+            if (!isAdminLoggedIn) { showToast('🔐 Admin login required'); window.location.href = 'index.html?login=delete'; return; }
+            if (!confirm('Are you sure you want to delete this file?')) return;
+            try { await db.collection('documents').doc(fileId).delete(); showToast('File deleted'); }
+            catch (error) { console.error('Error deleting file:', error); showToast('Failed to delete file'); }
         }
 
-        function showToast(message) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast-custom';
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => { 
-                toast.style.opacity = '0'; 
-                toast.style.transition = 'opacity 0.3s'; 
-                setTimeout(() => toast.remove(), 300); 
-            }, 2500);
-        }
+        function showToast(message) { const container = document.getElementById('toastContainer'); const toast = document.createElement('div'); toast.className = 'toast-custom'; toast.textContent = message; container.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; setTimeout(() => toast.remove(), 300); }, 2500); }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closePreview();
-        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePreview(); });
     </script>
 </body>
 </html>
