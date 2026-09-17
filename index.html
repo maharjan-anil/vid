@@ -5,37 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f0f0f">
     <meta name="description" content="Mero App - Your all-in-one digital companion">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Mero App">
     <title>Mero App</title>
     <link rel="manifest" href="./manifest.json">
     <link rel="apple-touch-icon" href="./icons/icon-192x192.png">
+    
+    <!-- ✅ Preload all app pages -->
+    <link rel="prefetch" href="./videogallery.html">
+    <link rel="prefetch" href="./phone.html">
+    <link rel="prefetch" href="./tools.html">
+    <link rel="prefetch" href="./calendar.html">
+    <link rel="prefetch" href="./links.html">
+    <link rel="prefetch" href="./documents.html">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-primary: #0f0f0f; --bg-secondary: #1a1a1a; --bg-card: #1a1a1a; --bg-hover: #252525;
-            --border-color: #272727; --text-primary: #ffffff; --text-secondary: #e0e0e0;
-            --text-muted: #aaaaaa; --text-dim: #666666; --accent: #ffffff;
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1a1a1a;
+            --bg-hover: #252525;
+            --border-color: #272727;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #aaaaaa;
+            --text-dim: #666666;
+            --accent: #ffffff;
         }
         [data-theme="light"] {
-            --bg-primary: #f5f5f7; --bg-secondary: #ffffff; --bg-card: #ffffff; --bg-hover: #f0f0f0;
-            --border-color: #e0e0e0; --text-primary: #1a1a1a; --text-secondary: #4a4a4a;
-            --text-muted: #6a6a6a; --text-dim: #9a9a9a; --accent: #000000;
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-hover: #f0f0f0;
+            --border-color: #e0e0e0;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #6a6a6a;
+            --text-dim: #9a9a9a;
+            --accent: #000000;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; }
-        .app-header { background-color: rgba(15,15,15,0.85); padding: 14px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(20px); }
-        [data-theme="light"] .app-header { background-color: rgba(245,245,247,0.85); }
-        .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 600px; margin: 0 auto; }
-        .header-brand { display: flex; align-items: center; gap: 10px; }
-        .header-logo { width: 32px; height: 32px; background: var(--text-primary); color: var(--bg-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; }
-        .header-title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); }
-        .header-actions { display: flex; gap: 8px; }
-        .header-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; color: var(--text-primary); }
+        body { 
+            background-color: var(--bg-primary); 
+            color: var(--text-primary); 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .app-header { 
+            background-color: rgba(15, 15, 15, 0.85); 
+            padding: 14px 20px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+        }
+        [data-theme="light"] .app-header { background-color: rgba(245, 245, 247, 0.85); }
+        .header-content { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; /* ✅ Center content */
+            max-width: 600px; 
+            margin: 0 auto;
+            position: relative;
+        }
+        .header-brand { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .header-logo { 
+            width: 32px; 
+            height: 32px; 
+            background: var(--text-primary); 
+            color: var(--bg-primary); 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1rem; 
+            font-weight: 800; 
+        }
+        .header-title { 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            color: var(--text-primary); 
+        }
+        .header-actions { 
+            display: flex; 
+            gap: 8px; 
+            position: absolute; 
+            right: 0; /* ✅ Keep actions on right */
+        }
+        .header-btn { 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 10px; 
+            background: var(--bg-secondary); 
+            border: 1px solid var(--border-color); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            color: var(--text-primary); 
+        }
         .header-btn:hover { background: var(--bg-hover); transform: translateY(-1px); }
+
         .home-container { padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 40px; }
+
+        /* Info Card */
         .info-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 24px; }
         .greeting-text { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
         .greeting-subtext { font-size: 0.85rem; color: var(--text-muted); }
@@ -52,6 +134,8 @@
         .weather-details { font-size: 0.75rem; color: var(--text-dim); display: flex; gap: 10px; margin-top: 4px; }
         .weather-loading { text-align: center; padding: 10px; color: var(--text-dim); font-size: 0.85rem; width: 100%; }
         .weather-loading .spinner-border { width: 1.2rem; height: 1.2rem; color: var(--text-muted); border-width: 2px; }
+
+        /* Quick Access */
         .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
         .section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
         .section-title i { color: var(--accent); }
@@ -64,6 +148,8 @@
         .app-item:hover .app-icon-wrapper { background-color: #000; transform: translateY(-2px); }
         .app-icon-wrapper i { font-size: 1.4rem; }
         .app-name { font-size: 0.7rem; color: var(--text-secondary); text-align: center; font-weight: 500; max-width: 65px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* Search Overlay */
         .search-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-primary); z-index: 9998; display: none; flex-direction: column; }
         .search-overlay.active { display: flex; }
         .search-overlay-header { background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
@@ -80,12 +166,18 @@
         .search-result-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; color: var(--text-primary); }
         .search-result-icon.link-icon { color: #e94560; }
         .search-result-icon.doc-icon { color: #2196f3; }
+        .search-result-icon.video-icon { color: #9c27b0; }
+        .search-result-icon.contact-icon { color: #4caf50; }
+        .search-result-icon.tool-icon { color: #ff9800; }
+        .search-result-icon.calendar-icon { color: #f44336; }
         .search-result-content { flex: 1; min-width: 0; }
         .search-result-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .search-result-subtitle { font-size: 0.75rem; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .search-result-arrow { color: var(--text-dim); font-size: 0.9rem; }
         .search-loading { text-align: center; padding: 40px; color: var(--text-muted); }
         .search-loading .spinner-border { width: 2rem; height: 2rem; color: var(--accent); }
+
+        /* Login Modal */
         .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 9997; display: none; align-items: center; justify-content: center; padding: 20px; }
         .login-overlay.active { display: flex; }
         .login-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 28px; max-width: 400px; width: 100%; }
@@ -104,6 +196,8 @@
         .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .login-cancel { width: 100%; padding: 10px; background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 10px; font-weight: 500; font-size: 0.9rem; cursor: pointer; margin-top: 8px; }
         .login-cancel:hover { background: var(--bg-hover); }
+
+        /* Settings */
         .settings-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-primary); z-index: 200; display: none; flex-direction: column; overflow-y: auto; }
         .settings-overlay.active { display: flex; }
         .settings-header { background: rgba(15,15,15,0.9); padding: 14px 20px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 10; backdrop-filter: blur(20px); }
@@ -139,6 +233,8 @@
         .admin-status.logged-out { background: rgba(255,152,0,0.15); color: #ff9800; }
         .admin-status .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
         .settings-footer { text-align: center; padding: 20px; color: var(--text-dim); font-size: 0.75rem; }
+
+        /* Toast */
         .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
         .toast-custom { background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; border-radius: 10px; border-left: 4px solid var(--text-primary); box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem; }
     </style>
@@ -196,7 +292,7 @@
     <div class="search-overlay" id="searchOverlay">
         <div class="search-overlay-header">
             <button class="search-overlay-back" onclick="closeGlobalSearch()"><i class="bi bi-chevron-left"></i></button>
-            <input type="text" class="search-overlay-input" id="globalSearchInput" placeholder="Search links, documents..." oninput="performGlobalSearch()">
+            <input type="text" class="search-overlay-input" id="globalSearchInput" placeholder="Search across all apps..." oninput="performGlobalSearch()">
         </div>
         <div class="search-overlay-body" id="searchResultsBody">
             <div class="search-results-empty"><i class="bi bi-search"></i><p>Start typing to search across the app</p></div>
@@ -364,29 +460,131 @@
         window.requireAdmin = requireAdmin;
         window.isAdminLoggedIn = () => isAdminLoggedIn;
 
+        // ✅ Enhanced Global Search - Search ALL collections
         function openGlobalSearch() { document.getElementById('searchOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('globalSearchInput').focus(), 100); }
         function closeGlobalSearch() { document.getElementById('searchOverlay').classList.remove('active'); document.getElementById('globalSearchInput').value = ''; document.getElementById('searchResultsBody').innerHTML = '<div class="search-results-empty"><i class="bi bi-search"></i><p>Start typing to search across the app</p></div>'; document.body.style.overflow = ''; }
         function performGlobalSearch() { clearTimeout(searchTimeout); const query = document.getElementById('globalSearchInput').value.trim().toLowerCase(); if (query.length < 2) { document.getElementById('searchResultsBody').innerHTML = '<div class="search-results-empty"><i class="bi bi-search"></i><p>Type at least 2 characters to search</p></div>'; return; } searchTimeout = setTimeout(() => executeGlobalSearch(query), 300); }
+        
         async function executeGlobalSearch(query) {
             const body = document.getElementById('searchResultsBody');
             body.innerHTML = '<div class="search-loading"><div class="spinner-border" role="status"></div><p style="margin-top:10px;">Searching...</p></div>';
+
             try {
-                const linksSnap = await db.collection('links').get(); const linksResults = [];
-                linksSnap.forEach(doc => { const d = doc.data(); if ((d.title && d.title.toLowerCase().includes(query)) || (d.description && d.description.toLowerCase().includes(query)) || (d.url && d.url.toLowerCase().includes(query))) linksResults.push({ id: doc.id, ...d, type: 'link' }); });
-                const docsSnap = await db.collection('documents').get(); const docsResults = [];
-                docsSnap.forEach(doc => { const d = doc.data(); if ((d.name && d.name.toLowerCase().includes(query)) || (d.description && d.description.toLowerCase().includes(query))) docsResults.push({ id: doc.id, ...d, type: 'document' }); });
-                renderSearchResults(linksResults, docsResults);
-            } catch (error) { console.error('Search error:', error); body.innerHTML = '<div class="search-results-empty"><i class="bi bi-exclamation-triangle"></i><p>Search failed. Check connection.</p></div>'; }
+                // Search Links
+                const linksSnap = await db.collection('links').get();
+                const linksResults = [];
+                linksSnap.forEach(doc => {
+                    const d = doc.data();
+                    if ((d.title && d.title.toLowerCase().includes(query)) || (d.description && d.description.toLowerCase().includes(query)) || (d.url && d.url.toLowerCase().includes(query))) {
+                        linksResults.push({ id: doc.id, ...d, type: 'link' });
+                    }
+                });
+
+                // Search Documents
+                const docsSnap = await db.collection('documents').get();
+                const docsResults = [];
+                docsSnap.forEach(doc => {
+                    const d = doc.data();
+                    if ((d.name && d.name.toLowerCase().includes(query)) || (d.description && d.description.toLowerCase().includes(query))) {
+                        docsResults.push({ id: doc.id, ...d, type: 'document' });
+                    }
+                });
+
+                // Search Videos
+                const videosSnap = await db.collection('videos').get();
+                const videosResults = [];
+                videosSnap.forEach(doc => {
+                    const d = doc.data();
+                    if ((d.title && d.title.toLowerCase().includes(query)) || (d.channelName && d.channelName.toLowerCase().includes(query)) || (d.description && d.description.toLowerCase().includes(query))) {
+                        videosResults.push({ id: doc.id, ...d, type: 'video' });
+                    }
+                });
+
+                // Search Contacts
+                const contactsSnap = await db.collection('contacts').get();
+                const contactsResults = [];
+                contactsSnap.forEach(doc => {
+                    const d = doc.data();
+                    if ((d.name && d.name.toLowerCase().includes(query)) || (d.phone && d.phone.includes(query)) || (d.category && d.category.toLowerCase().includes(query))) {
+                        contactsResults.push({ id: doc.id, ...d, type: 'contact' });
+                    }
+                });
+
+                // Search Channels
+                const channelsSnap = await db.collection('channels').get();
+                const channelsResults = [];
+                channelsSnap.forEach(doc => {
+                    const d = doc.data();
+                    if ((d.channelName && d.channelName.toLowerCase().includes(query)) || (d.description && d.description.toLowerCase().includes(query))) {
+                        channelsResults.push({ id: doc.id, ...d, type: 'channel' });
+                    }
+                });
+
+                renderSearchResults(linksResults, docsResults, videosResults, contactsResults, channelsResults);
+            } catch (error) {
+                console.error('Search error:', error);
+                body.innerHTML = '<div class="search-results-empty"><i class="bi bi-exclamation-triangle"></i><p>Search failed. Check connection.</p></div>';
+            }
         }
-        function renderSearchResults(links, docs) {
+
+        function renderSearchResults(links, docs, videos, contacts, channels) {
             const body = document.getElementById('searchResultsBody');
-            if (links.length === 0 && docs.length === 0) { body.innerHTML = '<div class="search-results-empty"><i class="bi bi-emoji-frown"></i><p>No results found</p><p style="font-size:0.8rem; color: var(--text-dim);">Try different keywords</p></div>'; return; }
+            const totalResults = links.length + docs.length + videos.length + contacts.length + channels.length;
+            
+            if (totalResults === 0) {
+                body.innerHTML = '<div class="search-results-empty"><i class="bi bi-emoji-frown"></i><p>No results found</p><p style="font-size:0.8rem; color: var(--text-dim);">Try different keywords</p></div>';
+                return;
+            }
+
             let html = '';
-            if (links.length > 0) { html += '<div class="search-group-title">🔗 Links (' + links.length + ')</div>'; links.forEach(item => { html += '<div class="search-result-item" onclick="navigateToSearchResult(\'link\', \'' + item.id + '\')"><div class="search-result-icon link-icon"><i class="bi bi-link-45deg"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.title) + '</div><div class="search-result-subtitle">' + escapeHtml(item.url || item.description || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>'; }); }
-            if (docs.length > 0) { html += '<div class="search-group-title">📄 Documents (' + docs.length + ')</div>'; docs.forEach(item => { const iconClass = item.type === 'image' ? 'doc-icon' : item.type === 'pdf' ? 'doc-icon' : 'doc-icon'; const icon = item.type === 'image' ? 'bi-image' : item.type === 'pdf' ? 'bi-file-earmark-pdf' : 'bi-file-earmark-text'; html += '<div class="search-result-item" onclick="navigateToSearchResult(\'document\', \'' + item.id + '\')"><div class="search-result-icon ' + iconClass + '"><i class="bi ' + icon + '"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.name) + '</div><div class="search-result-subtitle">' + escapeHtml(item.description || item.type || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>'; }); }
+
+            if (links.length > 0) {
+                html += '<div class="search-group-title">🔗 Links (' + links.length + ')</div>';
+                links.forEach(item => {
+                    html += '<div class="search-result-item" onclick="navigateToSearchResult(\'link\', \'' + item.id + '\')"><div class="search-result-icon link-icon"><i class="bi bi-link-45deg"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.title) + '</div><div class="search-result-subtitle">' + escapeHtml(item.url || item.description || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>';
+                });
+            }
+
+            if (docs.length > 0) {
+                html += '<div class="search-group-title">📄 Documents (' + docs.length + ')</div>';
+                docs.forEach(item => {
+                    const icon = item.type === 'image' ? 'bi-image' : item.type === 'pdf' ? 'bi-file-earmark-pdf' : 'bi-file-earmark-text';
+                    html += '<div class="search-result-item" onclick="navigateToSearchResult(\'document\', \'' + item.id + '\')"><div class="search-result-icon doc-icon"><i class="bi ' + icon + '"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.name) + '</div><div class="search-result-subtitle">' + escapeHtml(item.description || item.type || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>';
+                });
+            }
+
+            if (videos.length > 0) {
+                html += '<div class="search-group-title">🎥 Videos (' + videos.length + ')</div>';
+                videos.forEach(item => {
+                    html += '<div class="search-result-item" onclick="navigateToSearchResult(\'video\', \'' + item.id + '\')"><div class="search-result-icon video-icon"><i class="bi bi-play-circle"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.title) + '</div><div class="search-result-subtitle">' + escapeHtml(item.channelName || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>';
+                });
+            }
+
+            if (contacts.length > 0) {
+                html += '<div class="search-group-title">📞 Contacts (' + contacts.length + ')</div>';
+                contacts.forEach(item => {
+                    html += '<div class="search-result-item" onclick="navigateToSearchResult(\'contact\', \'' + item.id + '\')"><div class="search-result-icon contact-icon"><i class="bi bi-person"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.name) + '</div><div class="search-result-subtitle">' + escapeHtml(item.phone || item.category || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>';
+                });
+            }
+
+            if (channels.length > 0) {
+                html += '<div class="search-group-title">📺 Channels (' + channels.length + ')</div>';
+                channels.forEach(item => {
+                    html += '<div class="search-result-item" onclick="navigateToSearchResult(\'channel\', \'' + item.id + '\')"><div class="search-result-icon video-icon"><i class="bi bi-tv"></i></div><div class="search-result-content"><div class="search-result-title">' + escapeHtml(item.channelName) + '</div><div class="search-result-subtitle">' + escapeHtml(item.description || '') + '</div></div><i class="bi bi-chevron-right search-result-arrow"></i></div>';
+                });
+            }
+
             body.innerHTML = html;
         }
-        function navigateToSearchResult(type, id) { if (type === 'link') window.location.href = 'links.html?open=' + id; else if (type === 'document') window.location.href = 'documents.html?open=' + id; }
+
+        function navigateToSearchResult(type, id) {
+            if (type === 'link') window.location.href = 'links.html?open=' + id;
+            else if (type === 'document') window.location.href = 'documents.html?open=' + id;
+            else if (type === 'video') window.location.href = 'videogallery.html?open=' + id;
+            else if (type === 'contact') window.location.href = 'phone.html?open=' + id;
+            else if (type === 'channel') window.location.href = 'videogallery.html?channel=' + id;
+        }
+
         function escapeHtml(text) { if (!text) return ''; const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
 
         function setTheme(theme) { document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('mero_app_theme', theme); document.querySelectorAll('.theme-option').forEach(el => { el.classList.toggle('active', el.dataset.theme === theme); }); showToast('Theme changed to ' + theme); }
@@ -394,7 +592,7 @@
 
         function updateClock() { const now = new Date(); let hours = now.getHours(); const minutes = now.getMinutes(); const period = hours >= 12 ? 'PM' : 'AM'; const displayHours = hours % 12; const finalHours = displayHours ? displayHours : 12; document.getElementById('timeBadge').textContent = finalHours.toString().padStart(2,'0') + ':' + minutes.toString().padStart(2,'0') + ' ' + period; const options = { year: 'numeric', month: 'short', day: 'numeric', weekday: 'long' }; document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', options); updateGreeting(hours); }
         function updateGreeting(h) { const t = document.getElementById('greetingText'); const s = document.getElementById('greetingSubtext'); if (h >= 5 && h < 12) { t.textContent = 'Good Morning, Anil!'; s.textContent = 'Hope you have a great day ahead'; } else if (h >= 12 && h < 17) { t.textContent = 'Good Afternoon, Anil!'; s.textContent = 'Hope your day is going well'; } else if (h >= 17 && h < 21) { t.textContent = 'Good Evening, Anil!'; s.textContent = 'Time to relax and unwind'; } else { t.textContent = 'Good Night, Anil!'; s.textContent = 'Rest well for tomorrow'; } }
-        function getNepaliDate() { const now = new Date(); const nepaliMonths = ['बैशाख','जेठ','असार','श्रावण','भदौ','असोज','कार्तिक','मंसिर','पुष','माघ','फागुन','चैत']; const nepaliDays = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार']; function toNepaliNum(num) { const d = ['०','१','२','३','४','५','६','७','८','९']; return num.toString().split('').map(x => d[parseInt(x)]).join(''); } return 'वि.सं. ' + toNepaliNum(2083) + ' ' + nepaliMonths[5] + ' ' + toNepaliNum(1) + ', ' + nepaliDays[now.getDay()]; }
+        function getNepaliDate() { const now = new Date(); const nepaliMonths = ['बैशाख','जेठ','असार','श्रावण','भदौ','असोज','कार्तिक','मंसिर','पुष','माघ','फागुन','चैत']; const nepaliDays = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार']; function toNepaliNum(num) { const d = ['०','','२','३','४','५','६','७','८','९']; return num.toString().split('').map(x => d[parseInt(x)]).join(''); } return 'वि.सं. ' + toNepaliNum(2083) + ' ' + nepaliMonths[5] + ' ' + toNepaliNum(1) + ', ' + nepaliDays[now.getDay()]; }
         function updateNepaliDate() { document.getElementById('nepaliDate').textContent = getNepaliDate(); }
 
         async function loadWeather() { const row = document.getElementById('weatherRow'); try { let lat = 27.7172, lon = 85.3240, loc = 'Kathmandu'; if (navigator.geolocation) { try { const pos = await new Promise((r,j) => navigator.geolocation.getCurrentPosition(r,j,{timeout:5000})); lat = pos.coords.latitude; lon = pos.coords.longitude; try { const g = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lon + '&localityLanguage=en'); const gd = await g.json(); if (gd.city || gd.locality) loc = gd.city || gd.locality; } catch(e){} } catch(e){} } const wr = await fetch('https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon + '&current_weather=true'); const wd = await wr.json(); const c = wd.current_weather; const temp = Math.round(c.temperature); const info = getWeatherInfo(c.weathercode); row.innerHTML = '<div><div class="weather-temp">' + temp + '°C</div><div class="weather-condition">' + info.condition + '</div></div><div style="text-align:right;"><div class="weather-location"><i class="bi bi-geo-alt-fill"></i> ' + loc + '</div><div class="weather-details"><span><i class="bi bi-wind"></i> ' + c.windspeed + ' km/h</span><span><i class="bi bi-compass"></i> ' + getWindDir(c.winddirection) + '</span></div></div>'; } catch(e) { row.innerHTML = '<div><div class="weather-temp">--°C</div><div class="weather-condition">Unavailable</div></div><div style="text-align:right;"><div class="weather-location"><i class="bi bi-geo-alt-fill"></i> Error</div></div>'; } }
@@ -411,7 +609,22 @@
 
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (document.getElementById('searchOverlay').classList.contains('active')) closeGlobalSearch(); else if (document.getElementById('loginOverlay').classList.contains('active')) closeLoginModal(); else if (document.getElementById('settingsOverlay').classList.contains('active')) closeSettings(); } if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); openGlobalSearch(); } });
 
+        // ✅ Preload all app pages
+        function preloadPages() {
+            const pages = ['videogallery.html', 'phone.html', 'tools.html', 'calendar.html', 'links.html', 'documents.html'];
+            pages.forEach(page => {
+                const link = document.createElement('link');
+                link.rel = 'prefetch';
+                link.href = page;
+                document.head.appendChild(link);
+                
+                // Also fetch to cache
+                fetch(page).catch(() => {});
+            });
+        }
+
         loadTheme(); updateClock(); updateNepaliDate(); setInterval(updateClock, 1000); loadWeather(); setInterval(loadWeather, 600000);
+        preloadPages(); // ✅ Preload all pages
 
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js').then(reg => console.log('[PWA] SW registered:', reg.scope)).catch(err => console.log('[PWA] SW failed:', err)); }); }
         let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
