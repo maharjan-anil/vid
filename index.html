@@ -1000,7 +1000,7 @@
         // ==========================================
         function openApp(appName) {
             const actions = {
-                'video-gallery': () => showToast('Opening Video Gallery...'),
+                'video-gallery': () => { window.location.href = 'videogallery.html'; },
                 'phone': () => { window.location.href = 'phone.html'; },
                 'tools': () => { window.location.href = 'tools.html'; },
                 'links': () => showToast('Opening Links...'),
