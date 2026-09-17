@@ -1,13 +1,14 @@
 {
-  "name": "Video Gallery",
-  "short_name": "Video Gallery",
-  "description": "Watch your favorite videos in one place",
+  "name": "Mero App",
+  "short_name": "Mero App",
+  "description": "Your all-in-one digital companion - Calendar, Tools, Phone Directory & more",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0f0f0f",
   "theme_color": "#0f0f0f",
-  "orientation": "portrait",
+  "categories": ["productivity", "utilities"],
   "icons": [
     {
       "src": "./icons/icon-192x192.png",
