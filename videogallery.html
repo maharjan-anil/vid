@@ -20,7 +20,6 @@
             --text-dim: #666666;
             --accent: #ffffff;
         }
-
         [data-theme="light"] {
             --bg-primary: #f5f5f7;
             --bg-secondary: #ffffff;
@@ -33,690 +32,156 @@
             --text-dim: #9a9a9a;
             --accent: #000000;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            background-color: var(--bg-primary); 
-            color: var(--text-primary); 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
 
-        /* ==========================================
-           HEADER
-           ========================================== */
-        .app-header { 
-            background-color: rgba(15, 15, 15, 0.85); 
-            padding: 14px 20px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
+        .app-header { background-color: rgba(15, 15, 15, 0.85); padding: 14px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
         [data-theme="light"] .app-header { background-color: rgba(245, 245, 247, 0.85); }
-        
-        .header-content { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            max-width: 600px; 
-            margin: 0 auto; 
-        }
+        .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 600px; margin: 0 auto; }
         .header-left { display: flex; align-items: center; gap: 12px; }
-        .header-btn {
-            width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary);
-            border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s ease; color: var(--text-primary); text-decoration: none;
-        }
+        .header-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; color: var(--text-primary); text-decoration: none; }
         .header-btn:hover { background: var(--bg-hover); transform: translateY(-1px); }
         .header-btn i { font-size: 1.1rem; }
-        .header-title { 
-            font-size: 1.15rem; 
-            font-weight: 700; 
-            color: var(--text-primary);
-            letter-spacing: 1px;
-        }
+        .header-title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); letter-spacing: 1px; }
         .header-actions { display: flex; gap: 8px; }
 
-        /* ==========================================
-           MAIN CONTAINER
-           ========================================== */
-        .page-container { 
-            padding: 20px; 
-            max-width: 600px; 
-            margin: 0 auto; 
-            padding-bottom: 40px; 
-        }
+        .page-container { padding: 20px; max-width: 600px; margin: 0 auto; padding-bottom: 40px; }
 
-        /* ==========================================
-           CHANNELS SECTION
-           ========================================== */
-        .channels-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-        }
-        .channels-scroll {
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
+        .channels-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; margin-bottom: 20px; }
+        .channels-scroll { overflow-x: auto; scrollbar-width: none; }
         .channels-scroll::-webkit-scrollbar { display: none; }
-        .channels-list {
-            display: flex;
-            gap: 16px;
-            min-width: max-content;
-        }
-        .channel-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+        .channels-list { display: flex; gap: 16px; min-width: max-content; }
+        .channel-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s; }
         .channel-item:hover { transform: scale(1.05); }
-        .channel-item-logo {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--bg-hover);
-            border: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            transition: all 0.3s;
-        }
-        .channel-item.active .channel-item-logo {
-            border-color: var(--accent);
-            background: var(--accent);
-            color: var(--bg-primary);
-        }
-        .channel-item-name {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 6px;
-            max-width: 70px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-weight: 500;
-        }
+        .channel-item-logo { width: 56px; height: 56px; border-radius: 50%; background: var(--bg-hover); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; color: var(--text-primary); transition: all 0.3s; }
+        .channel-item.active .channel-item-logo { border-color: var(--accent); background: var(--accent); color: var(--bg-primary); }
+        .channel-item-name { font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
 
-        /* ==========================================
-           FILTER TABS (NEW - All Videos / Favorites)
-           ========================================== */
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 4px;
-        }
-        .filter-tab {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .filter-tab.active {
-            background: var(--accent);
-            color: var(--bg-primary);
-        }
+        .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 4px; }
+        .filter-tab { flex: 1; padding: 10px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .filter-tab.active { background: var(--accent); color: var(--bg-primary); }
         .filter-tab i { font-size: 1rem; }
-        .filter-badge {
-            background: var(--bg-primary);
-            color: var(--accent);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            min-width: 24px;
-            text-align: center;
-        }
-        .filter-tab.active .filter-badge {
-            background: var(--bg-primary);
-            color: var(--accent);
-        }
+        .filter-badge { background: var(--bg-primary); color: var(--accent); padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; min-width: 24px; text-align: center; }
 
-        /* ==========================================
-           VIDEOS SECTION
-           ========================================== */
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .section-title-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .section-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+        .section-title-left { display: flex; align-items: center; gap: 8px; }
         .section-title i { color: var(--accent); }
 
-        .video-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .video-list { display: flex; flex-direction: column; gap: 12px; }
+        .video-item { display: flex; gap: 12px; padding: 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; transition: all 0.2s; align-items: flex-start; }
+        .video-item:hover { background: var(--bg-hover); }
+        .video-thumb { width: 160px; min-width: 160px; height: 90px; border-radius: 10px; overflow: hidden; background: var(--bg-secondary); position: relative; cursor: pointer; flex-shrink: 0; }
+        .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .video-source-badge { position: absolute; top: 6px; right: 6px; background: rgba(0, 0, 0, 0.8); color: var(--text-primary); padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 600; }
+        .video-info { flex: 1; min-width: 0; cursor: pointer; }
+        .video-title { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .video-channel { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .video-channel-logo { width: 20px; height: 20px; border-radius: 50%; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: var(--text-primary); flex-shrink: 0; }
+        .video-stats { font-size: 0.75rem; color: var(--text-dim); }
 
-        .video-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            transition: all 0.2s;
-            align-items: flex-start;
-        }
-        .video-item:hover {
-            background: var(--bg-hover);
-        }
+        .video-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; padding: 4px; }
+        .video-action-btn { width: 32px; height: 32px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; color: var(--text-muted); font-size: 0.9rem; }
+        .video-action-btn:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--text-muted); }
+        .video-action-btn.favorite.active { color: var(--accent); border-color: var(--accent); }
+        .video-action-btn.delete:hover { background: #dc3545; color: white; border-color: #dc3545; }
 
-        .video-thumb {
-            width: 160px;
-            min-width: 160px;
-            height: 90px;
-            border-radius: 10px;
-            overflow: hidden;
-            background: var(--bg-secondary);
-            position: relative;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        .video-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .video-source-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(0, 0, 0, 0.8);
-            color: var(--text-primary);
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.65rem;
-            font-weight: 600;
-        }
-
-        .video-info {
-            flex: 1;
-            min-width: 0;
-            cursor: pointer;
-        }
-        .video-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 6px;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .video-channel {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .video-channel-logo {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--bg-hover);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            flex-shrink: 0;
-        }
-        .video-stats {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        /* Video Actions (Edit/Delete/Favorite) */
-        .video-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex-shrink: 0;
-            padding: 4px;
-        }
-        .video-action-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .video-action-btn:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-            border-color: var(--text-muted);
-        }
-        .video-action-btn.favorite.active {
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-        .video-action-btn.delete:hover {
-            background: #dc3545;
-            color: white;
-            border-color: #dc3545;
-        }
-
-        /* ==========================================
-           CHANNEL PAGE
-           ========================================== */
-        .channel-header {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-        .channel-header-top {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .channel-header-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--bg-hover);
-            border: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            flex-shrink: 0;
-        }
+        .channel-header { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+        .channel-header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .channel-header-logo { width: 50px; height: 50px; border-radius: 50%; background: var(--bg-hover); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); flex-shrink: 0; }
         .channel-header-info { flex: 1; }
-        .channel-header-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 2px;
-        }
-        .channel-header-desc {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        .channel-header-actions {
-            display: flex;
-            gap: 8px;
-        }
+        .channel-header-name { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+        .channel-header-desc { font-size: 0.8rem; color: var(--text-muted); }
+        .channel-header-actions { display: flex; gap: 8px; }
 
-        .video-player-section {
-            background: #000;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 16px;
-        }
-        .video-player-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            background: #000;
-        }
-        .video-player-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        .video-player-section { background: #000; border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+        .video-player-wrapper { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
+        .video-player-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        .video-details {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-        .video-details-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        
-        /* TRUNCATED DESCRIPTION */
-        .video-details-description {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 8px;
-            padding: 10px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            border-left: 3px solid var(--accent);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-        }
-        .video-details-description.expanded {
-            -webkit-line-clamp: unset;
-            display: block;
-        }
+        .video-details { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+        .video-details-title { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; line-height: 1.4; }
+        .video-details-description { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px; padding: 10px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid var(--accent); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: all 0.3s ease; cursor: pointer; }
+        .video-details-description.expanded { -webkit-line-clamp: unset; display: block; }
         .video-details-description:empty { display: none; }
-        
-        .read-more-btn {
-            background: none;
-            border: none;
-            color: var(--accent);
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 4px 10px;
-            margin-left: 10px;
-            margin-bottom: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: opacity 0.2s;
-        }
+        .read-more-btn { background: none; border: none; color: var(--accent); font-size: 0.8rem; font-weight: 600; cursor: pointer; padding: 4px 10px; margin-left: 10px; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 4px; }
         .read-more-btn:hover { opacity: 0.7; }
-        .read-more-btn.hidden { display: none; }
+        .video-details-meta { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap; }
 
-        .video-details-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            flex-wrap: wrap;
-        }
-
-        .channel-videos-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .channel-video-item {
-            display: flex;
-            gap: 12px;
-            padding: 10px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            align-items: flex-start;
-        }
+        .channel-videos-list { display: flex; flex-direction: column; gap: 10px; }
+        .channel-video-item { display: flex; gap: 12px; padding: 10px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; cursor: pointer; transition: all 0.2s; align-items: flex-start; }
         .channel-video-item:hover { background: var(--bg-hover); }
-        .channel-video-item.active {
-            background: var(--bg-hover);
-            border-color: var(--accent);
-        }
-        .channel-video-thumb {
-            width: 140px;
-            min-width: 140px;
-            height: 78px;
-            border-radius: 8px;
-            overflow: hidden;
-            background: var(--bg-secondary);
-            flex-shrink: 0;
-        }
-        .channel-video-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .channel-video-item.active { background: var(--bg-hover); border-color: var(--accent); }
+        .channel-video-thumb { width: 140px; min-width: 140px; height: 78px; border-radius: 8px; overflow: hidden; background: var(--bg-secondary); flex-shrink: 0; }
+        .channel-video-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .channel-video-info { flex: 1; min-width: 0; }
-        .channel-video-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .channel-video-stats {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
+        .channel-video-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .channel-video-stats { font-size: 0.75rem; color: var(--text-dim); }
 
-        /* ==========================================
-           EMPTY & LOADING STATES
-           ========================================== */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-        }
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 16px;
-            color: var(--text-dim);
-        }
-        .empty-state h5 {
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+        .empty-state i { font-size: 4rem; margin-bottom: 16px; color: var(--text-dim); }
+        .empty-state h5 { color: var(--text-primary); margin-bottom: 8px; }
+        .loading-container { text-align: center; padding: 40px; color: var(--text-muted); }
+        .loading-container .spinner-border { width: 2rem; height: 2rem; color: var(--accent); }
 
-        .loading-container {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-        }
-        .loading-container .spinner-border {
-            width: 2rem;
-            height: 2rem;
-            color: var(--accent);
-        }
-
-        /* ==========================================
-           MODALS
-           ========================================== */
-        .modal-content {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            border-radius: 16px;
-        }
-        .modal-header {
-            border-bottom: 1px solid var(--border-color);
-            padding: 16px 20px;
-        }
+        .modal-content { background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 16px; }
+        .modal-header { border-bottom: 1px solid var(--border-color); padding: 16px 20px; }
         .modal-title { font-weight: 700; font-size: 1.1rem; }
         .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
         [data-theme="light"] .btn-close-white { filter: none; }
         .modal-body { padding: 20px; }
-        .modal-footer {
-            border-top: 1px solid var(--border-color);
-            padding: 16px 20px;
-        }
-        .form-control, .form-select {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-        .form-control:focus, .form-select:focus {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
-        }
-        .form-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        .form-text {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-        }
-        .btn-custom-primary {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border: none;
-            font-weight: 600;
-        }
+        .modal-footer { border-top: 1px solid var(--border-color); padding: 16px 20px; }
+        .form-control, .form-select { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); }
+        .form-control:focus, .form-select:focus { background: var(--bg-secondary); color: var(--text-primary); border-color: var(--accent); box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1); }
+        .form-label { color: var(--text-secondary); font-weight: 500; margin-bottom: 8px; }
+        .form-text { color: var(--text-dim); font-size: 0.8rem; }
+        .btn-custom-primary { background: var(--accent); color: var(--bg-primary); border: none; font-weight: 600; }
         .btn-custom-primary:hover { opacity: 0.9; }
-        .btn-custom-secondary {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
+        .btn-custom-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
         .btn-custom-secondary:hover { background: var(--bg-hover); }
 
-        /* Toast */
         .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
-        .toast-custom { 
-            background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; 
-            border-radius: 10px; border-left: 4px solid var(--accent); 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem; 
-        }
+        .toast-custom { background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; border-radius: 10px; border-left: 4px solid var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem; }
 
-        /* Search Overlay */
-        .search-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 200;
-            display: none;
-            flex-direction: column;
-            padding: 20px;
-        }
+        .search-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.95); z-index: 200; display: none; flex-direction: column; padding: 20px; }
         .search-overlay.active { display: flex; }
-        .search-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        .search-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
         .search-input-wrapper { flex: 1; position: relative; }
-        .search-input {
-            width: 100%;
-            padding: 12px 15px 12px 40px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            outline: none;
-        }
+        .search-input { width: 100%; padding: 12px 15px 12px 40px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 25px; color: var(--text-primary); font-size: 1rem; outline: none; }
         .search-input:focus { border-color: var(--accent); }
         .search-input::placeholder { color: var(--text-dim); }
-        .search-input-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-dim);
-        }
-        .search-close {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-        }
+        .search-input-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
+        .search-close { background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 5px; }
         .search-results { flex: 1; overflow-y: auto; }
-        .search-results-title {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            padding: 0 5px;
-        }
+        .search-results-title { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; padding: 0 5px; }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header class="app-header">
         <div class="header-content">
             <div class="header-left">
-                <a href="index.html" class="header-btn" title="Back to Home">
-                    <i class="bi bi-arrow-left"></i>
-                </a>
+                <a href="index.html" class="header-btn" title="Back to Home"><i class="bi bi-arrow-left"></i></a>
                 <h5 class="header-title mb-0" id="pageTitle">VIDEO GALLERY</h5>
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="openSearch()" title="Search">
-                    <i class="bi bi-search"></i>
-                </button>
-                <button class="header-btn" onclick="openAddChannelModal()" title="Add Channel">
-                    <i class="bi bi-person-plus"></i>
-                </button>
-                <button class="header-btn" onclick="openAddVideoModal()" title="Add Video">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
+                <button class="header-btn" onclick="openSearch()" title="Search"><i class="bi bi-search"></i></button>
+                <button class="header-btn" onclick="openAddChannelModal()" title="Add Channel"><i class="bi bi-person-plus"></i></button>
+                <button class="header-btn" onclick="openAddVideoModal()" title="Add Video"><i class="bi bi-plus-lg"></i></button>
             </div>
         </div>
     </header>
 
-    <!-- Search Overlay -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-header">
             <div class="search-input-wrapper">
                 <i class="bi bi-search search-input-icon"></i>
                 <input type="text" class="search-input" id="searchInput" placeholder="Search videos..." oninput="handleSearch()">
             </div>
-            <button class="search-close" onclick="closeSearch()">
-                <i class="bi bi-x-lg"></i>
-            </button>
+            <button class="search-close" onclick="closeSearch()"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="search-results-title" id="searchResultsTitle">Type to search videos</div>
         <div class="search-results" id="searchResults"></div>
     </div>
 
-    <!-- Main Content -->
     <div class="page-container" id="mainContent">
         <div class="loading-container">
             <div class="spinner-border" role="status"></div>
@@ -724,9 +189,7 @@
         </div>
     </div>
 
-    <!-- ==========================================
-         ADD/EDIT CHANNEL MODAL
-         ========================================== -->
+    <!-- Channel Modal -->
     <div class="modal fade" id="channelModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -737,22 +200,10 @@
                 <div class="modal-body">
                     <form id="channelForm">
                         <input type="hidden" id="editChannelId">
-                        <div class="mb-3">
-                            <label class="form-label">Channel Name *</label>
-                            <input type="text" class="form-control" id="inputChannelName" placeholder="e.g., Tech Pana" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Channel Logo (Text/Emoji) *</label>
-                            <input type="text" class="form-control" id="inputChannelLogo" maxlength="3" placeholder="e.g., T or 🔥" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Channel Color</label>
-                            <input type="color" class="form-control" id="inputChannelColor" value="#ffffff" style="height: 50px;">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" id="inputChannelDesc" rows="3" placeholder="Channel description (optional)"></textarea>
-                        </div>
+                        <div class="mb-3"><label class="form-label">Channel Name *</label><input type="text" class="form-control" id="inputChannelName" placeholder="e.g., Tech Pana" required></div>
+                        <div class="mb-3"><label class="form-label">Channel Logo (Text/Emoji) *</label><input type="text" class="form-control" id="inputChannelLogo" maxlength="3" placeholder="e.g., T or 🔥" required></div>
+                        <div class="mb-3"><label class="form-label">Channel Color</label><input type="color" class="form-control" id="inputChannelColor" value="#ffffff" style="height: 50px;"></div>
+                        <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="inputChannelDesc" rows="3" placeholder="Channel description (optional)"></textarea></div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -763,9 +214,7 @@
         </div>
     </div>
 
-    <!-- ==========================================
-         ADD/EDIT VIDEO MODAL
-         ========================================== -->
+    <!-- Video Modal -->
     <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -776,32 +225,11 @@
                 <div class="modal-body">
                     <form id="videoForm">
                         <input type="hidden" id="editVideoId">
-                        <div class="mb-3">
-                            <label class="form-label">Video Source *</label>
-                            <select class="form-select" id="inputVideoSource" onchange="toggleVideoSourceFields()" required>
-                                <option value="youtube">YouTube</option>
-                                <option value="drive">Google Drive</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" id="videoIdLabel">Video ID *</label>
-                            <input type="text" class="form-control" id="inputVideoId" placeholder="e.g., dQw4w9WgXcQ" required>
-                            <small class="form-text" id="videoIdHelp">From URL: youtube.com/watch?v=<b>VIDEO_ID</b></small>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Title *</label>
-                            <input type="text" class="form-control" id="inputTitle" placeholder="Enter video title" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Channel *</label>
-                            <select class="form-select" id="inputChannel" required>
-                                <option value="">Select channel...</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" id="inputVideoDesc" rows="3" placeholder="Video description (optional)"></textarea>
-                        </div>
+                        <div class="mb-3"><label class="form-label">Video Source *</label><select class="form-select" id="inputVideoSource" onchange="toggleVideoSourceFields()" required><option value="youtube">YouTube</option><option value="drive">Google Drive</option></select></div>
+                        <div class="mb-3"><label class="form-label" id="videoIdLabel">Video ID *</label><input type="text" class="form-control" id="inputVideoId" placeholder="e.g., dQw4w9WgXcQ" required><small class="form-text" id="videoIdHelp">From URL: youtube.com/watch?v=<b>VIDEO_ID</b></small></div>
+                        <div class="mb-3"><label class="form-label">Title *</label><input type="text" class="form-control" id="inputTitle" placeholder="Enter video title" required></div>
+                        <div class="mb-3"><label class="form-label">Channel *</label><select class="form-select" id="inputChannel" required><option value="">Select channel...</option></select></div>
+                        <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="inputVideoDesc" rows="3" placeholder="Video description (optional)"></textarea></div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -812,10 +240,8 @@
         </div>
     </div>
 
-    <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -824,7 +250,7 @@
         // ==========================================
         // FIREBASE CONFIGURATION
         // ==========================================
-        const firebaseConfig = {
+       const firebaseConfig = {
   apiKey: "AIzaSyAeOf5HQZMay4QVID8-x0PzUIo84d-XS_k",
   authDomain: "my-vid-ccddc.firebaseapp.com",
   projectId: "my-vid-ccddc",
@@ -846,7 +272,8 @@
         let currentChannel = null;
         let currentPlayingVideo = null;
         let currentPage = 'home';
-        let currentFilter = 'all'; // 'all' or 'favorites'
+        let currentFilter = 'all';
+        let targetVideoId = null; // ✅ NEW: Track which video should play
         let unsubscribeChannels = null;
         let unsubscribeVideos = null;
         let unsubscribeFavorites = null;
@@ -913,16 +340,12 @@
         // VIDEO HELPERS
         // ==========================================
         function getVideoThumbnail(video) {
-            if (video.source === 'drive') {
-                return 'https://ssl.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png';
-            }
+            if (video.source === 'drive') return 'https://ssl.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png';
             return `https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`;
         }
 
         function getVideoEmbedUrl(video) {
-            if (video.source === 'drive') {
-                return `https://drive.google.com/file/d/${video.videoId}/preview`;
-            }
+            if (video.source === 'drive') return `https://drive.google.com/file/d/${video.videoId}/preview`;
             return `https://www.youtube.com/embed/${video.videoId}?rel=0`;
         }
 
@@ -949,7 +372,7 @@
         }
 
         // ==========================================
-        // RENDER FUNCTIONS
+        // ✅ FIXED: RENDER FUNCTIONS
         // ==========================================
         function renderCurrentView() {
             if (currentPage === 'channel' && currentChannel) {
@@ -963,127 +386,72 @@
             currentPage = 'home';
             currentChannel = null;
             currentPlayingVideo = null;
+            targetVideoId = null;
             document.getElementById('pageTitle').textContent = 'VIDEO GALLERY';
             
             const mainContent = document.getElementById('mainContent');
             
             if (channels.length === 0 && allVideos.length === 0) {
-                mainContent.innerHTML = `
-                    <div class="empty-state">
-                        <i class="bi bi-collection-play"></i>
-                        <h5>No videos yet</h5>
-                        <p>Add a channel and your first video to get started</p>
-                    </div>
-                `;
+                mainContent.innerHTML = `<div class="empty-state"><i class="bi bi-collection-play"></i><h5>No videos yet</h5><p>Add a channel and your first video to get started</p></div>`;
                 return;
             }
             
             let html = '';
             
-            // Channels Section
             if (channels.length > 0) {
-                html += `
-                    <div class="channels-section">
-                        <div class="channels-scroll">
-                            <div class="channels-list">
-                `;
+                html += `<div class="channels-section"><div class="channels-scroll"><div class="channels-list">`;
                 channels.forEach(ch => {
-                    html += `
-                        <div class="channel-item" onclick="openChannel('${escapeAttr(ch.channelName)}')">
-                            <div class="channel-item-logo">${ch.channelLogo || ch.channelName.charAt(0)}</div>
-                            <div class="channel-item-name">${ch.channelName}</div>
-                        </div>
-                    `;
+                    html += `<div class="channel-item" onclick="openChannel('${escapeAttr(ch.channelName)}')"><div class="channel-item-logo">${ch.channelLogo || ch.channelName.charAt(0)}</div><div class="channel-item-name">${ch.channelName}</div></div>`;
                 });
                 html += `</div></div></div>`;
             }
             
-            // ✅ NEW: Filter Tabs (All Videos / Favorites)
             const favCount = getFavoriteCount();
             html += `
                 <div class="filter-tabs">
-                    <button class="filter-tab ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')">
-                        <i class="bi bi-collection-play"></i>
-                        All Videos
-                        <span class="filter-badge">${allVideos.length}</span>
-                    </button>
-                    <button class="filter-tab ${currentFilter === 'favorites' ? 'active' : ''}" onclick="setFilter('favorites')">
-                        <i class="bi bi-heart-fill"></i>
-                        Favorites
-                        <span class="filter-badge">${favCount}</span>
-                    </button>
+                    <button class="filter-tab ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')"><i class="bi bi-collection-play"></i>All Videos<span class="filter-badge">${allVideos.length}</span></button>
+                    <button class="filter-tab ${currentFilter === 'favorites' ? 'active' : ''}" onclick="setFilter('favorites')"><i class="bi bi-heart-fill"></i>Favorites<span class="filter-badge">${favCount}</span></button>
                 </div>
             `;
             
-            // Videos Section
-            html += `
-                <div class="section-title">
-                    <div class="section-title-left">
-                        <i class="bi bi-${currentFilter === 'favorites' ? 'heart-fill' : 'play-circle'}"></i>
-                        ${currentFilter === 'favorites' ? 'Favorite Videos' : 'All Videos'}
-                    </div>
-                </div>
-                <div class="video-list">
-            `;
+            html += `<div class="section-title"><div class="section-title-left"><i class="bi bi-${currentFilter === 'favorites' ? 'heart-fill' : 'play-circle'}"></i>${currentFilter === 'favorites' ? 'Favorite Videos' : 'All Videos'}</div></div><div class="video-list">`;
             
-            // Filter videos based on current filter
             let displayVideos = allVideos;
             if (currentFilter === 'favorites') {
                 displayVideos = allVideos.filter(v => isFavorite(v.videoId));
             }
             
             if (displayVideos.length === 0) {
-                html += `
-                    <div class="empty-state">
-                        <i class="bi bi-${currentFilter === 'favorites' ? 'heart' : 'video-off'}"></i>
-                        <h5>${currentFilter === 'favorites' ? 'No favorites yet' : 'No videos found'}</h5>
-                        <p>${currentFilter === 'favorites' ? 'Click the heart icon on videos to add them here' : 'Check back soon for new content'}</p>
-                    </div>
-                `;
+                html += `<div class="empty-state"><i class="bi bi-${currentFilter === 'favorites' ? 'heart' : 'video-off'}"></i><h5>${currentFilter === 'favorites' ? 'No favorites yet' : 'No videos found'}</h5><p>${currentFilter === 'favorites' ? 'Click the heart icon on videos to add them here' : 'Check back soon for new content'}</p></div>`;
             } else {
                 displayVideos.forEach(video => {
                     const channel = channels.find(c => c.channelName === video.channelName);
                     const fav = isFavorite(video.videoId);
                     html += `
                         <div class="video-item">
-                            <div class="video-thumb" onclick="playVideoFromHome('${video.id}')">
-                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
-                                ${video.source === 'drive' ? '<span class="video-source-badge">Drive</span>' : ''}
-                            </div>
-                            <div class="video-info" onclick="playVideoFromHome('${video.id}')">
-                                <div class="video-title">${video.title}</div>
-                                <div class="video-channel">
-                                    <div class="video-channel-logo">${channel ? channel.channelLogo : '?'}</div>
-                                    <span>${video.channelName}</span>
-                                </div>
-                                <div class="video-stats">${formatViews(video.viewCount)} • ${video.published}</div>
-                            </div>
+                            <div class="video-thumb" onclick="playVideoFromHome('${video.id}')"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">${video.source === 'drive' ? '<span class="video-source-badge">Drive</span>' : ''}</div>
+                            <div class="video-info" onclick="playVideoFromHome('${video.id}')"><div class="video-title">${video.title}</div><div class="video-channel"><div class="video-channel-logo">${channel ? channel.channelLogo : '?'}</div><span>${video.channelName}</span></div><div class="video-stats">${formatViews(video.viewCount)} • ${video.published}</div></div>
                             <div class="video-actions">
-                                <button class="video-action-btn favorite ${fav ? 'active' : ''}" onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')" title="Favorite">
-                                    <i class="bi bi-heart${fav ? '-fill' : ''}"></i>
-                                </button>
-                                <button class="video-action-btn" onclick="openEditVideoModal('${video.id}')" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="video-action-btn delete" onclick="deleteVideo('${video.id}')" title="Delete">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <button class="video-action-btn favorite ${fav ? 'active' : ''}" onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')" title="Favorite"><i class="bi bi-heart${fav ? '-fill' : ''}"></i></button>
+                                <button class="video-action-btn" onclick="openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
+                                <button class="video-action-btn delete" onclick="deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>
                             </div>
                         </div>
                     `;
                 });
             }
             html += `</div>`;
-            
             mainContent.innerHTML = html;
         }
 
-        // ✅ NEW: Set Filter (All Videos / Favorites)
         function setFilter(filter) {
             currentFilter = filter;
             renderHomePage();
         }
 
+        // ==========================================
+        // ✅ FIXED: renderChannelPage - respects currentPlayingVideo
+        // ==========================================
         function renderChannelPage(videos) {
             if (!currentChannel) return;
             
@@ -1099,22 +467,40 @@
                             <div class="channel-header-desc">${currentChannel.description || ''}</div>
                         </div>
                         <div class="channel-header-actions">
-                            <button class="header-btn" onclick="openEditChannelModal('${currentChannel.id}')" title="Edit Channel">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            <button class="header-btn" onclick="deleteChannel('${currentChannel.id}')" title="Delete Channel">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <button class="header-btn" onclick="openEditChannelModal('${currentChannel.id}')" title="Edit Channel"><i class="bi bi-pencil"></i></button>
+                            <button class="header-btn" onclick="deleteChannel('${currentChannel.id}')" title="Delete Channel"><i class="bi bi-trash"></i></button>
                         </div>
                     </div>
                 </div>
             `;
             
-            // Video Player
-            if (videos.length > 0) {
-                const firstVideo = videos[0];
-                currentPlayingVideo = firstVideo;
-                const embedUrl = getVideoEmbedUrl(firstVideo);
+            // ✅ CRITICAL FIX: Determine which video to play
+            // Priority 1: If targetVideoId is set (from home page click), use that
+            // Priority 2: If currentPlayingVideo exists and belongs to this channel, keep it
+            // Priority 3: Otherwise use first video
+            let videoToPlay = null;
+            
+            if (targetVideoId) {
+                videoToPlay = videos.find(v => v.videoId === targetVideoId);
+                // Clear target after using it once
+                if (videoToPlay) targetVideoId = null;
+            }
+            
+            if (!videoToPlay && currentPlayingVideo) {
+                const currentVideoInList = videos.find(v => v.id === currentPlayingVideo.id);
+                if (currentVideoInList) {
+                    videoToPlay = currentVideoInList;
+                }
+            }
+            
+            if (!videoToPlay && videos.length > 0) {
+                videoToPlay = videos[0];
+                currentPlayingVideo = videoToPlay;
+            }
+            
+            if (videoToPlay) {
+                currentPlayingVideo = videoToPlay;
+                const embedUrl = getVideoEmbedUrl(videoToPlay);
                 
                 html += `
                     <div class="video-player-section">
@@ -1123,64 +509,33 @@
                         </div>
                     </div>
                     <div class="video-details">
-                        <div class="video-details-title">${firstVideo.title}</div>
-                        ${firstVideo.description ? `
-                            <div class="video-details-description" id="videoDescription" onclick="toggleDescription()">${firstVideo.description}</div>
-                            <button class="read-more-btn" id="readMoreBtn" onclick="toggleDescription()">
-                                <i class="bi bi-chevron-down"></i> Read more
-                            </button>
-                        ` : ''}
+                        <div class="video-details-title">${videoToPlay.title}</div>
+                        ${videoToPlay.description ? `<div class="video-details-description" id="videoDescription" onclick="toggleDescription()">${videoToPlay.description}</div><button class="read-more-btn" id="readMoreBtn" onclick="toggleDescription()"><i class="bi bi-chevron-down"></i> Read more</button>` : ''}
                         <div class="video-details-meta">
-                            <span><i class="bi bi-eye"></i> ${formatViews(firstVideo.viewCount)}</span>
-                            <span>•</span>
-                            <span>${firstVideo.published}</span>
-                            ${firstVideo.source === 'drive' ? '<span>•</span><span> Drive</span>' : ''}
+                            <span><i class="bi bi-eye"></i> ${formatViews(videoToPlay.viewCount)}</span>
+                            <span>•</span><span>${videoToPlay.published}</span>
+                            ${videoToPlay.source === 'drive' ? '<span>•</span><span> Drive</span>' : ''}
                         </div>
                     </div>
                 `;
             }
             
-            // Channel Videos List
-            html += `
-                <div class="section-title">
-                    <div class="section-title-left">
-                        <i class="bi bi-list-ul"></i>
-                        Videos (${videos.length})
-                    </div>
-                </div>
-                <div class="channel-videos-list">
-            `;
+            html += `<div class="section-title"><div class="section-title-left"><i class="bi bi-list-ul"></i>Videos (${videos.length})</div></div><div class="channel-videos-list">`;
             
             if (videos.length === 0) {
-                html += `
-                    <div class="empty-state">
-                        <i class="bi bi-video-off"></i>
-                        <h5>No videos in this channel</h5>
-                    </div>
-                `;
+                html += `<div class="empty-state"><i class="bi bi-video-off"></i><h5>No videos in this channel</h5></div>`;
             } else {
                 videos.forEach(video => {
                     const isActive = currentPlayingVideo && currentPlayingVideo.id === video.id;
                     const fav = isFavorite(video.videoId);
                     html += `
                         <div class="channel-video-item ${isActive ? 'active' : ''}" onclick="playChannelVideo('${video.id}', this)">
-                            <div class="channel-video-thumb">
-                                <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">
-                            </div>
-                            <div class="channel-video-info">
-                                <div class="channel-video-title">${video.title}</div>
-                                <div class="channel-video-stats">${formatViews(video.viewCount)} • ${video.published}</div>
-                            </div>
+                            <div class="channel-video-thumb"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'"></div>
+                            <div class="channel-video-info"><div class="channel-video-title">${video.title}</div><div class="channel-video-stats">${formatViews(video.viewCount)} • ${video.published}</div></div>
                             <div class="video-actions">
-                                <button class="video-action-btn favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')" title="Favorite">
-                                    <i class="bi bi-heart${fav ? '-fill' : ''}"></i>
-                                </button>
-                                <button class="video-action-btn" onclick="event.stopPropagation(); openEditVideoModal('${video.id}')" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="video-action-btn delete" onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Delete">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <button class="video-action-btn favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')" title="Favorite"><i class="bi bi-heart${fav ? '-fill' : ''}"></i></button>
+                                <button class="video-action-btn" onclick="event.stopPropagation(); openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
+                                <button class="video-action-btn delete" onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>
                             </div>
                         </div>
                     `;
@@ -1193,13 +548,12 @@
         }
 
         // ==========================================
-        // DESCRIPTION TOGGLE (Read more/less)
+        // DESCRIPTION TOGGLE
         // ==========================================
         function toggleDescription() {
             const desc = document.getElementById('videoDescription');
             const btn = document.getElementById('readMoreBtn');
             if (!desc || !btn) return;
-            
             if (desc.classList.contains('expanded')) {
                 desc.classList.remove('expanded');
                 btn.innerHTML = '<i class="bi bi-chevron-down"></i> Read more';
@@ -1214,57 +568,63 @@
         }
 
         // ==========================================
-        // CHANNEL & VIDEO ACTIONS
+        // ✅ FIXED: CHANNEL & VIDEO ACTIONS
         // ==========================================
-        function openChannel(channelName) {
+        function openChannel(channelName, videoIdToPlay = null) {
             currentPage = 'channel';
             currentChannel = channels.find(c => c.channelName === channelName);
             if (!currentChannel) { showToast('Channel not found'); return; }
+            
+            // ✅ Set target video if specified
+            if (videoIdToPlay) {
+                targetVideoId = videoIdToPlay;
+            }
+            
             renderChannelPage(getChannelVideos(channelName));
         }
 
+        // ✅ FIXED: playVideoFromHome - properly passes target video
         function playVideoFromHome(videoDocId) {
             const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
+            
             incrementViewCount(videoDocId);
-            openChannel(video.channelName);
-            setTimeout(() => {
-                const videoElement = document.querySelector(`.channel-video-item`);
-                if (videoElement) {
-                    const items = document.querySelectorAll('.channel-video-item');
-                    items.forEach(item => {
-                        if (item.onclick && item.onclick.toString().includes(videoDocId)) {
-                            playChannelVideo(videoDocId, item);
-                        }
-                    });
-                }
-            }, 300);
+            
+            // ✅ Pass the videoId to openChannel so renderChannelPage knows which to play
+            openChannel(video.channelName, video.videoId);
         }
 
+        // ✅ FIXED: playChannelVideo - updates state BEFORE incrementing
         function playChannelVideo(videoDocId, element) {
             const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
             
+            // ✅ Set currentPlayingVideo FIRST (before any async operations)
             currentPlayingVideo = video;
+            targetVideoId = null; // Clear any pending target
+            
+            // Increment view (this triggers re-render, but currentPlayingVideo is already set)
             incrementViewCount(videoDocId);
             
+            // Update player immediately
             const player = document.getElementById('channelVideoPlayer');
             if (player) {
                 const embedUrl = getVideoEmbedUrl(video);
                 player.src = embedUrl;
             }
             
+            // Update details
             const detailsTitle = document.querySelector('.video-details-title');
             if (detailsTitle) detailsTitle.textContent = video.title;
             
-            // Update description with truncation
+            // Update description
             const descContainer = document.querySelector('.video-details');
-            const oldDesc = descContainer.querySelector('.video-details-description');
-            const oldBtn = descContainer.querySelector('.read-more-btn');
+            const oldDesc = descContainer ? descContainer.querySelector('.video-details-description') : null;
+            const oldBtn = descContainer ? descContainer.querySelector('.read-more-btn') : null;
             if (oldDesc) oldDesc.remove();
             if (oldBtn) oldBtn.remove();
             
-            if (video.description) {
+            if (video.description && descContainer) {
                 const newDesc = document.createElement('div');
                 newDesc.className = 'video-details-description';
                 newDesc.id = 'videoDescription';
@@ -1278,18 +638,15 @@
                 newBtn.innerHTML = '<i class="bi bi-chevron-down"></i> Read more';
                 
                 const meta = descContainer.querySelector('.video-details-meta');
-                meta.insertAdjacentElement('beforebegin', newBtn);
-                meta.insertAdjacentElement('beforebegin', newDesc);
+                if (meta) {
+                    meta.insertAdjacentElement('beforebegin', newBtn);
+                    meta.insertAdjacentElement('beforebegin', newDesc);
+                }
             }
             
             const detailsMeta = document.querySelector('.video-details-meta');
             if (detailsMeta) {
-                detailsMeta.innerHTML = `
-                    <span><i class="bi bi-eye"></i> ${formatViews(video.viewCount + 1)}</span>
-                    <span>•</span>
-                    <span>${video.published}</span>
-                    ${video.source === 'drive' ? '<span>•</span><span>📁 Drive</span>' : ''}
-                `;
+                detailsMeta.innerHTML = `<span><i class="bi bi-eye"></i> ${formatViews(video.viewCount + 1)}</span><span>•</span><span>${video.published}</span>${video.source === 'drive' ? '<span>•</span><span>📁 Drive</span>' : ''}`;
             }
             
             if (element) {
@@ -1312,10 +669,7 @@
                 } else {
                     const video = allVideos.find(v => v.videoId === videoId);
                     await db.collection('favorites').add({
-                        videoId: videoId,
-                        title: title,
-                        channelName: channelName,
-                        published: published,
+                        videoId: videoId, title: title, channelName: channelName, published: published,
                         thumbnail: video ? video.thumbnail : '',
                         addedAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
@@ -1347,48 +701,19 @@
             const resultsDiv = document.getElementById('searchResults');
             const titleDiv = document.getElementById('searchResultsTitle');
             
-            if (!query) {
-                resultsDiv.innerHTML = '';
-                titleDiv.textContent = 'Type to search videos';
-                return;
-            }
+            if (!query) { resultsDiv.innerHTML = ''; titleDiv.textContent = 'Type to search videos'; return; }
             
-            const filteredVideos = allVideos.filter(v => 
-                v.title.toLowerCase().includes(query) || 
-                v.channelName.toLowerCase().includes(query) ||
-                (v.description && v.description.toLowerCase().includes(query))
-            );
-            
+            const filteredVideos = allVideos.filter(v => v.title.toLowerCase().includes(query) || v.channelName.toLowerCase().includes(query) || (v.description && v.description.toLowerCase().includes(query)));
             titleDiv.textContent = `${filteredVideos.length} result${filteredVideos.length !== 1 ? 's' : ''} found`;
             
             if (filteredVideos.length === 0) {
-                resultsDiv.innerHTML = `
-                    <div class="empty-state">
-                        <i class="bi bi-search"></i>
-                        <h5>No videos found</h5>
-                        <p>Try a different search term</p>
-                    </div>
-                `;
+                resultsDiv.innerHTML = `<div class="empty-state"><i class="bi bi-search"></i><h5>No videos found</h5><p>Try a different search term</p></div>`;
                 return;
             }
             
             let html = '';
             filteredVideos.forEach(video => {
-                html += `
-                    <div class="video-item" onclick="closeSearch(); playVideoFromHome('${video.id}')">
-                        <div class="video-thumb">
-                            <img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy">
-                        </div>
-                        <div class="video-info">
-                            <div class="video-title">${highlightText(video.title, query)}</div>
-                            <div class="video-channel">
-                                <div class="video-channel-logo">?</div>
-                                <span>${highlightText(video.channelName, query)}</span>
-                            </div>
-                            <div class="video-stats">${formatViews(video.viewCount)}</div>
-                        </div>
-                    </div>
-                `;
+                html += `<div class="video-item" onclick="closeSearch(); playVideoFromHome('${video.id}')"><div class="video-thumb"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy"></div><div class="video-info"><div class="video-title">${highlightText(video.title, query)}</div><div class="video-channel"><div class="video-channel-logo">?</div><span>${highlightText(video.channelName, query)}</span></div><div class="video-stats">${formatViews(video.viewCount)}</div></div></div>`;
             });
             resultsDiv.innerHTML = html;
         }
@@ -1409,26 +734,20 @@
             document.getElementById('channelForm').reset();
             document.getElementById('editChannelId').value = '';
             document.getElementById('inputChannelColor').value = '#ffffff';
-            if (!channelModalInstance) {
-                channelModalInstance = new bootstrap.Modal(document.getElementById('channelModal'));
-            }
+            if (!channelModalInstance) channelModalInstance = new bootstrap.Modal(document.getElementById('channelModal'));
             channelModalInstance.show();
         }
 
         function openEditChannelModal(channelId) {
             const channel = channels.find(c => c.id === channelId);
             if (!channel) return;
-            
             document.getElementById('channelModalTitle').textContent = 'Edit Channel';
             document.getElementById('editChannelId').value = channelId;
             document.getElementById('inputChannelName').value = channel.channelName || '';
             document.getElementById('inputChannelLogo').value = channel.channelLogo || '';
             document.getElementById('inputChannelColor').value = channel.channelColor || '#ffffff';
             document.getElementById('inputChannelDesc').value = channel.description || '';
-            
-            if (!channelModalInstance) {
-                channelModalInstance = new bootstrap.Modal(document.getElementById('channelModal'));
-            }
+            if (!channelModalInstance) channelModalInstance = new bootstrap.Modal(document.getElementById('channelModal'));
             channelModalInstance.show();
         }
 
@@ -1439,10 +758,7 @@
             const channelColor = document.getElementById('inputChannelColor').value;
             const description = document.getElementById('inputChannelDesc').value.trim();
             
-            if (!channelName || !channelLogo) {
-                showToast('Please fill required fields');
-                return;
-            }
+            if (!channelName || !channelLogo) { showToast('Please fill required fields'); return; }
             
             try {
                 const data = { channelName, channelLogo, channelColor, description };
@@ -1468,6 +784,8 @@
                 showToast('Channel deleted');
                 currentPage = 'home';
                 currentChannel = null;
+                currentPlayingVideo = null;
+                targetVideoId = null;
                 renderHomePage();
             } catch (error) {
                 console.error('Error deleting channel:', error);
@@ -1513,21 +831,16 @@
             
             const select = document.getElementById('inputChannel');
             select.innerHTML = '<option value="">Select channel...</option>';
-            channels.forEach(ch => {
-                select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`;
-            });
+            channels.forEach(ch => { select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`; });
             if (currentChannel) select.value = currentChannel.channelName;
             
-            if (!videoModalInstance) {
-                videoModalInstance = new bootstrap.Modal(document.getElementById('videoModal'));
-            }
+            if (!videoModalInstance) videoModalInstance = new bootstrap.Modal(document.getElementById('videoModal'));
             videoModalInstance.show();
         }
 
         function openEditVideoModal(videoDocId) {
             const video = allVideos.find(v => v.id === videoDocId);
             if (!video) return;
-            
             document.getElementById('videoModalTitle').textContent = 'Edit Video';
             document.getElementById('editVideoId').value = videoDocId;
             document.getElementById('inputVideoSource').value = video.source || 'youtube';
@@ -1538,14 +851,10 @@
             
             const select = document.getElementById('inputChannel');
             select.innerHTML = '<option value="">Select channel...</option>';
-            channels.forEach(ch => {
-                select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`;
-            });
+            channels.forEach(ch => { select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`; });
             select.value = video.channelName;
             
-            if (!videoModalInstance) {
-                videoModalInstance = new bootstrap.Modal(document.getElementById('videoModal'));
-            }
+            if (!videoModalInstance) videoModalInstance = new bootstrap.Modal(document.getElementById('videoModal'));
             videoModalInstance.show();
         }
 
@@ -1557,25 +866,11 @@
             const channelName = document.getElementById('inputChannel').value;
             const description = document.getElementById('inputVideoDesc').value.trim();
             
-            if (!videoId || !title || !channelName) {
-                showToast('Please fill all required fields');
-                return;
-            }
-            
-            if (source === 'drive') {
-                videoId = extractDriveFileId(videoId);
-            }
+            if (!videoId || !title || !channelName) { showToast('Please fill all required fields'); return; }
+            if (source === 'drive') videoId = extractDriveFileId(videoId);
             
             try {
-                const data = {
-                    videoId: videoId,
-                    title: title,
-                    channelName: channelName,
-                    description: description,
-                    source: source,
-                    published: new Date().toISOString().split('T')[0]
-                };
-                
+                const data = { videoId, title, channelName, description, source, published: new Date().toISOString().split('T')[0] };
                 if (videoDocId) {
                     await db.collection('videos').doc(videoDocId).update(data);
                     showToast('Video updated!');
@@ -1585,7 +880,6 @@
                     await db.collection('videos').add(data);
                     showToast('Video added!');
                 }
-                
                 videoModalInstance.hide();
             } catch (error) {
                 console.error('Error saving video:', error);
@@ -1618,14 +912,9 @@
             toast.className = 'toast-custom';
             toast.textContent = message;
             container.appendChild(toast);
-            setTimeout(() => { 
-                toast.style.opacity = '0'; 
-                toast.style.transition = 'opacity 0.3s'; 
-                setTimeout(() => toast.remove(), 300); 
-            }, 2500);
+            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; setTimeout(() => toast.remove(), 300); }, 2500);
         }
 
-        // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
             if (unsubscribeChannels) unsubscribeChannels();
             if (unsubscribeVideos) unsubscribeVideos();
