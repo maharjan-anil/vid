@@ -19,9 +19,9 @@
             --text-muted: #6a6a6a; --text-dim: #9a9a9a; --accent: #000000;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
+        body { background-color: var(--bg-primary); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; }
 
-        .app-header { background-color: rgba(15, 15, 15, 0.85); padding: 14px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .app-header { background-color: rgba(15, 15, 15, 0.85); padding: 14px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); backdrop-filter: blur(20px); }
         [data-theme="light"] .app-header { background-color: rgba(245, 245, 247, 0.85); }
         .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 600px; margin: 0 auto; }
         .header-left { display: flex; align-items: center; gap: 12px; }
@@ -39,18 +39,15 @@
         .channels-list { display: flex; gap: 16px; min-width: max-content; }
         .channel-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s; }
         .channel-item:hover { transform: scale(1.05); }
-        .channel-item-logo { width: 56px; height: 56px; border-radius: 50%; background: var(--bg-hover); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; color: var(--text-primary); transition: all 0.3s; }
-        .channel-item.active .channel-item-logo { border-color: var(--accent); background: var(--accent); color: var(--bg-primary); }
+        .channel-item-logo { width: 56px; height: 56px; border-radius: 50%; background: var(--bg-hover); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; color: var(--text-primary); }
         .channel-item-name { font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
 
         .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 4px; }
         .filter-tab { flex: 1; padding: 10px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .filter-tab.active { background: var(--accent); color: var(--bg-primary); }
-        .filter-tab i { font-size: 1rem; }
         .filter-badge { background: var(--bg-primary); color: var(--accent); padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; min-width: 24px; text-align: center; }
 
-        .section-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
-        .section-title-left { display: flex; align-items: center; gap: 8px; }
+        .section-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .section-title i { color: var(--accent); }
 
         .video-list { display: flex; flex-direction: column; gap: 12px; }
@@ -58,7 +55,6 @@
         .video-item:hover { background: var(--bg-hover); }
         .video-thumb { width: 160px; min-width: 160px; height: 90px; border-radius: 10px; overflow: hidden; background: var(--bg-secondary); position: relative; cursor: pointer; flex-shrink: 0; }
         .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .video-source-badge { position: absolute; top: 6px; right: 6px; background: rgba(0, 0, 0, 0.8); color: var(--text-primary); padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 600; }
         .video-info { flex: 1; min-width: 0; cursor: pointer; }
         .video-title { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .video-channel { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
@@ -67,7 +63,7 @@
 
         .video-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; padding: 4px; }
         .video-action-btn { width: 32px; height: 32px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; color: var(--text-muted); font-size: 0.9rem; }
-        .video-action-btn:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--text-muted); }
+        .video-action-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
         .video-action-btn.favorite.active { color: var(--accent); border-color: var(--accent); }
         .video-action-btn.delete:hover { background: #dc3545; color: white; border-color: #dc3545; }
 
@@ -85,11 +81,9 @@
 
         .video-details { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
         .video-details-title { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; line-height: 1.4; }
-        .video-details-description { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px; padding: 10px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid var(--accent); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: all 0.3s ease; cursor: pointer; }
+        .video-details-description { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px; padding: 10px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid var(--accent); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
         .video-details-description.expanded { -webkit-line-clamp: unset; display: block; }
-        .video-details-description:empty { display: none; }
         .read-more-btn { background: none; border: none; color: var(--accent); font-size: 0.8rem; font-weight: 600; cursor: pointer; padding: 4px 10px; margin-left: 10px; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 4px; }
-        .read-more-btn:hover { opacity: 0.7; }
         .video-details-meta { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap; }
 
         .channel-videos-list { display: flex; flex-direction: column; gap: 10px; }
@@ -120,9 +114,7 @@
         .form-label { color: var(--text-secondary); font-weight: 500; margin-bottom: 8px; }
         .form-text { color: var(--text-dim); font-size: 0.8rem; }
         .btn-custom-primary { background: var(--accent); color: var(--bg-primary); border: none; font-weight: 600; }
-        .btn-custom-primary:hover { opacity: 0.9; }
         .btn-custom-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
-        .btn-custom-secondary:hover { background: var(--bg-hover); }
 
         .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
         .toast-custom { background: var(--bg-card); color: var(--text-primary); padding: 12px 20px; border-radius: 10px; border-left: 4px solid var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-weight: 500; font-size: 0.9rem; }
@@ -142,25 +134,20 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header class="app-header">
         <div class="header-content">
             <div class="header-left">
-                <!-- ✅ Dynamic Back Button -->
-                <button class="header-btn" id="backButton" onclick="handleBack()" title="Back">
-                    <i class="bi bi-arrow-left"></i>
-                </button>
+                <a href="index.html" class="header-btn" title="Back to Home"><i class="bi bi-arrow-left"></i></a>
                 <h5 class="header-title mb-0" id="pageTitle">VIDEO GALLERY</h5>
             </div>
             <div class="header-actions">
                 <button class="header-btn" onclick="openSearch()" title="Search"><i class="bi bi-search"></i></button>
-                <button class="header-btn" onclick="openAddChannelModal()" title="Add Channel"><i class="bi bi-person-plus"></i></button>
-                <button class="header-btn" onclick="openAddVideoModal()" title="Add Video"><i class="bi bi-plus-lg"></i></button>
+                <button class="header-btn admin-only-btn" onclick="openAddChannelModal()" title="Add Channel" style="display:none;"><i class="bi bi-person-plus"></i></button>
+                <button class="header-btn admin-only-btn" onclick="openAddVideoModal()" title="Add Video" style="display:none;"><i class="bi bi-plus-lg"></i></button>
             </div>
         </div>
     </header>
 
-    <!-- Search Overlay -->
     <div class="search-overlay" id="searchOverlay">
         <div class="search-header">
             <div class="search-input-wrapper">
@@ -173,7 +160,6 @@
         <div class="search-results" id="searchResults"></div>
     </div>
 
-    <!-- Main Content -->
     <div class="page-container" id="mainContent">
         <div class="loading-container">
             <div class="spinner-border" role="status"></div>
@@ -192,10 +178,10 @@
                 <div class="modal-body">
                     <form id="channelForm">
                         <input type="hidden" id="editChannelId">
-                        <div class="mb-3"><label class="form-label">Channel Name *</label><input type="text" class="form-control" id="inputChannelName" placeholder="e.g., Tech Pana" required></div>
-                        <div class="mb-3"><label class="form-label">Channel Logo (Text/Emoji) *</label><input type="text" class="form-control" id="inputChannelLogo" maxlength="3" placeholder="e.g., T or " required></div>
+                        <div class="mb-3"><label class="form-label">Channel Name *</label><input type="text" class="form-control" id="inputChannelName" required></div>
+                        <div class="mb-3"><label class="form-label">Channel Logo (Text/Emoji) *</label><input type="text" class="form-control" id="inputChannelLogo" maxlength="3" required></div>
                         <div class="mb-3"><label class="form-label">Channel Color</label><input type="color" class="form-control" id="inputChannelColor" value="#ffffff" style="height: 50px;"></div>
-                        <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="inputChannelDesc" rows="3" placeholder="Channel description (optional)"></textarea></div>
+                        <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="inputChannelDesc" rows="3"></textarea></div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -218,10 +204,10 @@
                     <form id="videoForm">
                         <input type="hidden" id="editVideoId">
                         <div class="mb-3"><label class="form-label">Video Source *</label><select class="form-select" id="inputVideoSource" onchange="toggleVideoSourceFields()" required><option value="youtube">YouTube</option><option value="drive">Google Drive</option></select></div>
-                        <div class="mb-3"><label class="form-label" id="videoIdLabel">Video ID *</label><input type="text" class="form-control" id="inputVideoId" placeholder="e.g., dQw4w9WgXcQ" required><small class="form-text" id="videoIdHelp">From URL: youtube.com/watch?v=<b>VIDEO_ID</b></small></div>
-                        <div class="mb-3"><label class="form-label">Title *</label><input type="text" class="form-control" id="inputTitle" placeholder="Enter video title" required></div>
+                        <div class="mb-3"><label class="form-label" id="videoIdLabel">Video ID *</label><input type="text" class="form-control" id="inputVideoId" required><small class="form-text" id="videoIdHelp">From URL: youtube.com/watch?v=<b>VIDEO_ID</b></small></div>
+                        <div class="mb-3"><label class="form-label">Title *</label><input type="text" class="form-control" id="inputTitle" required></div>
                         <div class="mb-3"><label class="form-label">Channel *</label><select class="form-select" id="inputChannel" required><option value="">Select channel...</option></select></div>
-                        <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="inputVideoDesc" rows="3" placeholder="Video description (optional)"></textarea></div>
+                        <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="inputVideoDesc" rows="3"></textarea></div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -236,12 +222,10 @@
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // ==========================================
-        // FIREBASE CONFIGURATION
-        // ==========================================
         const firebaseConfig = {
   apiKey: "AIzaSyAeOf5HQZMay4QVID8-x0PzUIo84d-XS_k",
   authDomain: "my-vid-ccddc.firebaseapp.com",
@@ -251,597 +235,225 @@
   appId: "1:510082359037:web:361277a4774d68e746a894",
   measurementId: "G-Q2CQ01NTQ9"
 };
-
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
 
-        // ==========================================
-        // STATE
-        // ==========================================
-        let channels = [];
-        let allVideos = [];
-        let favorites = [];
-        let currentChannel = null;
-        let currentPlayingVideo = null;
-        let currentPage = 'home';
-        let currentFilter = 'all';
-        let targetVideoId = null; 
-        let unsubscribeChannels = null;
-        let unsubscribeVideos = null;
-        let unsubscribeFavorites = null;
-        let channelModalInstance = null;
-        let videoModalInstance = null;
+        let channels = [], allVideos = [], favorites = [];
+        let currentChannel = null, currentPlayingVideo = null, currentPage = 'home', currentFilter = 'all', targetVideoId = null;
+        let isAdminLoggedIn = false;
+        let channelModalInstance = null, videoModalInstance = null;
 
-        // ==========================================
-        // THEME
-        // ==========================================
+        // Auth State
+        auth.onAuthStateChanged(user => {
+            isAdminLoggedIn = !!user;
+            updateAdminUI();
+        });
+        if (localStorage.getItem('mero_admin_logged_in') === 'true') {
+            isAdminLoggedIn = true; // Optimistic UI update
+            updateAdminUI();
+        }
+
+        function updateAdminUI() {
+            document.querySelectorAll('.admin-only-btn').forEach(btn => {
+                btn.style.display = isAdminLoggedIn ? 'flex' : 'none';
+            });
+        }
+
+        function checkAdminAccess(callback) {
+            if (isAdminLoggedIn) {
+                callback();
+            } else {
+                showToast('🔐 Admin login required');
+                setTimeout(() => { window.location.href = 'index.html?login=action'; }, 1000);
+            }
+        }
+
         function loadTheme() {
             const savedTheme = localStorage.getItem('mero_app_theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
         }
 
-        // ==========================================
-        // ✅ NEW: BACK BUTTON HANDLER
-        // ==========================================
-        function handleBack() {
-            if (currentPage === 'channel') {
-                // Channel page बाट → Video Gallery home page
-                currentPage = 'home';
-                currentChannel = null;
-                currentPlayingVideo = null;
-                targetVideoId = null;
-                renderHomePage();
-            } else {
-                // Video Gallery home page बाट → Main App (index.html)
-                window.location.href = 'index.html';
-            }
-        }
-
-        // ==========================================
-        // INIT
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTheme();
-            loadInitialData();
-        });
+        document.addEventListener('DOMContentLoaded', () => { loadTheme(); loadInitialData(); });
 
         function loadInitialData() {
-            unsubscribeChannels = db.collection('channels').onSnapshot(snapshot => {
-                channels = [];
-                snapshot.forEach(doc => channels.push({ id: doc.id, ...doc.data() }));
+            db.collection('channels').onSnapshot(snapshot => {
+                channels = []; snapshot.forEach(doc => channels.push({ id: doc.id, ...doc.data() }));
                 renderCurrentView();
-            }, error => {
-                console.error('Error loading channels:', error);
-                showToast('Failed to load channels');
             });
-            
-            unsubscribeVideos = db.collection('videos').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+            db.collection('videos').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
                 allVideos = [];
                 snapshot.forEach(doc => {
                     const data = doc.data();
-                    allVideos.push({
-                        id: doc.id,
-                        videoId: data.videoId || '',
-                        title: data.title || '',
-                        channelName: data.channelName || '',
-                        published: data.published || '',
-                        description: data.description || '',
-                        source: data.source || 'youtube',
-                        viewCount: data.viewCount || 0,
-                        thumbnail: getVideoThumbnail({ videoId: data.videoId, source: data.source }),
-                        createdAt: data.createdAt
-                    });
+                    allVideos.push({ id: doc.id, videoId: data.videoId || '', title: data.title || '', channelName: data.channelName || '', published: data.published || '', description: data.description || '', source: data.source || 'youtube', viewCount: data.viewCount || 0, thumbnail: getVideoThumbnail({ videoId: data.videoId, source: data.source }), createdAt: data.createdAt });
                 });
                 renderCurrentView();
-            }, error => {
-                console.error('Error loading videos:', error);
-                showToast('Failed to load videos');
             });
-
-            unsubscribeFavorites = db.collection('favorites').onSnapshot(snapshot => {
-                favorites = [];
-                snapshot.forEach(doc => favorites.push({ id: doc.id, ...doc.data() }));
+            db.collection('favorites').onSnapshot(snapshot => {
+                favorites = []; snapshot.forEach(doc => favorites.push({ id: doc.id, ...doc.data() }));
                 renderCurrentView();
-            }, error => console.error('Favorites error:', error));
+            });
         }
 
-        // ==========================================
-        // VIDEO HELPERS
-        // ==========================================
-        function getVideoThumbnail(video) {
-            if (video.source === 'drive') return 'https://ssl.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png';
-            return `https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`;
-        }
-
-        function getVideoEmbedUrl(video) {
-            if (video.source === 'drive') return `https://drive.google.com/file/d/${video.videoId}/preview`;
-            return `https://www.youtube.com/embed/${video.videoId}?rel=0`;
-        }
-
-        function formatViews(count) {
-            if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M views';
-            if (count >= 1000) return (count / 1000).toFixed(1) + 'K views';
-            return count + ' views';
-        }
-
-        async function incrementViewCount(videoDocId) {
-            try {
-                await db.collection('videos').doc(videoDocId).update({
-                    viewCount: firebase.firestore.FieldValue.increment(1)
-                });
-            } catch (error) { console.error('Error incrementing view:', error); }
-        }
-
+        function getVideoThumbnail(video) { return video.source === 'drive' ? 'https://ssl.gstatic.com/images/branding/product/2x/drive_2020q4_48dp.png' : `https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`; }
+        function getVideoEmbedUrl(video) { return video.source === 'drive' ? `https://drive.google.com/file/d/${video.videoId}/preview` : `https://www.youtube.com/embed/${video.videoId}?rel=0`; }
+        function formatViews(count) { if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M views'; if (count >= 1000) return (count / 1000).toFixed(1) + 'K views'; return count + ' views'; }
+        async function incrementViewCount(videoDocId) { try { await db.collection('videos').doc(videoDocId).update({ viewCount: firebase.firestore.FieldValue.increment(1) }); } catch (error) {} }
         function isFavorite(videoId) { return favorites.some(f => f.videoId === videoId); }
         function getFavoriteCount() { return favorites.length; }
 
-        // ==========================================
-        // RENDER FUNCTIONS
-        // ==========================================
         function renderCurrentView() {
-            if (currentPage === 'channel' && currentChannel) {
-                renderChannelPage(getChannelVideos(currentChannel.channelName));
-            } else {
-                renderHomePage();
-            }
+            if (currentPage === 'channel' && currentChannel) renderChannelPage(getChannelVideos(currentChannel.channelName));
+            else renderHomePage();
         }
 
         function renderHomePage() {
-            currentPage = 'home';
-            currentChannel = null;
-            currentPlayingVideo = null;
-            targetVideoId = null;
+            currentPage = 'home'; currentChannel = null; currentPlayingVideo = null; targetVideoId = null;
             document.getElementById('pageTitle').textContent = 'VIDEO GALLERY';
-            
-            // ✅ Update back button for Home Page
-            const backButton = document.getElementById('backButton');
-            backButton.title = 'Back to Main App';
-
             const mainContent = document.getElementById('mainContent');
-            
-            if (channels.length === 0 && allVideos.length === 0) {
-                mainContent.innerHTML = `<div class="empty-state"><i class="bi bi-collection-play"></i><h5>No videos yet</h5><p>Add a channel and your first video to get started</p></div>`;
-                return;
-            }
+            if (channels.length === 0 && allVideos.length === 0) { mainContent.innerHTML = `<div class="empty-state"><i class="bi bi-collection-play"></i><h5>No videos yet</h5><p>Add a channel and your first video to get started</p></div>`; return; }
             
             let html = '';
-            
             if (channels.length > 0) {
                 html += `<div class="channels-section"><div class="channels-scroll"><div class="channels-list">`;
-                channels.forEach(ch => {
-                    html += `<div class="channel-item" onclick="openChannel('${escapeAttr(ch.channelName)}')"><div class="channel-item-logo">${ch.channelLogo || ch.channelName.charAt(0)}</div><div class="channel-item-name">${ch.channelName}</div></div>`;
-                });
+                channels.forEach(ch => { html += `<div class="channel-item" onclick="openChannel('${escapeAttr(ch.channelName)}')"><div class="channel-item-logo">${ch.channelLogo || ch.channelName.charAt(0)}</div><div class="channel-item-name">${ch.channelName}</div></div>`; });
                 html += `</div></div></div>`;
             }
-            
             const favCount = getFavoriteCount();
-            html += `
-                <div class="filter-tabs">
-                    <button class="filter-tab ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')"><i class="bi bi-collection-play"></i>All Videos<span class="filter-badge">${allVideos.length}</span></button>
-                    <button class="filter-tab ${currentFilter === 'favorites' ? 'active' : ''}" onclick="setFilter('favorites')"><i class="bi bi-heart-fill"></i>Favorites<span class="filter-badge">${favCount}</span></button>
-                </div>
-            `;
-            
-            html += `<div class="section-title"><div class="section-title-left"><i class="bi bi-${currentFilter === 'favorites' ? 'heart-fill' : 'play-circle'}"></i>${currentFilter === 'favorites' ? 'Favorite Videos' : 'All Videos'}</div></div><div class="video-list">`;
+            html += `<div class="filter-tabs"><button class="filter-tab ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')"><i class="bi bi-collection-play"></i>All Videos<span class="filter-badge">${allVideos.length}</span></button><button class="filter-tab ${currentFilter === 'favorites' ? 'active' : ''}" onclick="setFilter('favorites')"><i class="bi bi-heart-fill"></i>Favorites<span class="filter-badge">${favCount}</span></button></div>`;
+            html += `<div class="section-title"><i class="bi bi-${currentFilter === 'favorites' ? 'heart-fill' : 'play-circle'}"></i>${currentFilter === 'favorites' ? 'Favorite Videos' : 'All Videos'}</div><div class="video-list">`;
             
             let displayVideos = allVideos;
             if (currentFilter === 'favorites') displayVideos = allVideos.filter(v => isFavorite(v.videoId));
             
-            if (displayVideos.length === 0) {
-                html += `<div class="empty-state"><i class="bi bi-${currentFilter === 'favorites' ? 'heart' : 'video-off'}"></i><h5>${currentFilter === 'favorites' ? 'No favorites yet' : 'No videos found'}</h5><p>${currentFilter === 'favorites' ? 'Click the heart icon on videos to add them here' : 'Check back soon for new content'}</p></div>`;
-            } else {
+            if (displayVideos.length === 0) { html += `<div class="empty-state"><i class="bi bi-${currentFilter === 'favorites' ? 'heart' : 'video-off'}"></i><h5>${currentFilter === 'favorites' ? 'No favorites yet' : 'No videos found'}</h5></div>`; }
+            else {
                 displayVideos.forEach(video => {
                     const channel = channels.find(c => c.channelName === video.channelName);
                     const fav = isFavorite(video.videoId);
-                    html += `
-                        <div class="video-item">
-                            <div class="video-thumb" onclick="playVideoFromHome('${video.id}')"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'">${video.source === 'drive' ? '<span class="video-source-badge">Drive</span>' : ''}</div>
-                            <div class="video-info" onclick="playVideoFromHome('${video.id}')"><div class="video-title">${video.title}</div><div class="video-channel"><div class="video-channel-logo">${channel ? channel.channelLogo : '?'}</div><span>${video.channelName}</span></div><div class="video-stats">${formatViews(video.viewCount)} • ${video.published}</div></div>
-                            <div class="video-actions">
-                                <button class="video-action-btn favorite ${fav ? 'active' : ''}" onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')" title="Favorite"><i class="bi bi-heart${fav ? '-fill' : ''}"></i></button>
-                                <button class="video-action-btn" onclick="openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
-                                <button class="video-action-btn delete" onclick="deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>
-                            </div>
-                        </div>
-                    `;
+                    html += `<div class="video-item"><div class="video-thumb" onclick="playVideoFromHome('${video.id}')"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'"></div><div class="video-info" onclick="playVideoFromHome('${video.id}')"><div class="video-title">${video.title}</div><div class="video-channel"><div class="video-channel-logo">${channel ? channel.channelLogo : '?'}</div><span>${video.channelName}</span></div><div class="video-stats">${formatViews(video.viewCount)} • ${video.published}</div></div><div class="video-actions"><button class="video-action-btn favorite ${fav ? 'active' : ''}" onclick="toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')" title="Favorite"><i class="bi bi-heart${fav ? '-fill' : ''}"></i></button>${isAdminLoggedIn ? `<button class="video-action-btn" onclick="openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button><button class="video-action-btn delete" onclick="deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>` : ''}</div></div>`;
                 });
             }
-            html += `</div>`;
-            mainContent.innerHTML = html;
+            html += `</div>`; mainContent.innerHTML = html;
         }
 
         function setFilter(filter) { currentFilter = filter; renderHomePage(); }
 
         function renderChannelPage(videos) {
             if (!currentChannel) return;
-            
             const mainContent = document.getElementById('mainContent');
             document.getElementById('pageTitle').textContent = currentChannel.channelName;
-            
-            // ✅ Update back button for Channel Page
-            const backButton = document.getElementById('backButton');
-            backButton.title = 'Back to Video Gallery';
-
-            let html = `
-                <div class="channel-header">
-                    <div class="channel-header-top">
-                        <div class="channel-header-logo">${currentChannel.channelLogo || currentChannel.channelName.charAt(0)}</div>
-                        <div class="channel-header-info">
-                            <div class="channel-header-name">${currentChannel.channelName}</div>
-                            <div class="channel-header-desc">${currentChannel.description || ''}</div>
-                        </div>
-                        <div class="channel-header-actions">
-                            <button class="header-btn" onclick="openEditChannelModal('${currentChannel.id}')" title="Edit Channel"><i class="bi bi-pencil"></i></button>
-                            <button class="header-btn" onclick="deleteChannel('${currentChannel.id}')" title="Delete Channel"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-            `;
+            let html = `<div class="channel-header"><div class="channel-header-top"><div class="channel-header-logo">${currentChannel.channelLogo || currentChannel.channelName.charAt(0)}</div><div class="channel-header-info"><div class="channel-header-name">${currentChannel.channelName}</div><div class="channel-header-desc">${currentChannel.description || ''}</div></div>${isAdminLoggedIn ? `<div class="channel-header-actions"><button class="header-btn" onclick="openEditChannelModal('${currentChannel.id}')" title="Edit Channel"><i class="bi bi-pencil"></i></button><button class="header-btn" onclick="deleteChannel('${currentChannel.id}')" title="Delete Channel"><i class="bi bi-trash"></i></button></div>` : ''}</div></div>`;
             
             let videoToPlay = null;
-            if (targetVideoId) {
-                videoToPlay = videos.find(v => v.videoId === targetVideoId);
-                if (videoToPlay) targetVideoId = null;
-            }
-            if (!videoToPlay && currentPlayingVideo) {
-                const currentVideoInList = videos.find(v => v.id === currentPlayingVideo.id);
-                if (currentVideoInList) videoToPlay = currentVideoInList;
-            }
-            if (!videoToPlay && videos.length > 0) {
-                videoToPlay = videos[0];
-                currentPlayingVideo = videoToPlay;
-            }
+            if (targetVideoId) { videoToPlay = videos.find(v => v.videoId === targetVideoId); if (videoToPlay) targetVideoId = null; }
+            if (!videoToPlay && currentPlayingVideo) { const currentVideoInList = videos.find(v => v.id === currentPlayingVideo.id); if (currentVideoInList) videoToPlay = currentVideoInList; }
+            if (!videoToPlay && videos.length > 0) { videoToPlay = videos[0]; currentPlayingVideo = videoToPlay; }
             
             if (videoToPlay) {
                 currentPlayingVideo = videoToPlay;
-                const embedUrl = getVideoEmbedUrl(videoToPlay);
-                html += `
-                    <div class="video-player-section">
-                        <div class="video-player-wrapper">
-                            <iframe id="channelVideoPlayer" src="${embedUrl}" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-                        </div>
-                    </div>
-                    <div class="video-details">
-                        <div class="video-details-title">${videoToPlay.title}</div>
-                        ${videoToPlay.description ? `<div class="video-details-description" id="videoDescription" onclick="toggleDescription()">${videoToPlay.description}</div><button class="read-more-btn" id="readMoreBtn" onclick="toggleDescription()"><i class="bi bi-chevron-down"></i> Read more</button>` : ''}
-                        <div class="video-details-meta">
-                            <span><i class="bi bi-eye"></i> ${formatViews(videoToPlay.viewCount)}</span>
-                            <span>•</span><span>${videoToPlay.published}</span>
-                            ${videoToPlay.source === 'drive' ? '<span>•</span><span> Drive</span>' : ''}
-                        </div>
-                    </div>
-                `;
+                html += `<div class="video-player-section"><div class="video-player-wrapper"><iframe id="channelVideoPlayer" src="${getVideoEmbedUrl(videoToPlay)}" allowfullscreen allow="autoplay; encrypted-media"></iframe></div></div><div class="video-details"><div class="video-details-title">${videoToPlay.title}</div>${videoToPlay.description ? `<div class="video-details-description" id="videoDescription" onclick="toggleDescription()">${videoToPlay.description}</div><button class="read-more-btn" id="readMoreBtn" onclick="toggleDescription()"><i class="bi bi-chevron-down"></i> Read more</button>` : ''}<div class="video-details-meta"><span><i class="bi bi-eye"></i> ${formatViews(videoToPlay.viewCount)}</span><span>•</span><span>${videoToPlay.published}</span></div></div>`;
             }
-            
-            html += `<div class="section-title"><div class="section-title-left"><i class="bi bi-list-ul"></i>Videos (${videos.length})</div></div><div class="channel-videos-list">`;
-            
-            if (videos.length === 0) {
-                html += `<div class="empty-state"><i class="bi bi-video-off"></i><h5>No videos in this channel</h5></div>`;
-            } else {
+            html += `<div class="section-title"><i class="bi bi-list-ul"></i>Videos (${videos.length})</div><div class="channel-videos-list">`;
+            if (videos.length === 0) { html += `<div class="empty-state"><i class="bi bi-video-off"></i><h5>No videos in this channel</h5></div>`; }
+            else {
                 videos.forEach(video => {
                     const isActive = currentPlayingVideo && currentPlayingVideo.id === video.id;
                     const fav = isFavorite(video.videoId);
-                    html += `
-                        <div class="channel-video-item ${isActive ? 'active' : ''}" onclick="playChannelVideo('${video.id}', this)">
-                            <div class="channel-video-thumb"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'"></div>
-                            <div class="channel-video-info"><div class="channel-video-title">${video.title}</div><div class="channel-video-stats">${formatViews(video.viewCount)} • ${video.published}</div></div>
-                            <div class="video-actions">
-                                <button class="video-action-btn favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')" title="Favorite"><i class="bi bi-heart${fav ? '-fill' : ''}"></i></button>
-                                <button class="video-action-btn" onclick="event.stopPropagation(); openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
-                                <button class="video-action-btn delete" onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>
-                            </div>
-                        </div>
-                    `;
+                    html += `<div class="channel-video-item ${isActive ? 'active' : ''}" onclick="playChannelVideo('${video.id}', this)"><div class="channel-video-thumb"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=No+Thumbnail'"></div><div class="channel-video-info"><div class="channel-video-title">${video.title}</div><div class="channel-video-stats">${formatViews(video.viewCount)} • ${video.published}</div></div><div class="video-actions"><button class="video-action-btn favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${video.videoId}', '${escapeAttr(video.title)}', '${video.channelName}', '${video.published}')" title="Favorite"><i class="bi bi-heart${fav ? '-fill' : ''}"></i></button>${isAdminLoggedIn ? `<button class="video-action-btn" onclick="event.stopPropagation(); openEditVideoModal('${video.id}')" title="Edit"><i class="bi bi-pencil"></i></button><button class="video-action-btn delete" onclick="event.stopPropagation(); deleteVideo('${video.id}')" title="Delete"><i class="bi bi-trash"></i></button>` : ''}</div></div>`;
                 });
             }
-            html += `</div>`;
-            mainContent.innerHTML = html;
-            window.scrollTo(0, 0);
+            html += `</div>`; mainContent.innerHTML = html; window.scrollTo(0, 0);
         }
 
-        function toggleDescription() {
-            const desc = document.getElementById('videoDescription');
-            const btn = document.getElementById('readMoreBtn');
-            if (!desc || !btn) return;
-            if (desc.classList.contains('expanded')) {
-                desc.classList.remove('expanded');
-                btn.innerHTML = '<i class="bi bi-chevron-down"></i> Read more';
-            } else {
-                desc.classList.add('expanded');
-                btn.innerHTML = '<i class="bi bi-chevron-up"></i> Show less';
-            }
-        }
-
+        function toggleDescription() { const desc = document.getElementById('videoDescription'); const btn = document.getElementById('readMoreBtn'); if (!desc || !btn) return; if (desc.classList.contains('expanded')) { desc.classList.remove('expanded'); btn.innerHTML = '<i class="bi bi-chevron-down"></i> Read more'; } else { desc.classList.add('expanded'); btn.innerHTML = '<i class="bi bi-chevron-up"></i> Show less'; } }
         function getChannelVideos(channelName) { return allVideos.filter(v => v.channelName === channelName); }
 
-        // ==========================================
-        // ACTIONS
-        // ==========================================
+        function handleBack() {
+            if (currentPage === 'channel') { currentPage = 'home'; currentChannel = null; currentPlayingVideo = null; targetVideoId = null; renderHomePage(); }
+            else { window.location.href = 'index.html'; }
+        }
+
         function openChannel(channelName, videoIdToPlay = null) {
-            currentPage = 'channel';
-            currentChannel = channels.find(c => c.channelName === channelName);
+            currentPage = 'channel'; currentChannel = channels.find(c => c.channelName === channelName);
             if (!currentChannel) { showToast('Channel not found'); return; }
             if (videoIdToPlay) targetVideoId = videoIdToPlay;
             renderChannelPage(getChannelVideos(channelName));
         }
 
         function playVideoFromHome(videoDocId) {
-            const video = allVideos.find(v => v.id === videoDocId);
-            if (!video) return;
-            incrementViewCount(videoDocId);
-            openChannel(video.channelName, video.videoId);
+            const video = allVideos.find(v => v.id === videoDocId); if (!video) return;
+            incrementViewCount(videoDocId); openChannel(video.channelName, video.videoId);
         }
 
         function playChannelVideo(videoDocId, element) {
-            const video = allVideos.find(v => v.id === videoDocId);
-            if (!video) return;
-            currentPlayingVideo = video;
-            targetVideoId = null;
-            incrementViewCount(videoDocId);
-            
-            const player = document.getElementById('channelVideoPlayer');
-            if (player) player.src = getVideoEmbedUrl(video);
-            
-            const detailsTitle = document.querySelector('.video-details-title');
-            if (detailsTitle) detailsTitle.textContent = video.title;
-            
+            const video = allVideos.find(v => v.id === videoDocId); if (!video) return;
+            currentPlayingVideo = video; targetVideoId = null; incrementViewCount(videoDocId);
+            const player = document.getElementById('channelVideoPlayer'); if (player) player.src = getVideoEmbedUrl(video);
+            const detailsTitle = document.querySelector('.video-details-title'); if (detailsTitle) detailsTitle.textContent = video.title;
             const descContainer = document.querySelector('.video-details');
-            const oldDesc = descContainer ? descContainer.querySelector('.video-details-description') : null;
-            const oldBtn = descContainer ? descContainer.querySelector('.read-more-btn') : null;
-            if (oldDesc) oldDesc.remove();
-            if (oldBtn) oldBtn.remove();
-            
+            const oldDesc = descContainer ? descContainer.querySelector('.video-details-description') : null; const oldBtn = descContainer ? descContainer.querySelector('.read-more-btn') : null;
+            if (oldDesc) oldDesc.remove(); if (oldBtn) oldBtn.remove();
             if (video.description && descContainer) {
-                const newDesc = document.createElement('div');
-                newDesc.className = 'video-details-description';
-                newDesc.id = 'videoDescription';
-                newDesc.textContent = video.description;
-                newDesc.onclick = toggleDescription;
-                
-                const newBtn = document.createElement('button');
-                newBtn.className = 'read-more-btn';
-                newBtn.id = 'readMoreBtn';
-                newBtn.onclick = toggleDescription;
-                newBtn.innerHTML = '<i class="bi bi-chevron-down"></i> Read more';
-                
-                const meta = descContainer.querySelector('.video-details-meta');
-                if (meta) {
-                    meta.insertAdjacentElement('beforebegin', newBtn);
-                    meta.insertAdjacentElement('beforebegin', newDesc);
-                }
+                const newDesc = document.createElement('div'); newDesc.className = 'video-details-description'; newDesc.id = 'videoDescription'; newDesc.textContent = video.description; newDesc.onclick = toggleDescription;
+                const newBtn = document.createElement('button'); newBtn.className = 'read-more-btn'; newBtn.id = 'readMoreBtn'; newBtn.onclick = toggleDescription; newBtn.innerHTML = '<i class="bi bi-chevron-down"></i> Read more';
+                const meta = descContainer.querySelector('.video-details-meta'); if (meta) { meta.insertAdjacentElement('beforebegin', newBtn); meta.insertAdjacentElement('beforebegin', newDesc); }
             }
-            
             const detailsMeta = document.querySelector('.video-details-meta');
-            if (detailsMeta) {
-                detailsMeta.innerHTML = `<span><i class="bi bi-eye"></i> ${formatViews(video.viewCount + 1)}</span><span>•</span><span>${video.published}</span>${video.source === 'drive' ? '<span>•</span><span>📁 Drive</span>' : ''}`;
-            }
-            
-            if (element) {
-                document.querySelectorAll('.channel-video-item').forEach(item => item.classList.remove('active'));
-                element.classList.add('active');
-            }
+            if (detailsMeta) { detailsMeta.innerHTML = `<span><i class="bi bi-eye"></i> ${formatViews(video.viewCount + 1)}</span><span>•</span><span>${video.published}</span>`; }
+            if (element) { document.querySelectorAll('.channel-video-item').forEach(item => item.classList.remove('active')); element.classList.add('active'); }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         async function toggleFavorite(videoId, title, channelName, published) {
             const existing = favorites.find(f => f.videoId === videoId);
             try {
-                if (existing) {
-                    await db.collection('favorites').doc(existing.id).delete();
-                    showToast('Removed from favorites');
-                } else {
-                    const video = allVideos.find(v => v.videoId === videoId);
-                    await db.collection('favorites').add({
-                        videoId: videoId, title: title, channelName: channelName, published: published,
-                        thumbnail: video ? video.thumbnail : '',
-                        addedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    showToast('Added to favorites ❤️');
-                }
-            } catch (error) { console.error('Error toggling favorite:', error); showToast('Failed to update favorite'); }
+                if (existing) { await db.collection('favorites').doc(existing.id).delete(); showToast('Removed from favorites'); }
+                else { const video = allVideos.find(v => v.videoId === videoId); await db.collection('favorites').add({ videoId: videoId, title: title, channelName: channelName, published: published, thumbnail: video ? video.thumbnail : '', addedAt: firebase.firestore.FieldValue.serverTimestamp() }); showToast('Added to favorites ❤️'); }
+            } catch (error) { showToast('Failed to update favorite'); }
         }
 
-        // ==========================================
-        // SEARCH
-        // ==========================================
-        function openSearch() {
-            document.getElementById('searchOverlay').classList.add('active');
-            document.getElementById('searchInput').value = '';
-            document.getElementById('searchResults').innerHTML = '';
-            document.getElementById('searchResultsTitle').textContent = 'Type to search videos';
-            setTimeout(() => document.getElementById('searchInput').focus(), 100);
-        }
+        function openSearch() { document.getElementById('searchOverlay').classList.add('active'); document.getElementById('searchInput').value = ''; document.getElementById('searchResults').innerHTML = ''; document.getElementById('searchResultsTitle').textContent = 'Type to search videos'; setTimeout(() => document.getElementById('searchInput').focus(), 100); }
         function closeSearch() { document.getElementById('searchOverlay').classList.remove('active'); }
-
         function handleSearch() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
-            const resultsDiv = document.getElementById('searchResults');
-            const titleDiv = document.getElementById('searchResultsTitle');
+            const resultsDiv = document.getElementById('searchResults'); const titleDiv = document.getElementById('searchResultsTitle');
             if (!query) { resultsDiv.innerHTML = ''; titleDiv.textContent = 'Type to search videos'; return; }
-            
             const filteredVideos = allVideos.filter(v => v.title.toLowerCase().includes(query) || v.channelName.toLowerCase().includes(query) || (v.description && v.description.toLowerCase().includes(query)));
             titleDiv.textContent = `${filteredVideos.length} result${filteredVideos.length !== 1 ? 's' : ''} found`;
-            
-            if (filteredVideos.length === 0) {
-                resultsDiv.innerHTML = `<div class="empty-state"><i class="bi bi-search"></i><h5>No videos found</h5><p>Try a different search term</p></div>`;
-                return;
-            }
-            
+            if (filteredVideos.length === 0) { resultsDiv.innerHTML = `<div class="empty-state"><i class="bi bi-search"></i><h5>No videos found</h5></div>`; return; }
             let html = '';
-            filteredVideos.forEach(video => {
-                html += `<div class="video-item" onclick="closeSearch(); playVideoFromHome('${video.id}')"><div class="video-thumb"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy"></div><div class="video-info"><div class="video-title">${highlightText(video.title, query)}</div><div class="video-channel"><div class="video-channel-logo">?</div><span>${highlightText(video.channelName, query)}</span></div><div class="video-stats">${formatViews(video.viewCount)}</div></div></div>`;
-            });
+            filteredVideos.forEach(video => { html += `<div class="video-item" onclick="closeSearch(); playVideoFromHome('${video.id}')"><div class="video-thumb"><img src="${video.thumbnail}" alt="${escapeAttr(video.title)}" loading="lazy"></div><div class="video-info"><div class="video-title">${highlightText(video.title, query)}</div><div class="video-channel"><div class="video-channel-logo">?</div><span>${highlightText(video.channelName, query)}</span></div><div class="video-stats">${formatViews(video.viewCount)}</div></div></div>`; });
             resultsDiv.innerHTML = html;
         }
-
-        function highlightText(text, query) {
-            if (!query) return text;
-            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-            return text.replace(regex, '<mark style="background: var(--accent); color: var(--bg-primary); padding: 0 3px; border-radius: 2px;">$1</mark>');
-        }
+        function highlightText(text, query) { if (!query) return text; const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'); return text.replace(regex, '<mark style="background: var(--accent); color: var(--bg-primary); padding: 0 3px; border-radius: 2px;">$1</mark>'); }
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSearch(); });
 
-        // ==========================================
-        // CHANNEL CRUD
-        // ==========================================
-        function openAddChannelModal() {
-            document.getElementById('channelModalTitle').textContent = 'Add Channel';
-            document.getElementById('channelForm').reset();
-            document.getElementById('editChannelId').value = '';
-            document.getElementById('inputChannelColor').value = '#ffffff';
-            if (!channelModalInstance) channelModalInstance = new bootstrap.Modal(document.getElementById('channelModal'));
-            channelModalInstance.show();
-        }
-
-        function openEditChannelModal(channelId) {
-            const channel = channels.find(c => c.id === channelId);
-            if (!channel) return;
-            document.getElementById('channelModalTitle').textContent = 'Edit Channel';
-            document.getElementById('editChannelId').value = channelId;
-            document.getElementById('inputChannelName').value = channel.channelName || '';
-            document.getElementById('inputChannelLogo').value = channel.channelLogo || '';
-            document.getElementById('inputChannelColor').value = channel.channelColor || '#ffffff';
-            document.getElementById('inputChannelDesc').value = channel.description || '';
-            if (!channelModalInstance) channelModalInstance = new bootstrap.Modal(document.getElementById('channelModal'));
-            channelModalInstance.show();
-        }
-
+        function openAddChannelModal() { checkAdminAccess(() => { document.getElementById('channelModalTitle').textContent = 'Add Channel'; document.getElementById('channelForm').reset(); document.getElementById('editChannelId').value = ''; document.getElementById('inputChannelColor').value = '#ffffff'; if (!channelModalInstance) channelModalInstance = new bootstrap.Modal(document.getElementById('channelModal')); channelModalInstance.show(); }); }
+        function openEditChannelModal(channelId) { checkAdminAccess(() => { const channel = channels.find(c => c.id === channelId); if (!channel) return; document.getElementById('channelModalTitle').textContent = 'Edit Channel'; document.getElementById('editChannelId').value = channelId; document.getElementById('inputChannelName').value = channel.channelName || ''; document.getElementById('inputChannelLogo').value = channel.channelLogo || ''; document.getElementById('inputChannelColor').value = channel.channelColor || '#ffffff'; document.getElementById('inputChannelDesc').value = channel.description || ''; if (!channelModalInstance) channelModalInstance = new bootstrap.Modal(document.getElementById('channelModal')); channelModalInstance.show(); }); }
         async function submitChannel() {
-            const channelId = document.getElementById('editChannelId').value;
-            const channelName = document.getElementById('inputChannelName').value.trim();
-            const channelLogo = document.getElementById('inputChannelLogo').value.trim();
-            const channelColor = document.getElementById('inputChannelColor').value;
-            const description = document.getElementById('inputChannelDesc').value.trim();
+            const channelId = document.getElementById('editChannelId').value; const channelName = document.getElementById('inputChannelName').value.trim(); const channelLogo = document.getElementById('inputChannelLogo').value.trim(); const channelColor = document.getElementById('inputChannelColor').value; const description = document.getElementById('inputChannelDesc').value.trim();
             if (!channelName || !channelLogo) { showToast('Please fill required fields'); return; }
-            try {
-                const data = { channelName, channelLogo, channelColor, description };
-                if (channelId) {
-                    await db.collection('channels').doc(channelId).update(data);
-                    showToast('Channel updated!');
-                } else {
-                    data.createdAt = new Date();
-                    await db.collection('channels').add(data);
-                    showToast('Channel added!');
-                }
-                channelModalInstance.hide();
-            } catch (error) { console.error('Error saving channel:', error); showToast('Failed to save channel'); }
+            try { const data = { channelName, channelLogo, channelColor, description }; if (channelId) { await db.collection('channels').doc(channelId).update(data); showToast('Channel updated!'); } else { data.createdAt = new Date(); await db.collection('channels').add(data); showToast('Channel added!'); } channelModalInstance.hide(); } catch (error) { showToast('Failed to save channel'); }
         }
+        async function deleteChannel(channelId) { checkAdminAccess(async () => { if (!confirm('Are you sure you want to delete this channel?')) return; try { await db.collection('channels').doc(channelId).delete(); showToast('Channel deleted'); currentPage = 'home'; currentChannel = null; currentPlayingVideo = null; targetVideoId = null; renderHomePage(); } catch (error) { showToast('Failed to delete channel'); } }); }
 
-        async function deleteChannel(channelId) {
-            if (!confirm('Are you sure you want to delete this channel?')) return;
-            try {
-                await db.collection('channels').doc(channelId).delete();
-                showToast('Channel deleted');
-                currentPage = 'home'; currentChannel = null; currentPlayingVideo = null; targetVideoId = null;
-                renderHomePage();
-            } catch (error) { console.error('Error deleting channel:', error); showToast('Failed to delete channel'); }
-        }
-
-        // ==========================================
-        // VIDEO CRUD
-        // ==========================================
-        function toggleVideoSourceFields() {
-            const source = document.getElementById('inputVideoSource').value;
-            if (source === 'drive') {
-                document.getElementById('videoIdLabel').textContent = 'Google Drive File ID or Link *';
-                document.getElementById('inputVideoId').placeholder = 'e.g., 1ABC123xyz or full Drive link';
-                document.getElementById('videoIdHelp').textContent = 'Paste Google Drive file ID or share link';
-            } else {
-                document.getElementById('videoIdLabel').textContent = 'Video ID *';
-                document.getElementById('inputVideoId').placeholder = 'e.g., dQw4w9WgXcQ';
-                document.getElementById('videoIdHelp').innerHTML = 'From URL: youtube.com/watch?v=<b>VIDEO_ID</b>';
-            }
-        }
-
-        function extractDriveFileId(input) {
-            if (!input.includes('/')) return input.trim();
-            const match = input.match(/\/file\/d\/([^\/\?]+)/);
-            if (match && match[1]) return match[1];
-            const match2 = input.match(/id=([^&]+)/);
-            if (match2 && match2[1]) return match2[1];
-            return input.trim();
-        }
-
-        function openAddVideoModal() {
-            document.getElementById('videoModalTitle').textContent = 'Add Video';
-            document.getElementById('videoForm').reset();
-            document.getElementById('editVideoId').value = '';
-            document.getElementById('inputVideoSource').value = 'youtube';
-            toggleVideoSourceFields();
-            const select = document.getElementById('inputChannel');
-            select.innerHTML = '<option value="">Select channel...</option>';
-            channels.forEach(ch => { select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`; });
-            if (currentChannel) select.value = currentChannel.channelName;
-            if (!videoModalInstance) videoModalInstance = new bootstrap.Modal(document.getElementById('videoModal'));
-            videoModalInstance.show();
-        }
-
-        function openEditVideoModal(videoDocId) {
-            const video = allVideos.find(v => v.id === videoDocId);
-            if (!video) return;
-            document.getElementById('videoModalTitle').textContent = 'Edit Video';
-            document.getElementById('editVideoId').value = videoDocId;
-            document.getElementById('inputVideoSource').value = video.source || 'youtube';
-            toggleVideoSourceFields();
-            document.getElementById('inputVideoId').value = video.videoId;
-            document.getElementById('inputTitle').value = video.title;
-            document.getElementById('inputVideoDesc').value = video.description || '';
-            const select = document.getElementById('inputChannel');
-            select.innerHTML = '<option value="">Select channel...</option>';
-            channels.forEach(ch => { select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`; });
-            select.value = video.channelName;
-            if (!videoModalInstance) videoModalInstance = new bootstrap.Modal(document.getElementById('videoModal'));
-            videoModalInstance.show();
-        }
-
+        function toggleVideoSourceFields() { const source = document.getElementById('inputVideoSource').value; if (source === 'drive') { document.getElementById('videoIdLabel').textContent = 'Google Drive File ID or Link *'; document.getElementById('inputVideoId').placeholder = 'e.g., 1ABC123xyz'; document.getElementById('videoIdHelp').textContent = 'Paste Google Drive file ID or share link'; } else { document.getElementById('videoIdLabel').textContent = 'Video ID *'; document.getElementById('inputVideoId').placeholder = 'e.g., dQw4w9WgXcQ'; document.getElementById('videoIdHelp').innerHTML = 'From URL: youtube.com/watch?v=<b>VIDEO_ID</b>'; } }
+        function extractDriveFileId(input) { if (!input.includes('/')) return input.trim(); const match = input.match(/\/file\/d\/([^\/\?]+)/); if (match && match[1]) return match[1]; const match2 = input.match(/id=([^&]+)/); if (match2 && match2[1]) return match2[1]; return input.trim(); }
+        
+        function openAddVideoModal() { checkAdminAccess(() => { document.getElementById('videoModalTitle').textContent = 'Add Video'; document.getElementById('videoForm').reset(); document.getElementById('editVideoId').value = ''; document.getElementById('inputVideoSource').value = 'youtube'; toggleVideoSourceFields(); const select = document.getElementById('inputChannel'); select.innerHTML = '<option value="">Select channel...</option>'; channels.forEach(ch => { select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`; }); if (currentChannel) select.value = currentChannel.channelName; if (!videoModalInstance) videoModalInstance = new bootstrap.Modal(document.getElementById('videoModal')); videoModalInstance.show(); }); }
+        function openEditVideoModal(videoDocId) { checkAdminAccess(() => { const video = allVideos.find(v => v.id === videoDocId); if (!video) return; document.getElementById('videoModalTitle').textContent = 'Edit Video'; document.getElementById('editVideoId').value = videoDocId; document.getElementById('inputVideoSource').value = video.source || 'youtube'; toggleVideoSourceFields(); document.getElementById('inputVideoId').value = video.videoId; document.getElementById('inputTitle').value = video.title; document.getElementById('inputVideoDesc').value = video.description || ''; const select = document.getElementById('inputChannel'); select.innerHTML = '<option value="">Select channel...</option>'; channels.forEach(ch => { select.innerHTML += `<option value="${ch.channelName}">${ch.channelName}</option>`; }); select.value = video.channelName; if (!videoModalInstance) videoModalInstance = new bootstrap.Modal(document.getElementById('videoModal')); videoModalInstance.show(); }); }
         async function submitVideo() {
-            const videoDocId = document.getElementById('editVideoId').value;
-            const source = document.getElementById('inputVideoSource').value;
-            let videoId = document.getElementById('inputVideoId').value.trim();
-            const title = document.getElementById('inputTitle').value.trim();
-            const channelName = document.getElementById('inputChannel').value;
-            const description = document.getElementById('inputVideoDesc').value.trim();
+            const videoDocId = document.getElementById('editVideoId').value; const source = document.getElementById('inputVideoSource').value; let videoId = document.getElementById('inputVideoId').value.trim(); const title = document.getElementById('inputTitle').value.trim(); const channelName = document.getElementById('inputChannel').value; const description = document.getElementById('inputVideoDesc').value.trim();
             if (!videoId || !title || !channelName) { showToast('Please fill all required fields'); return; }
             if (source === 'drive') videoId = extractDriveFileId(videoId);
-            try {
-                const data = { videoId, title, channelName, description, source, published: new Date().toISOString().split('T')[0] };
-                if (videoDocId) {
-                    await db.collection('videos').doc(videoDocId).update(data);
-                    showToast('Video updated!');
-                } else {
-                    data.viewCount = 0; data.createdAt = new Date();
-                    await db.collection('videos').add(data);
-                    showToast('Video added!');
-                }
-                videoModalInstance.hide();
-            } catch (error) { console.error('Error saving video:', error); showToast('Failed to save video'); }
+            try { const data = { videoId, title, channelName, description, source, published: new Date().toISOString().split('T')[0] }; if (videoDocId) { await db.collection('videos').doc(videoDocId).update(data); showToast('Video updated!'); } else { data.viewCount = 0; data.createdAt = new Date(); await db.collection('videos').add(data); showToast('Video added!'); } videoModalInstance.hide(); } catch (error) { showToast('Failed to save video'); }
         }
+        async function deleteVideo(videoDocId) { checkAdminAccess(async () => { if (!confirm('Are you sure you want to delete this video?')) return; try { await db.collection('videos').doc(videoDocId).delete(); showToast('Video deleted'); } catch (error) { showToast('Failed to delete video'); } }); }
 
-        async function deleteVideo(videoDocId) {
-            if (!confirm('Are you sure you want to delete this video?')) return;
-            try {
-                await db.collection('videos').doc(videoDocId).delete();
-                showToast('Video deleted');
-            } catch (error) { console.error('Error deleting video:', error); showToast('Failed to delete video'); }
-        }
-
-        // ==========================================
-        // UTILITIES
-        // ==========================================
         function escapeAttr(text) { if (!text) return ''; return text.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
-        function showToast(message) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast-custom';
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; setTimeout(() => toast.remove(), 300); }, 2500);
-        }
-        window.addEventListener('beforeunload', () => {
-            if (unsubscribeChannels) unsubscribeChannels();
-            if (unsubscribeVideos) unsubscribeVideos();
-            if (unsubscribeFavorites) unsubscribeFavorites();
-        });
+        function showToast(message) { const container = document.getElementById('toastContainer'); const toast = document.createElement('div'); toast.className = 'toast-custom'; toast.textContent = message; container.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; setTimeout(() => toast.remove(), 300); }, 2500); }
+        window.addEventListener('beforeunload', () => { /* cleanup if needed */ });
     </script>
 </body>
 </html>
