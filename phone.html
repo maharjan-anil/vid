@@ -47,8 +47,6 @@
         .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
         .empty-state i { font-size: 4rem; margin-bottom: 16px; color: var(--text-dim); }
         .empty-state h5 { color: var(--text-primary); margin-bottom: 8px; }
-        .loading-container { text-align: center; padding: 40px; color: var(--text-muted); }
-        .loading-container .spinner-border { width: 2rem; height: 2rem; color: var(--accent); }
         .modal-content { background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 16px; }
         .modal-header { border-bottom: 1px solid var(--border-color); padding: 16px 20px; }
         .modal-title { font-weight: 700; font-size: 1.1rem; }
@@ -76,7 +74,9 @@
     <div class="page-container">
         <div class="search-container"><i class="bi bi-search search-icon"></i><input type="text" class="search-input" id="searchInput" placeholder="Search contacts..." oninput="filterContacts()"></div>
         <div class="filter-tabs"><button class="filter-tab active" id="allTab" onclick="setFilter('all')"><span>All</span></button><button class="filter-tab" id="favTab" onclick="setFilter('favorites')"><i class="bi bi-star-fill"></i><span>Favorites</span></button></div>
-        <div class="contact-list" id="contactList"><div class="loading-container"><div class="spinner-border" role="status"></div><div style="margin-top: 10px;">Loading contacts...</div></div></div>
+        <div class="contact-list" id="contactList">
+            <div class="empty-state"><i class="bi bi-people"></i><h5>Phone Directory</h5><p>Loading contacts...</p></div>
+        </div>
     </div>
 
     <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
@@ -121,20 +121,47 @@
         let authReady = false;
 
         auth.onAuthStateChanged(user => { isAdminLoggedIn = !!user; authReady = true; updateAdminUI(); });
-        document.addEventListener('DOMContentLoaded', () => { loadTheme(); loadContacts(); document.querySelectorAll('.admin-only-btn').forEach(btn => { btn.style.display = 'none'; }); });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            document.querySelectorAll('.admin-only-btn').forEach(btn => { btn.style.display = 'none'; });
+            renderContacts(); // ✅ Render empty UI immediately
+            loadContacts();
+            handleUrlParams();
+        });
+
+        function handleUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const openId = params.get('open');
+            if (openId) {
+                setTimeout(() => {
+                    const contact = allContacts.find(c => c.id === openId);
+                    if (contact) {
+                        showToast('Contact: ' + contact.name + ' - ' + contact.phone);
+                        window.location.href = 'tel:' + contact.phone;
+                    }
+                }, 1000);
+            }
+        }
 
         function updateAdminUI() { document.querySelectorAll('.admin-only-btn').forEach(btn => { btn.style.display = isAdminLoggedIn ? 'flex' : 'none'; }); renderContacts(); }
         function checkAdminAccess(callback) { if (!authReady) { showToast('⏳ Please wait...'); return; } if (isAdminLoggedIn) callback(); else { showToast('🔐 Admin login required'); setTimeout(() => { window.location.href = 'index.html?login=action'; }, 1000); } }
         function loadTheme() { const savedTheme = localStorage.getItem('mero_app_theme') || 'dark'; document.documentElement.setAttribute('data-theme', savedTheme); }
 
-        function loadContacts() { db.collection('contacts').orderBy('name').onSnapshot(snapshot => { allContacts = []; snapshot.forEach(doc => { allContacts.push({ id: doc.id, ...doc.data() }); }); renderContacts(); }, error => { console.error('Error loading contacts:', error); showToast('Failed to load contacts'); }); }
+        function loadContacts() {
+            db.collection('contacts').orderBy('name').onSnapshot(snapshot => {
+                allContacts = [];
+                snapshot.forEach(doc => { allContacts.push({ id: doc.id, ...doc.data() }); });
+                renderContacts();
+            }, error => { console.error('Error loading contacts:', error); showToast('Failed to load contacts'); });
+        }
 
         function renderContacts() {
             const contactList = document.getElementById('contactList');
             let filtered = allContacts;
             if (currentFilter === 'favorites') filtered = filtered.filter(c => c.isFavorite);
             if (searchQuery) { const query = searchQuery.toLowerCase(); filtered = filtered.filter(c => c.name.toLowerCase().includes(query) || c.phone.includes(query) || (c.category && c.category.toLowerCase().includes(query))); }
-            if (filtered.length === 0) { contactList.innerHTML = '<div class="empty-state"><i class="bi bi-person-x"></i><h5>No contacts found</h5><p>' + (searchQuery ? 'Try a different search' : 'Add your first contact') + '</p></div>'; return; }
+            if (filtered.length === 0) { contactList.innerHTML = '<div class="empty-state"><i class="bi bi-person-x"></i><h5>No contacts found</h5><p>' + (searchQuery ? 'Try a different search' : (currentFilter === 'favorites' ? 'No favorites yet' : 'Add your first contact')) + '</p></div>'; return; }
             contactList.innerHTML = filtered.map(contact => {
                 const initials = getInitials(contact.name);
                 const isFav = contact.isFavorite ? 'active' : '';
