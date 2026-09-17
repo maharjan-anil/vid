@@ -159,9 +159,7 @@
             border-color: var(--accent);
         }
 
-        /* ==========================================
-           2-COLUMN GRID LAYOUT - FIXED HEIGHT
-           ========================================== */
+        /* 2-Column Grid Layout */
         .links-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -178,9 +176,7 @@
             border-radius: 12px;
             transition: all 0.2s ease;
             cursor: pointer;
-            
-            /* ✅ FIXED HEIGHT */
-            height: 120px;
+            height: 110px;
             overflow: hidden;
         }
         .link-row:hover {
@@ -212,7 +208,7 @@
             color: var(--text-muted);
         }
 
-        /* Content - FIXED */
+        /* Content */
         .link-content {
             flex: 1;
             min-width: 0;
@@ -227,8 +223,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        
-        /* ✅ URL - FIXED SINGLE LINE */
         .link-url {
             font-size: 0.65rem;
             color: var(--text-dim);
@@ -238,7 +232,6 @@
             margin-bottom: 4px;
             max-width: 100%;
         }
-        
         .link-meta {
             display: flex;
             align-items: center;
@@ -258,7 +251,7 @@
             flex-shrink: 0;
         }
 
-        /* Vertical Action Icons */
+        /* ✅ Vertical Action Icons - Desktop */
         .link-actions {
             display: flex;
             flex-direction: column;
@@ -441,14 +434,49 @@
         }
 
         /* ==========================================
-           RESPONSIVE
+           ✅ MOBILE RESPONSIVE - 2x2 ICON GRID
            ========================================== */
         @media (max-width: 576px) {
             .links-list {
                 grid-template-columns: 1fr;
             }
+            
             .link-row {
-                height: 70px;
+                height: 90px; /* ✅ Increased height for mobile */
+                padding: 12px;
+            }
+            
+            .link-favicon {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .link-title {
+                font-size: 0.9rem;
+            }
+            
+            .link-url {
+                font-size: 0.7rem;
+            }
+            
+            /* ✅ 2x2 Grid for Action Icons on Mobile */
+            .link-actions {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 4px;
+                padding-left: 8px;
+                border-left: 1px solid var(--border-color);
+            }
+            
+            .link-action-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            .link-action-btn i {
+                font-size: 0.95rem;
             }
         }
     </style>
